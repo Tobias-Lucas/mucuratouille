@@ -158,10 +158,10 @@ As receitas foram adaptadas para fins acadêmicos e de demonstração da interfa
 
 ## Equipe
 
-**Ana Paula Silva Amorim**
-**Clayton China Simões**
-**Jônatas Tiago Albuquerque de Moraes**
-**Lucas Jatene Tobias**
+**Ana Paula Silva Amorim;**
+**Clayton China Simões;**
+**Jônatas Tiago Albuquerque de Moraes;**
+**Lucas Jatene Tobias.**
 
 
 **Mucuratouille — Receitas boas. Conselhos duvidosos.**  
