@@ -19,17 +19,20 @@ function limpar() {
 </script>
 
 <template>
-  <form class="busca" role="search" @submit.prevent>
-    <label class="sr-only" for="busca-receitas">Buscar por receita ou ingrediente</label>
+  <form class="busca input-group shadow-sm" role="search" @submit.prevent>
+    <label class="visually-hidden" for="busca-receitas">Buscar por receita ou ingrediente</label>
 
-    <svg viewBox="0 0 24 24" aria-hidden="true">
-      <circle cx="10.5" cy="10.5" r="6.5" />
-      <path d="m16 16 5 5" />
-    </svg>
+    <span class="input-group-text busca__icone" aria-hidden="true">
+      <svg viewBox="0 0 24 24">
+        <circle cx="10.5" cy="10.5" r="6.5" />
+        <path d="m16 16 5 5" />
+      </svg>
+    </span>
 
     <input
       id="busca-receitas"
       v-model="texto"
+      class="form-control busca__campo"
       type="search"
       placeholder="Busque uma receita... (ex.: tacacá, maniçoba, cupuaçu)"
       autocomplete="off"
@@ -39,7 +42,7 @@ function limpar() {
     <button
       v-if="texto"
       type="button"
-      class="busca__limpar"
+      class="btn btn-light busca__limpar"
       aria-label="Limpar busca"
       @click="limpar"
     >
@@ -50,64 +53,93 @@ function limpar() {
 
 <style scoped>
 .busca {
-  position: relative;
-  display: flex;
   min-width: 0;
-  flex: 1;
-  align-items: center;
   min-height: 58px;
+  overflow: hidden;
   background: #fff;
   border: 1px solid #d8d0c0;
-  border-radius: 17px;
-  box-shadow: 0 8px 20px rgba(73, 49, 24, 0.11);
+  border-radius: 18px;
+  box-shadow: 0 10px 24px rgba(73, 49, 24, 0.14) !important;
 }
 
 .busca:focus-within {
-  outline: 3px solid rgba(36, 75, 56, 0.18);
   border-color: var(--verde);
+  box-shadow: 0 0 0 3px rgba(36, 75, 56, 0.15), 0 10px 24px rgba(73, 49, 24, 0.14) !important;
 }
 
-.busca svg {
-  width: 24px;
-  height: 24px;
-  margin-left: 18px;
-  flex-shrink: 0;
+.busca__icone {
+  padding-left: 18px;
+  padding-right: 8px;
+  color: var(--verde);
+  background: #fff;
+  border: 0;
+}
+
+.busca__icone svg {
+  width: 23px;
+  height: 23px;
   fill: none;
-  stroke: var(--verde);
+  stroke: currentColor;
   stroke-width: 2;
 }
 
-.busca input {
-  width: 100%;
+.busca__campo {
   min-width: 0;
   min-height: 56px;
-  padding: 14px 48px 14px 14px;
+  padding: 14px 12px;
   color: #4a4b43;
-  background: transparent;
+  background: #fff;
   border: 0;
-  outline: none;
-  font: inherit;
   font-size: 14px;
 }
 
-.busca input::placeholder {
+.busca__campo:focus {
+  box-shadow: none;
+}
+
+.busca__campo::placeholder {
   color: #77766e;
   opacity: 1;
 }
 
-.busca input::-webkit-search-cancel-button {
+.busca__campo::-webkit-search-cancel-button {
   display: none;
 }
 
 .busca__limpar {
-  position: absolute;
-  right: 6px;
-  width: 44px;
-  height: 44px;
+  width: 48px;
   color: #666;
-  background: transparent;
+  background: #fff;
   border: 0;
-  font-size: 26px;
-  cursor: pointer;
+  font-size: 24px;
 }
+
+@media (max-width: 575.98px) {
+  .busca {
+    min-height: 50px;
+    border-radius: 16px;
+  }
+
+  .busca__icone {
+    padding-left: 15px;
+    padding-right: 6px;
+  }
+
+  .busca__icone svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .busca__campo {
+    min-height: 48px;
+    padding: 11px 8px;
+    font-size: 12px;
+  }
+
+  .busca__limpar {
+    width: 42px;
+    font-size: 21px;
+  }
+}
+
 </style>

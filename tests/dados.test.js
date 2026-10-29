@@ -15,10 +15,13 @@ test('15 receitas completas, IDs unicos e referencias HTTPS', () => {
     assert.equal(new URL(r.fonte.url).protocol,'https:')
   }
 })
-test('todas as 11 imagens referenciadas existem localmente',()=>{
+test('imagens principais e novos assets locais existem',()=>{
   assert.ok(fs.existsSync(new URL('../public/imagens/mucura-chef.webp',import.meta.url)))
   assert.ok(fs.existsSync(new URL('../public/imagens/mucura-avatar.webp',import.meta.url)))
   for(const r of dadosReceitas) if(r.imagem) assert.ok(fs.existsSync(new URL(`../public/imagens/${r.imagem}.webp`,import.meta.url)))
+  for(const asset of ['mucura-rodape.png','equipe-ana.png','equipe-clayton.png','equipe-jonatas.png','equipe-lucas.png']) {
+    assert.ok(fs.existsSync(new URL(`../public/imagens/${asset}`,import.meta.url)))
+  }
 })
 test('normalizacao ignora acentos, caixa e espacos externos',()=>assert.equal(normalizar('  TACAC\u00c1  '),'tacaca'))
 test('busca encontra nome sem acento',()=>assert.deepEqual(filtrar('manicoba').map(r=>r.id),['manicoba']))
@@ -44,17 +47,27 @@ test('ordenacao nao modifica o catalogo original',()=>{
   filtrar('','todas',false,[],false,'nome')
   assert.deepEqual(dadosReceitas.map(r=>r.id),ids)
 })
-test('seis componentes distintos e App usam script setup',()=>{
+test('sete componentes distintos e App usam script setup',()=>{
   const dir=new URL('../src/components/',import.meta.url)
   const files=fs.readdirSync(dir).filter(f=>f.endsWith('.vue'))
-  assert.equal(files.length,6)
+  assert.equal(files.length,7)
   for(const f of files) assert.ok(!/(?<!:)src="\.\/imagens\//.test(fs.readFileSync(new URL(f,dir),'utf8')),'Imagens publicas devem usar binding, nao imports relativos implicitos')
   for(const f of files) assert.ok(fs.readFileSync(new URL(f,dir),'utf8').includes('<script setup>'))
   const app=fs.readFileSync(new URL('../src/App.vue',import.meta.url),'utf8')
   for(const f of files) assert.ok(app.includes(`<${f.replace('.vue','')}`))
 })
-test('nao existem dependencias de interface, CSS, estado ou roteamento',()=>{
+test('fase 2 usa Bootstrap local e continua sem roteamento ou estado externo',()=>{
   const pkg=JSON.parse(fs.readFileSync(new URL('../package.json',import.meta.url),'utf8'))
   assert.deepEqual(Object.keys(pkg.dependencies),['vue'])
   assert.deepEqual(Object.keys(pkg.devDependencies).sort(),['@vitejs/plugin-vue','vite'])
+  assert.ok(fs.existsSync(new URL('../src/vendor/bootstrap.min.css',import.meta.url)))
+  const main=fs.readFileSync(new URL('../src/main.js',import.meta.url),'utf8')
+  assert.ok(main.includes("./vendor/bootstrap.min.css"))
+  assert.ok(!main.includes('vue-router'))
+  const app=fs.readFileSync(new URL('../src/App.vue',import.meta.url),'utf8')
+  const detalhe=fs.readFileSync(new URL('../src/components/DetalheReceita.vue',import.meta.url),'utf8')
+  assert.ok(app.includes('class="toast show aviso'))
+  assert.ok(detalhe.includes('class="progress detalhe__progress"'))
+  assert.ok(detalhe.includes('class="progress-bar detalhe__progress-bar"'))
+  assert.ok(detalhe.includes('badge rounded-pill detalhe__info-badge'))
 })

@@ -22,7 +22,7 @@ function tituloSelo(receita) {
 </script>
 
 <template>
-  <article class="detalhe">
+  <article class="detalhe card border-0 shadow-sm">
     <template v-if="receita">
       <div class="detalhe__hero">
         <img
@@ -38,10 +38,19 @@ function tituloSelo(receita) {
           </span>
           <h2 id="titulo-receita">{{ receita.nome }}</h2>
           <p>{{ receita.descricao }}</p>
-          <div class="detalhe__infos">
-            <span>◷ {{ receita.tempo }}</span>
-            <span>♙ {{ receita.porcoes }} porções</span>
-            <span>♨ {{ receita.dificuldade }}</span>
+          <div class="detalhe__infos d-flex flex-wrap gap-2">
+            <span class="badge rounded-pill detalhe__info-badge">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5v5l3.5 2"/></svg>
+              {{ receita.tempo }}
+            </span>
+            <span class="badge rounded-pill detalhe__info-badge">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3"/><path d="M3.5 18c.5-3.3 2.3-5 5.5-5s5 1.7 5.5 5"/><path d="M15.5 7.2a2.6 2.6 0 0 1 0 4.9M16 13.3c2.5.4 3.9 2 4.3 4.7"/></svg>
+              {{ receita.porcoes }} porções
+            </span>
+            <span class="badge rounded-pill detalhe__info-badge">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 14.5h12l-1 6H7l-1-6Z"/><path d="M8 14.5V11a4 4 0 0 1 8 0v3.5M9 6.5h6"/></svg>
+              {{ receita.dificuldade }}
+            </span>
           </div>
         </div>
 
@@ -51,7 +60,9 @@ function tituloSelo(receita) {
           :aria-pressed="favorita"
           @click="emit('favoritar', receita)"
         >
-          <span aria-hidden="true">{{ favorita ? '♥' : '♡' }}</span>
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 20.5 4.1 13C-.5 8.7 2 3.5 6.4 3.5c2.4 0 4.1 1.5 5.6 3.2 1.5-1.7 3.2-3.2 5.6-3.2 4.4 0 6.9 5.2 2.3 9.5L12 20.5Z" />
+          </svg>
           {{ favorita ? 'Favorito' : 'Favoritar' }}
         </button>
       </div>
@@ -61,10 +72,10 @@ function tituloSelo(receita) {
         <p>{{ receita.alerta }}</p>
       </aside>
 
-      <div class="detalhe__corpo">
-        <section class="detalhe__ingredientes" aria-labelledby="titulo-ingredientes">
+      <div class="detalhe__corpo row g-3">
+        <section class="detalhe__ingredientes col-12 col-md-5" aria-labelledby="titulo-ingredientes">
           <div class="detalhe__titulo-secao">
-            <span aria-hidden="true">🌿</span>
+            <svg class="detalhe__icone-secao" viewBox="0 0 24 24" aria-hidden="true"><path d="M19.5 4.5C13 4.8 8.2 8.4 7.2 14.8c4.6.4 8.5-1.3 10.8-5.2-1.9 2.1-4.5 3.8-7.6 4.7"/><path d="M6.4 20c.2-4.1 1.7-7.8 4.5-10.6"/></svg>
             <h3 id="titulo-ingredientes">Ingredientes</h3>
           </div>
 
@@ -78,12 +89,25 @@ function tituloSelo(receita) {
           </ul>
 
           <div class="detalhe__progresso">
-            <progress
-              :value="marcados.length"
-              :max="receita.ingredientes.length"
+            <div
+              class="progress detalhe__progress"
+              role="progressbar"
               aria-label="Ingredientes separados"
-            ></progress>
-            <span>{{ marcados.length }} de {{ receita.ingredientes.length }} ingredientes</span>
+              :aria-valuenow="marcados.length"
+              aria-valuemin="0"
+              :aria-valuemax="receita.ingredientes.length"
+            >
+              <div
+                class="progress-bar detalhe__progress-bar"
+                :style="{ width: `${receita.ingredientes.length ? Math.round((marcados.length / receita.ingredientes.length) * 100) : 0}%` }"
+              ></div>
+            </div>
+            <div class="detalhe__progresso-info d-flex align-items-center justify-content-between gap-2">
+              <span>{{ marcados.length }} de {{ receita.ingredientes.length }} ingredientes</span>
+              <strong>
+                {{ receita.ingredientes.length ? Math.round((marcados.length / receita.ingredientes.length) * 100) : 0 }}%
+              </strong>
+            </div>
           </div>
 
           <button
@@ -96,9 +120,9 @@ function tituloSelo(receita) {
           </button>
         </section>
 
-        <section class="detalhe__preparo" aria-labelledby="titulo-preparo">
+        <section class="detalhe__preparo col-12 col-md-7" aria-labelledby="titulo-preparo">
           <div class="detalhe__titulo-secao">
-            <span aria-hidden="true">♨</span>
+            <svg class="detalhe__icone-secao" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 11h12v3.5a6 6 0 0 1-6 6 6 6 0 0 1-6-6V11Z"/><path d="M8 8h8M9 5.5c0-1 .6-1.8 1.5-2.3M13 6c0-1.3.8-2.4 2-3"/></svg>
             <h3 id="titulo-preparo">Modo de preparo</h3>
           </div>
 
@@ -119,7 +143,7 @@ function tituloSelo(receita) {
           alt="Mucuratouille, a mascote do projeto"
         />
         <div>
-          <strong>💡 Dica do Mucuratouille</strong>
+          <strong class="detalhe__dica-titulo"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18h6M10 21h4"/><path d="M8.4 14.6A6 6 0 1 1 15.6 14.6C14.8 15.2 14.4 16 14.3 17h-4.6c-.1-1-.5-1.8-1.3-2.4Z"/></svg>Dica do Mucuratouille</strong>
           <p>“{{ receita.frase }}”</p>
         </div>
       </div>
@@ -152,10 +176,10 @@ function tituloSelo(receita) {
           </div>
         </div>
 
-        <div class="detalhe__vitrine-corpo">
-          <section class="detalhe__painel">
+        <div class="detalhe__vitrine-corpo row g-3">
+          <section class="detalhe__painel col-12 col-md-5">
             <div class="detalhe__titulo-secao">
-              <span aria-hidden="true">🧭</span>
+              <svg class="detalhe__icone-secao" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="m14.8 9.2-1.7 3.9-3.9 1.7 1.7-3.9 3.9-1.7Z"/></svg>
               <h3>Como usar</h3>
             </div>
             <ul class="detalhe__lista detalhe__lista--guia">
@@ -166,9 +190,9 @@ function tituloSelo(receita) {
             </ul>
           </section>
 
-          <section class="detalhe__painel detalhe__painel--claro">
+          <section class="detalhe__painel detalhe__painel--claro col-12 col-md-7">
             <div class="detalhe__titulo-secao">
-              <span aria-hidden="true">🌴</span>
+              <svg class="detalhe__icone-secao" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21v-9M12 12c-1.1-3.8-4-6-8-6 0 4.3 2.9 7 8 6Zm0 0c1.1-4.2 4.2-6.6 8.3-6.3-.2 4.3-3.3 6.9-8.3 6.3ZM8.5 21h7"/></svg>
               <h3>Sobre o projeto</h3>
             </div>
             <p>
@@ -191,7 +215,7 @@ function tituloSelo(receita) {
             alt="Mucuratouille, a mascote do projeto"
           />
           <div>
-            <strong>💡 Dica do Mucuratouille</strong>
+            <strong class="detalhe__dica-titulo"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18h6M10 21h4"/><path d="M8.4 14.6A6 6 0 1 1 15.6 14.6C14.8 15.2 14.4 16 14.3 17h-4.6c-.1-1-.5-1.8-1.3-2.4Z"/></svg>Dica do Mucuratouille</strong>
             <p>“Começa por uma receita clássica e depois te aventura no resto. A fama de chef nasce assim.”</p>
           </div>
         </div>
@@ -205,7 +229,7 @@ function tituloSelo(receita) {
   overflow: hidden;
   background: #fffdf8;
   border: 1px solid #d8d0c3;
-  border-radius: 12px;
+  border-radius: 20px;
   box-shadow: 0 10px 26px rgba(75, 49, 24, 0.1);
 }
 
@@ -268,12 +292,31 @@ function tituloSelo(receita) {
 }
 
 .detalhe__infos {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 17px;
   margin-top: 17px;
   font-size: 11px;
   font-weight: 700;
+}
+
+.detalhe__info-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 7px 9px;
+  color: #fff;
+  background: rgba(25, 47, 34, 0.82);
+  font-size: 10px;
+  font-weight: 700;
+  backdrop-filter: blur(4px);
+}
+
+.detalhe__infos svg {
+  width: 14px;
+  height: 14px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
 .detalhe__favorito {
@@ -296,10 +339,17 @@ function tituloSelo(receita) {
   cursor: pointer;
 }
 
-.detalhe__favorito span {
-  color: #f12e3f;
-  font-size: 22px;
-  line-height: 1;
+.detalhe__favorito svg {
+  width: 21px;
+  height: 21px;
+  fill: none;
+  stroke: #f12e3f;
+  stroke-width: 1.7;
+  stroke-linejoin: round;
+}
+
+.detalhe__favorito[aria-pressed="true"] svg {
+  fill: #f12e3f;
 }
 
 .detalhe__seguranca {
@@ -324,10 +374,8 @@ function tituloSelo(receita) {
 
 .detalhe__corpo,
 .detalhe__vitrine-corpo {
-  display: grid;
-  grid-template-columns: 0.9fr 1.15fr;
-  gap: 18px;
-  padding: 18px 18px 10px;
+  margin: 0;
+  padding: 18px 10px 10px;
 }
 
 .detalhe__ingredientes,
@@ -359,8 +407,15 @@ function tituloSelo(receita) {
   margin-bottom: 9px;
 }
 
-.detalhe__titulo-secao > span {
-  font-size: 20px;
+.detalhe__icone-secao {
+  width: 21px;
+  height: 21px;
+  flex-shrink: 0;
+  fill: none;
+  stroke: #39714f;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
 .detalhe h3 {
@@ -418,16 +473,28 @@ function tituloSelo(receita) {
 
 .detalhe__progresso {
   display: grid;
-  gap: 5px;
-  margin-top: 7px;
+  gap: 7px;
+  margin-top: 9px;
   color: #5e625a;
   font-size: 9px;
 }
 
-.detalhe progress {
-  width: 100%;
-  height: 6px;
-  accent-color: var(--verde);
+.detalhe__progress {
+  height: 8px;
+  overflow: hidden;
+  background: #e2ddd2;
+  border-radius: 999px;
+}
+
+.detalhe__progress-bar {
+  background: linear-gradient(90deg, #2d6647, #5b8c66);
+  border-radius: 999px;
+  transition: width 0.2s ease;
+}
+
+.detalhe__progresso-info strong {
+  color: #2d6647;
+  font-size: 9px;
 }
 
 .detalhe__limpar {
@@ -497,6 +564,22 @@ function tituloSelo(receita) {
   font-size: 11px;
 }
 
+.detalhe__dica-titulo {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.detalhe__dica-titulo svg {
+  width: 16px;
+  height: 16px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
 .detalhe__dica p {
   margin: 5px 0 0;
   color: #4c4c45;
@@ -529,11 +612,6 @@ function tituloSelo(receita) {
 }
 
 @media (max-width: 1180px) {
-  .detalhe__corpo,
-  .detalhe__vitrine-corpo {
-    grid-template-columns: 1fr;
-  }
-
   .detalhe__hero-conteudo,
   .detalhe__vitrine-conteudo {
     width: 72%;
@@ -564,8 +642,9 @@ function tituloSelo(receita) {
     font-size: 0;
   }
 
-  .detalhe__favorito span {
-    font-size: 22px;
+  .detalhe__favorito svg {
+    width: 22px;
+    height: 22px;
   }
 
   .detalhe__dica {

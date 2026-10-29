@@ -4,7 +4,7 @@ defineProps({
   favoritosAtivos: Boolean,
 })
 
-const emit = defineEmits(['favoritos'])
+const emit = defineEmits(['favoritos', 'inicio'])
 </script>
 
 <template>
@@ -18,14 +18,23 @@ const emit = defineEmits(['favoritos'])
       fetchpriority="high"
     />
 
-    <div class="cabecalho__conteudo">
-      <img
-        class="cabecalho__logo"
-        :src="'./imagens/cabecalho-logo.webp'"
-        alt="Mucuratouille — Receitas boas. Conselhos duvidosos."
-        width="2172"
-        height="724"
-      />
+    <div class="cabecalho__sombra" aria-hidden="true"></div>
+
+    <div class="cabecalho__conteudo container-fluid px-3 px-lg-4">
+      <a
+        class="cabecalho__logo-link"
+        href="#inicio"
+        aria-label="Voltar ao início do Mucuratouille"
+        @click="emit('inicio')"
+      >
+        <img
+          class="cabecalho__logo"
+          :src="'./imagens/cabecalho-logo.png'"
+          alt="Mucuratouille — Receitas boas. Conselhos duvidosos."
+          width="2172"
+          height="724"
+        />
+      </a>
 
       <img
         class="cabecalho__mascote"
@@ -36,14 +45,18 @@ const emit = defineEmits(['favoritos'])
       />
 
       <a
-        class="cabecalho__favoritos"
+        class="cabecalho__favoritos d-flex flex-column align-items-center justify-content-center shadow"
         :class="{ 'cabecalho__favoritos--ativo': favoritosAtivos }"
         href="#receitas"
         :aria-label="`Ver favoritos: ${quantidadeFavoritos}`"
         @click="emit('favoritos')"
       >
-        <span aria-hidden="true">♥</span>
-        <strong>{{ quantidadeFavoritos }}</strong>
+        <div class="d-flex align-items-center gap-1">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 20.5 4.1 13C-.5 8.7 2 3.5 6.4 3.5c2.4 0 4.1 1.5 5.6 3.2 1.5-1.7 3.2-3.2 5.6-3.2 4.4 0 6.9 5.2 2.3 9.5L12 20.5Z" />
+          </svg>
+          <strong>{{ quantidadeFavoritos }}</strong>
+        </div>
         <small>favoritos</small>
       </a>
     </div>
@@ -53,8 +66,9 @@ const emit = defineEmits(['favoritos'])
 <style scoped>
 .cabecalho {
   position: relative;
+  z-index: 1;
   width: 100%;
-  height: clamp(136px, 11.63vw, 180px);
+  height: clamp(190px, 14vw, 232px);
   overflow: hidden;
   background: #18241b;
 }
@@ -65,7 +79,14 @@ const emit = defineEmits(['favoritos'])
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center 55%;
+  object-position: center 54%;
+}
+
+.cabecalho__sombra {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(7, 22, 14, 0.2), transparent 45%, rgba(7, 22, 14, 0.08));
+  pointer-events: none;
 }
 
 .cabecalho__conteudo {
@@ -74,21 +95,32 @@ const emit = defineEmits(['favoritos'])
   height: 100%;
 }
 
-.cabecalho__logo {
+.cabecalho__logo-link {
   position: absolute;
-  left: 0.9%;
-  top: 2%;
-  width: min(37%, 690px);
+  z-index: 3;
+  left: clamp(12px, 2vw, 36px);
+  top: clamp(10px, 1.1vw, 20px);
+  display: block;
+  width: min(25vw, 420px);
+  transition: transform 0.18s ease, filter 0.18s ease;
+}
+
+.cabecalho__logo-link:hover {
+  transform: translateY(-2px) scale(1.015);
+  filter: drop-shadow(0 8px 15px rgba(0, 0, 0, 0.18));
+}
+
+.cabecalho__logo {
+  width: 100%;
   height: auto;
-  max-height: 96%;
   object-fit: contain;
 }
 
 .cabecalho__mascote {
   position: absolute;
-  right: 6.8%;
-  top: 0;
-  width: min(44%, 560px);
+  right: clamp(86px, 7.5vw, 140px);
+  top: -1px;
+  width: min(39vw, 520px);
   height: 100%;
   object-fit: contain;
   object-position: right top;
@@ -96,77 +128,131 @@ const emit = defineEmits(['favoritos'])
 
 .cabecalho__favoritos {
   position: absolute;
-  top: 20px;
-  right: 1.6%;
-  display: grid;
-  width: clamp(58px, 5vw, 84px);
-  min-height: clamp(52px, 4.7vw, 74px);
-  place-items: center;
-  align-content: center;
-  padding: 6px 6px 8px;
+  z-index: 5;
+  top: clamp(14px, 1.4vw, 24px);
+  right: clamp(12px, 2vw, 34px);
+  width: 76px;
+  min-height: 68px;
+  padding: 8px 7px;
   color: #fff;
   text-decoration: none;
-  background: rgba(13, 31, 21, 0.96);
+  background: rgba(11, 38, 26, 0.94);
   border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 12px;
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.24);
+  border-radius: 15px;
+  backdrop-filter: blur(6px);
+  transition: transform 0.18s ease, background 0.18s ease;
+}
+
+.cabecalho__favoritos:hover {
+  color: #fff;
+  transform: translateY(-2px);
+  background: rgba(17, 59, 40, 0.98);
 }
 
 .cabecalho__favoritos--ativo {
-  background: rgba(20, 67, 44, 0.98);
+  background: rgba(24, 84, 55, 0.98);
 }
 
-.cabecalho__favoritos span {
-  color: #ff3447;
-  font-size: clamp(13px, 1.2vw, 20px);
-  line-height: 1;
+.cabecalho__favoritos svg {
+  width: 17px;
+  height: 17px;
+  fill: #ff4052;
 }
 
 .cabecalho__favoritos strong {
-  margin-top: 2px;
-  font-size: clamp(11px, 1vw, 17px);
+  font-size: 16px;
   line-height: 1;
 }
 
 .cabecalho__favoritos small {
-  margin-top: 2px;
-  font-size: clamp(7px, 0.68vw, 10px);
+  margin-top: 3px;
+  font-size: 9px;
 }
 
-@media (max-width: 1024px) {
-  .cabecalho__logo {
-    width: 43%;
+@media (max-width: 991.98px) {
+  .cabecalho__logo-link {
+    width: min(34vw, 390px);
   }
 
   .cabecalho__mascote {
-    right: 8.4%;
-    width: 43%;
+    right: 70px;
+    width: min(45vw, 470px);
   }
 }
 
-@media (max-width: 640px) {
+@media (max-width: 767.98px) {
   .cabecalho {
-    height: 128px;
+    height: 188px;
   }
 
   .cabecalho__fundo {
-    object-position: center 58%;
+    object-position: 50% 54%;
   }
 
-  .cabecalho__logo {
-    width: 58%;
-    top: 4px;
-    left: 4px;
+  .cabecalho__logo-link {
+    top: 12px;
+    left: 12px;
+    width: min(39vw, 280px);
   }
 
   .cabecalho__mascote {
-    right: 10px;
-    width: 44%;
+    right: 62px;
+    top: 4px;
+    width: min(43vw, 320px);
+    height: 92%;
   }
 
   .cabecalho__favoritos {
+    width: 62px;
+    min-height: 58px;
+    right: 10px;
     top: 12px;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .cabecalho {
+    height: 174px;
+  }
+
+  .cabecalho__fundo {
+    object-position: 49% 55%;
+  }
+
+  .cabecalho__logo-link {
+    top: 10px;
+    left: 10px;
+    width: min(47vw, 205px);
+  }
+
+  .cabecalho__mascote {
+    right: 48px;
+    top: 6px;
+    width: 40vw;
+    height: 88%;
+  }
+
+  .cabecalho__favoritos {
+    width: 52px;
+    min-height: 50px;
     right: 8px;
+    top: 10px;
+    padding: 5px 4px;
+    border-radius: 12px;
+  }
+
+  .cabecalho__favoritos svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .cabecalho__favoritos strong {
+    font-size: 12px;
+  }
+
+  .cabecalho__favoritos small {
+    margin-top: 1px;
+    font-size: 7px;
   }
 }
 </style>

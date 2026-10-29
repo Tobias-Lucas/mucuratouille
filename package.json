@@ -1,9 +1,9 @@
 {
   "name": "mucuratouille",
-  "version": "1.0.0",
+  "version": "2.3.0",
   "private": true,
   "type": "module",
-  "description": "Receitas paraenses, uma mucura e uma pitada de caos. Projeto Vue One Page.",
+  "description": "Mucuratouille - receitas paraenses em Vue 3, fase 2 com Bootstrap 5.3.6, progress, toast, badges e evolução visual responsiva.",
   "scripts": {
     "dev": "vite --host 127.0.0.1",
     "build": "vite build",

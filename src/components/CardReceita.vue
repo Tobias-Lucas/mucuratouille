@@ -10,13 +10,13 @@ const emit = defineEmits(['abrir', 'favoritar'])
 
 <template>
   <article
-    class="card-receita"
+    class="card card-receita h-100 border-0 shadow-sm rounded-4 overflow-hidden"
     :class="{ 'card-receita--selecionada': selecionada }"
     :data-receita="receita.id"
   >
     <div class="card-receita__visual">
       <a
-        href="#detalhes"
+        href="#receitas"
         class="card-receita__imagem-link"
         tabindex="-1"
         aria-hidden="true"
@@ -32,35 +32,56 @@ const emit = defineEmits(['abrir', 'favoritar'])
       </a>
 
       <span
-        class="card-receita__selo"
+        class="badge rounded-pill card-receita__selo"
         :class="`card-receita__selo--${receita.cirio ? 'cirio' : receita.categoria}`"
       >
         {{ receita.cirio ? 'Especial Círio' : receita.categoria === 'doces' ? 'Doces e sobremesas' : receita.categoria === 'casa' ? 'Comida de casa' : 'Clássicos da terrinha' }}
       </span>
 
       <button
-        class="card-receita__coracao"
+        class="btn btn-light rounded-circle shadow-sm card-receita__coracao"
         :class="{ 'card-receita__coracao--ativo': favorita }"
         type="button"
         :aria-label="`${favorita ? 'Remover' : 'Adicionar'} ${receita.nome} ${favorita ? 'dos' : 'aos'} favoritos`"
         :aria-pressed="favorita"
         @click="emit('favoritar', receita)"
       >
-        <span aria-hidden="true">{{ favorita ? '♥' : '♡' }}</span>
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M12 20.5 4.1 13C-.5 8.7 2 3.5 6.4 3.5c2.4 0 4.1 1.5 5.6 3.2 1.5-1.7 3.2-3.2 5.6-3.2 4.4 0 6.9 5.2 2.3 9.5L12 20.5Z" />
+        </svg>
       </button>
     </div>
 
-    <div class="card-receita__corpo">
-      <h2>
-        <a href="#detalhes" @click="emit('abrir', receita)">
+    <div class="card-body d-flex flex-column p-3">
+      <h2 class="card-title mb-2">
+        <a href="#receitas" @click="emit('abrir', receita)">
           {{ receita.nome }}
         </a>
       </h2>
 
-      <div class="card-receita__meta">
-        <span>◷ {{ receita.tempo }}</span>
-        <span>♙ {{ receita.porcoes }} porções</span>
-        <span>♨ {{ receita.dificuldade }}</span>
+      <div class="card-receita__meta d-flex flex-wrap gap-2 mt-auto">
+        <span class="card-receita__meta-item">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="12" cy="12" r="8.5" />
+            <path d="M12 7.5v5l3.5 2" />
+          </svg>
+          {{ receita.tempo }}
+        </span>
+        <span class="card-receita__meta-item">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="9" cy="8" r="3" />
+            <path d="M3.5 18c.5-3.3 2.3-5 5.5-5s5 1.7 5.5 5" />
+            <path d="M15.5 7.2a2.6 2.6 0 0 1 0 4.9M16 13.3c2.5.4 3.9 2 4.3 4.7" />
+          </svg>
+          {{ receita.porcoes }} porções
+        </span>
+        <span class="card-receita__meta-item">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M6 14.5h12l-1 6H7l-1-6Z" />
+            <path d="M8 14.5V11a4 4 0 0 1 8 0v3.5M9 6.5h6" />
+          </svg>
+          {{ receita.dificuldade }}
+        </span>
       </div>
     </div>
   </article>
@@ -69,24 +90,24 @@ const emit = defineEmits(['abrir', 'favoritar'])
 <style scoped>
 .card-receita {
   min-width: 0;
-  overflow: hidden;
-  background: #fffdf9;
-  border: 1px solid #ded5c7;
-  border-radius: 10px;
-  box-shadow: 0 5px 14px rgba(70, 46, 23, 0.07);
-  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+  background: #fff;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, outline-color 0.2s ease;
 }
 
-.card-receita:hover,
+.card-receita:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 25px rgba(65, 43, 22, 0.14) !important;
+}
+
 .card-receita--selecionada {
-  transform: translateY(-2px);
-  border-color: #bd4a0a;
-  box-shadow: 0 8px 20px rgba(91, 51, 20, 0.13);
+  outline: 2px solid #c4510d;
+  outline-offset: -2px;
+  box-shadow: 0 12px 28px rgba(177, 72, 11, 0.18) !important;
 }
 
 .card-receita__visual {
   position: relative;
-  height: 136px;
+  height: 154px;
   overflow: hidden;
   background: #e5e7d9;
 }
@@ -100,27 +121,26 @@ const emit = defineEmits(['abrir', 'favoritar'])
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.25s ease;
+  transition: transform 0.28s ease;
 }
 
-.card-receita:hover img {
-  transform: scale(1.035);
+.card-receita:hover .card-receita__visual img {
+  transform: scale(1.045);
 }
 
 .card-receita__selo {
   position: absolute;
-  top: 10px;
-  left: 10px;
+  top: 11px;
+  left: 11px;
   max-width: calc(100% - 62px);
   overflow: hidden;
-  padding: 6px 10px;
+  padding: 7px 10px;
   color: #fff;
-  border-radius: 9px;
-  font-size: 10px;
+  background: #256341;
+  font-size: 9px;
   font-weight: 800;
   text-overflow: ellipsis;
   white-space: nowrap;
-  background: #256341;
 }
 
 .card-receita__selo--cirio,
@@ -134,57 +154,130 @@ const emit = defineEmits(['abrir', 'favoritar'])
 
 .card-receita__coracao {
   position: absolute;
-  top: 8px;
-  right: 8px;
+  top: 9px;
+  right: 9px;
   display: grid;
-  width: 38px;
-  height: 38px;
+  width: 39px;
+  height: 39px;
   place-items: center;
-  color: #262b24;
-  background: rgba(255, 255, 255, 0.95);
+  padding: 0;
+  color: #365142;
   border: 0;
-  border-radius: 50%;
-  box-shadow: 0 2px 7px rgba(0, 0, 0, 0.14);
-  font-size: 22px;
-  cursor: pointer;
+}
+
+.card-receita__coracao svg {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linejoin: round;
 }
 
 .card-receita__coracao--ativo {
   color: #ef2637;
 }
 
-.card-receita__corpo {
-  padding: 9px 12px 11px;
+.card-receita__coracao--ativo svg {
+  fill: currentColor;
+  stroke: currentColor;
 }
 
 .card-receita h2 {
-  margin: 0 0 9px;
-  font: 800 16px / 1.15 Arial, Helvetica, sans-serif;
+  font: 800 17px / 1.2 Arial, Helvetica, sans-serif;
 }
 
 .card-receita h2 a {
-  color: #171915;
+  color: #1f211c;
   text-decoration: none;
 }
 
+.card-receita h2 a:hover {
+  color: #9e3d08;
+}
+
 .card-receita__meta {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 7px;
-  color: #64665f;
+  color: #64675f;
   font-size: 9px;
 }
 
-.card-receita__meta span {
-  min-width: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
+.card-receita__meta-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 6px;
+  background: #f7f4ee;
+  border-radius: 999px;
   white-space: nowrap;
 }
 
-@media (max-width: 560px) {
+.card-receita__meta-item svg {
+  width: 12px;
+  height: 12px;
+  fill: none;
+  stroke: #3b5b48;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+@media (max-width: 575.98px) {
+  .card-receita {
+    border-radius: 16px !important;
+  }
+
   .card-receita__visual {
-    height: 152px;
+    height: 116px;
+  }
+
+  .card-receita__selo {
+    top: 7px;
+    left: 7px;
+    max-width: calc(100% - 48px);
+    padding: 5px 7px;
+    font-size: 7px;
+  }
+
+  .card-receita__coracao {
+    top: 6px;
+    right: 6px;
+    width: 31px;
+    height: 31px;
+  }
+
+  .card-receita__coracao svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .card-receita .card-body {
+    padding: 9px !important;
+  }
+
+  .card-receita h2 {
+    display: -webkit-box;
+    min-height: 31px;
+    margin-bottom: 7px !important;
+    overflow: hidden;
+    font-size: 13px;
+    line-height: 1.2;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+
+  .card-receita__meta {
+    gap: 4px !important;
+    font-size: 7px;
+  }
+
+  .card-receita__meta-item {
+    gap: 3px;
+    padding: 3px 5px;
+  }
+
+  .card-receita__meta-item svg {
+    width: 9px;
+    height: 9px;
   }
 }
 </style>

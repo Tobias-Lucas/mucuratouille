@@ -8,7 +8,7 @@ O trabalho foi desenvolvido pela **turma do segundo semestre de Análise e Desen
 
 ## Objetivo acadêmico
 
-O projeto foi construído para aplicar somente os fundamentos de Vue trabalhados na disciplina:
+Na primeira etapa, o projeto foi construído para aplicar os fundamentos de Vue trabalhados na disciplina:
 
 - componentes `.vue`;
 - `<script setup>`;
@@ -19,7 +19,9 @@ O projeto foi construído para aplicar somente os fundamentos de Vue trabalhados
 - CSS próprio;
 - reutilização de componentes.
 
-O projeto **não utiliza** Vue Router, Bootstrap, Tailwind, bibliotecas externas de componentes ou bibliotecas de gerenciamento de estado.
+Na segunda etapa, o projeto foi evoluído com **Bootstrap 5.3.6**, mantendo Vue.js, componentização e reatividade. O Bootstrap foi incluído localmente em `src/vendor/bootstrap.min.css`.
+
+O projeto continua **sem Vue Router**, sem biblioteca externa de gerenciamento de estado e sem biblioteca pronta de componentes Vue.
 
 ## Proposta
 
@@ -38,6 +40,32 @@ A aplicação apresenta receitas típicas do Pará com uma identidade regional i
 - botão para selecionar uma receita aleatória;
 - interface responsiva para desktop, tablet e celular.
 
+## Evolução — 2ª etapa com Bootstrap
+
+A segunda fase mantém todas as funcionalidades da primeira avaliação e utiliza o Bootstrap para simplificar layout, responsividade e estilização de elementos da interface.
+
+Principais melhorias:
+
+- grid responsivo com `container-fluid`, `row`, `col-12`, `col-sm-*`, `col-lg-*` e `col-xl-*`;
+- espaçamentos com `g-3`, `g-4`, `gap-*`, `px-*` e `pb-*`;
+- cards de receitas modernizados com `card`, `card-body`, `card-title`, `rounded-4`, `h-100` e `shadow-sm`;
+- busca com `input-group`, `input-group-text` e `form-control`, agora em uma barra flutuante de largura controlada;
+- botão “Surpreenda-me!” destacado com `btn`, `btn-warning`, `rounded-pill` e `shadow`;
+- filtros em formato pill, com SVGs próprios e estados ativos mais evidentes;
+- ícones da interface substituídos por SVGs vetoriais consistentes;
+- organização com `d-flex`, `align-items-center`, `justify-content-between` e `flex-wrap`;
+- modal reutilizável com `modal`, `modal-dialog`, `modal-content`, `modal-header`, `modal-body`, cards brancos e identidade amazônica;
+- equipe representada por quatro personagens Mucura distintos, associados a nome e matrícula;
+- responsividade aprimorada em desktop, tablet e dispositivos móveis;
+- cabeçalho com logo transparente separada, menor e clicável para restaurar o estado inicial;
+- rodapé com recorte ondulado real, personagem próprio e Sobre o projeto, Equipe e Fontes das receitas exibidos dentro da mesma página;
+- novas imagens locais para Vatapá paraense e Chibé.
+- barra reativa de ingredientes com `progress` e `progress-bar`, atualizada conforme os checkboxes são marcados;
+- notificações de favoritos apresentadas com o componente visual `toast`, controlado pelo Vue;
+- tempo, porções e dificuldade exibidos como `badge` com `rounded-pill` no detalhe das receitas.
+
+O CSS próprio continua sendo utilizado para preservar a identidade regional do Mucuratouille, como cores, ondulações, sobreposições, mascote e elementos decorativos.
+
 ## Componentes
 
 A interface foi dividida em componentes com responsabilidades específicas:
@@ -50,6 +78,7 @@ src/
 │   ├── CardReceita.vue
 │   ├── DetalheReceita.vue
 │   ├── FiltroCategorias.vue
+│   ├── ModalInformacoes.vue
 │   └── Rodape.vue
 ├── data/
 │   ├── filtros.js
@@ -59,7 +88,7 @@ src/
 └── style.css
 ```
 
-O `CardReceita.vue` é reutilizado para exibir diferentes receitas a partir de props. O `DetalheReceita.vue` recebe a receita selecionada e utiliza `v-for` para mostrar ingredientes e etapas do preparo.
+O `CardReceita.vue` é reutilizado para exibir diferentes receitas a partir de props. O `DetalheReceita.vue` recebe a receita selecionada e utiliza `v-for` para mostrar ingredientes e etapas do preparo. O `ModalInformacoes.vue` é reutilizado para exibir Sobre o projeto, Equipe e Fontes das receitas sem sair da página.
 
 ## Como executar
 
@@ -74,7 +103,9 @@ Depois, abra no navegador o endereço informado pelo Vite.
 
 ## Uso de Inteligência Artificial
 
-Como proposto no enunciado da tarefa, a inteligência artificial foi utilizada como ferramenta de apoio nas etapas de concepção, identidade visual, componentização, conteúdo, implementação de interações e refinamento da interface. Todo o desenvolvimento foi limitado aos conteúdos estudados na disciplina.
+Como proposto no enunciado da tarefa, a inteligência artificial foi utilizada como ferramenta de apoio nas etapas de concepção, identidade visual, componentização, conteúdo, implementação de interações e refinamento da interface.
+
+Os prompts abaixo registram principalmente a **1ª etapa**, quando frameworks CSS ainda não eram permitidos. Na **2ª etapa**, o Bootstrap passou a ser integrado conforme o novo enunciado da atividade.
 
 ### Prompt 1 — Definição da proposta
 
@@ -158,11 +189,22 @@ As receitas foram adaptadas para fins acadêmicos e de demonstração da interfa
 
 ## Equipe
 
-**Ana Paula Silva Amorim**
-**Clayton China Simões**
-**Jônatas Tiago Albuquerque de Moraes**
-**Lucas Jatene Tobias**
+| Integrante | Matrícula |
+| --- | --- |
+| Ana Paula Silva Amorim | 04218364 |
+| Clayton China Simões | 04153200 |
+| Jônatas Tiago Albuquerque de Moraes | 04214380 |
+| Lucas Jatene Tobias | 04217989 |
 
 
 **Mucuratouille — Receitas boas. Conselhos duvidosos.**  
 Belém do Pará · 2026
+
+## Ajustes mobile da versão 2.2
+
+- Grade de receitas com duas colunas em celulares.
+- Categorias recolhíveis no mobile, controladas com `ref()`, `@click` e `v-show`.
+- Ao selecionar uma receita no celular, a lista é substituída pelo componente de detalhes na mesma área da página.
+- Botão **Voltar às receitas** retorna ao grid sem navegação entre páginas.
+- Personagens do modal **Equipe** foram reduzidos para melhorar a proporção dos cards.
+

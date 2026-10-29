@@ -1,39 +1,50 @@
 <script setup>
-defineProps({
-  receitas: Array,
-})
+const emit = defineEmits(['abrir-info'])
 </script>
 
 <template>
   <footer class="rodape">
-    <div class="rodape__alvos" aria-hidden="true">
-      <span id="sobre-o-projeto"></span>
-      <span id="equipe"></span>
-      <span id="fontes"></span>
-    </div>
+    <img
+      class="rodape__personagem"
+      :src="'./imagens/mucura-rodape.png'"
+      alt="Mucuratouille de braços cruzados"
+    />
 
-    <div class="rodape__faixa">
-      <div class="rodape__conteudo container">
-        <div class="rodape__marca">
-          <div class="rodape__logo" aria-hidden="true">👨‍🍳</div>
-          <div>
+    <div class="rodape__superficie">
+      <div class="container d-flex flex-column flex-md-row align-items-center justify-content-between gap-3 rodape__conteudo">
+        <button
+          class="rodape__marca btn p-0 border-0 text-start"
+          type="button"
+          @click="emit('abrir-info', 'sobre')"
+        >
+          <span>
             <strong class="rodape__titulo">Mucuratouille</strong>
             <small class="rodape__subtitulo">Receitas boas. Conselhos duvidosos.</small>
-          </div>
-        </div>
+          </span>
+        </button>
 
-        <nav class="rodape__nav" aria-label="Navegação do rodapé">
-          <a href="#sobre-o-projeto">Sobre o projeto</a>
+        <nav
+          class="rodape__nav d-flex align-items-center justify-content-center flex-wrap gap-2 gap-lg-3"
+          aria-label="Navegação do rodapé"
+        >
+          <button type="button" class="btn btn-link p-0 rodape__link" @click="emit('abrir-info', 'sobre')">
+            Sobre o projeto
+          </button>
           <span aria-hidden="true">|</span>
-          <a href="#equipe">Equipe</a>
+          <button type="button" class="btn btn-link p-0 rodape__link" @click="emit('abrir-info', 'equipe')">
+            Equipe
+          </button>
           <span aria-hidden="true">|</span>
-          <a href="#fontes">Fontes das receitas</a>
+          <button type="button" class="btn btn-link p-0 rodape__link" @click="emit('abrir-info', 'fontes')">
+            Fontes das receitas
+          </button>
         </nav>
 
-        <div class="rodape__credito">
-          <span class="rodape__icone" aria-hidden="true">🌴</span>
-          <span class="rodape__icone" aria-hidden="true">🍴</span>
-          <span>Feito com <b>❤</b> em Belém do Pará</span>
+        <div class="rodape__credito d-flex align-items-center justify-content-center justify-content-md-end gap-2">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 21v-9M12 12c-1.1-3.8-4-6-8-6 0 4.3 2.9 7 8 6Zm0 0c1.1-4.2 4.2-6.6 8.3-6.3-.2 4.3-3.3 6.9-8.3 6.3ZM8.5 21h7" />
+          </svg>
+          <span class="rodape__frase">Feito com <svg class="rodape__coracao" viewBox="0 0 24 24" aria-label="amor"><path d="M12 20.5 4.1 13C-.5 8.7 2 3.5 6.4 3.5c2.4 0 4.1 1.5 5.6 3.2 1.5-1.7 3.2-3.2 5.6-3.2 4.4 0 6.9 5.2 2.3 9.5L12 20.5Z"/></svg> em Belém do Pará</span>
         </div>
       </div>
     </div>
@@ -42,140 +53,250 @@ defineProps({
 
 <style scoped>
 .rodape {
-  margin-top: 24px;
+  position: relative;
+  z-index: 7;
+  min-height: 164px;
+  margin-top: -52px;
+  overflow: visible;
   color: #f6f0dd;
-  background: #0e1f15;
 }
 
-.rodape__alvos {
+.rodape__superficie {
   position: absolute;
-  width: 0;
-  height: 0;
-  overflow: hidden;
-}
-
-.rodape__faixa {
+  inset: 0;
+  min-height: 164px;
+  padding-top: 56px;
   background-image:
-    linear-gradient(rgba(8, 18, 12, 0.16), rgba(8, 18, 12, 0.16)),
+    linear-gradient(rgba(7, 24, 15, 0.32), rgba(7, 24, 15, 0.3)),
     url('./imagens/rodape-fundo.webp');
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 180' preserveAspectRatio='none'%3E%3Cpath fill='white' d='M0 62 C120 35 225 38 350 52 C500 70 625 75 775 48 C930 20 1085 15 1228 31 C1320 41 1380 52 1440 44 L1440 180 L0 180 Z'/%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 180' preserveAspectRatio='none'%3E%3Cpath fill='white' d='M0 62 C120 35 225 38 350 52 C500 70 625 75 775 48 C930 20 1085 15 1228 31 C1320 41 1380 52 1440 44 L1440 180 L0 180 Z'/%3E%3C/svg%3E");
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+
+.rodape__personagem {
+  position: absolute;
+  z-index: 4;
+  left: max(18px, calc((100vw - 1320px) / 2));
+  bottom: 9px;
+  width: 98px;
+  height: 116px;
+  object-fit: contain;
+  object-position: center bottom;
+  filter: drop-shadow(0 7px 8px rgba(0, 0, 0, 0.26));
+  pointer-events: none;
 }
 
 .rodape__conteudo {
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-  align-items: center;
-  gap: 20px;
-  min-height: 72px;
-  padding: 10px 16px;
+  position: relative;
+  z-index: 3;
+  min-height: 102px;
+  padding-top: 18px;
+  padding-bottom: 14px;
 }
 
 .rodape__marca {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  min-width: 0;
+  min-width: 215px;
+  margin-left: 105px;
+  color: inherit;
+  background: transparent;
 }
 
-.rodape__logo {
-  display: grid;
-  flex-shrink: 0;
-  width: 32px;
-  height: 32px;
-  place-items: center;
-  font-size: 21px;
-  background: rgba(234, 220, 177, 0.12);
-  border: 1px solid rgba(234, 220, 177, 0.28);
-  border-radius: 999px;
+.rodape__titulo,
+.rodape__subtitulo {
+  display: block;
 }
 
 .rodape__titulo {
-  display: block;
   color: #f3d07a;
-  font-size: 22px;
-  line-height: 1;
+  font: 800 21px / 1 Georgia, 'Times New Roman', serif;
 }
 
 .rodape__subtitulo {
-  display: block;
-  margin-top: 2px;
+  margin-top: 4px;
   color: #f5e9c7;
-  font-size: 10px;
-  line-height: 1.2;
-  opacity: 0.94;
+  font-size: 9px;
 }
 
 .rodape__nav {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  min-width: 0;
+  color: rgba(246, 240, 221, 0.55);
+}
+
+.rodape__link {
   color: #f8f1dc;
-  font-size: 12px;
-  font-weight: 600;
-}
-
-.rodape__nav a {
-  color: inherit;
+  font-size: 11px;
+  font-weight: 700;
   text-decoration: none;
-  white-space: nowrap;
 }
 
-.rodape__nav a:hover {
+.rodape__link:hover {
+  color: #f3d07a;
   text-decoration: underline;
 }
 
 .rodape__credito {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 8px;
   color: #f5e9c7;
-  font-size: 12px;
+  font-size: 10px;
   font-weight: 600;
   white-space: nowrap;
 }
 
-.rodape__credito b {
-  color: #ff4a59;
+.rodape__credito svg {
+  width: 19px;
+  height: 19px;
+  fill: none;
+  stroke: #f3d07a;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
-.rodape__icone {
-  font-size: 14px;
+.rodape__frase {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
 }
 
-@media (max-width: 960px) {
+.rodape__coracao {
+  width: 13px !important;
+  height: 13px !important;
+  fill: #ff4a59 !important;
+  stroke: none !important;
+}
+
+@media (max-width: 991.98px) {
+  .rodape__marca {
+    min-width: 180px;
+    margin-left: 88px;
+  }
+
+  .rodape__personagem {
+    width: 82px;
+    height: 100px;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .rodape {
+    min-height: 208px;
+    margin-top: -28px;
+  }
+
+  .rodape__superficie {
+    min-height: 208px;
+    padding-top: 46px;
+    background-position: 58% center;
+    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 420 220' preserveAspectRatio='none'%3E%3Cpath fill='white' d='M0 48 C72 28 122 42 181 51 C236 60 273 20 337 27 C373 31 399 42 420 36 L420 220 L0 220 Z'/%3E%3C/svg%3E");
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 420 220' preserveAspectRatio='none'%3E%3Cpath fill='white' d='M0 48 C72 28 122 42 181 51 C236 60 273 20 337 27 C373 31 399 42 420 36 L420 220 L0 220 Z'/%3E%3C/svg%3E");
+  }
+
   .rodape__conteudo {
-    grid-template-columns: 1fr;
-    justify-items: center;
-    gap: 8px;
-    padding: 12px 14px;
-    text-align: center;
+    display: grid !important;
+    grid-template-columns: 74px 1fr;
+    grid-template-areas:
+      "personagem marca"
+      "nav nav"
+      "credito credito";
+    align-items: center !important;
+    justify-items: stretch;
+    gap: 7px 10px !important;
+    min-height: 154px;
+    padding: 14px 14px 10px;
+    text-align: left;
   }
 
-  .rodape__nav {
-    flex-wrap: wrap;
+  .rodape__marca {
+    grid-area: marca;
+    min-width: 0;
+    margin-left: 0;
+    padding: 0 !important;
+    text-align: left !important;
   }
 
-  .rodape__credito {
-    justify-content: center;
-    white-space: normal;
+  .rodape__personagem {
+    left: max(14px, calc((100vw - 540px) / 2));
+    bottom: 94px;
+    width: 70px;
+    height: 82px;
   }
-}
 
-@media (max-width: 560px) {
   .rodape__titulo {
     font-size: 18px;
   }
 
-  .rodape__subtitulo,
-  .rodape__nav,
-  .rodape__credito {
+  .rodape__subtitulo {
+    margin-top: 3px;
+    font-size: 8px;
+  }
+
+  .rodape__nav {
+    grid-area: nav;
+    width: 100%;
+    justify-content: center !important;
+    gap: 7px !important;
+    padding-top: 3px;
+    font-size: 0;
+  }
+
+  .rodape__link {
     font-size: 10px;
+  }
+
+  .rodape__nav > span {
+    font-size: 10px;
+  }
+
+  .rodape__credito {
+    grid-area: credito;
+    justify-content: center !important;
+    width: 100%;
+    white-space: normal;
+    font-size: 9px;
+    text-align: center;
+  }
+
+  .rodape__credito > svg {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .rodape {
+    min-height: 196px;
+    margin-top: -22px;
+  }
+
+  .rodape__superficie {
+    min-height: 196px;
+    padding-top: 42px;
+  }
+
+  .rodape__conteudo {
+    grid-template-columns: 64px 1fr;
+    min-height: 146px;
+    padding-right: 10px;
+    padding-left: 10px;
+  }
+
+  .rodape__personagem {
+    left: 12px;
+    bottom: 90px;
+    width: 60px;
+    height: 72px;
+  }
+
+  .rodape__titulo {
+    font-size: 17px;
+  }
+
+  .rodape__link {
+    font-size: 9px;
   }
 }
 </style>
