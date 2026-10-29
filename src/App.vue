@@ -207,7 +207,7 @@ function fecharInformacoes() {
 
           <div v-else class="catalogo__vazio card border-0 shadow-sm">
             <img
-              :src="'./imagens/mucura-avatar.webp'"
+              :src="'/imagens/mucura-avatar.webp'"
               width="82"
               height="82"
               alt="Mucura chef procurando uma receita"
@@ -254,7 +254,7 @@ function fecharInformacoes() {
 
             <div v-else class="catalogo__vazio card border-0 shadow-sm">
               <img
-                :src="'./imagens/mucura-avatar.webp'"
+                :src="'/imagens/mucura-avatar.webp'"
                 width="82"
                 height="82"
                 alt="Mucura chef procurando uma receita"

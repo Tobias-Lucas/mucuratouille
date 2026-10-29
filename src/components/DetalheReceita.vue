@@ -26,7 +26,7 @@ function tituloSelo(receita) {
     <template v-if="receita">
       <div class="detalhe__hero">
         <img
-          :src="receita.imagemUrl || `./imagens/${receita.imagem}.webp`"
+          :src="receita.imagemUrl || `/imagens/${receita.imagem}.webp`"
           :alt="`Imagem ilustrativa de ${receita.nome}`"
         />
 
@@ -137,7 +137,7 @@ function tituloSelo(receita) {
 
       <div class="detalhe__dica">
         <img
-          :src="'./imagens/mucura-dica.webp'"
+          :src="'/imagens/mucura-dica.webp'"
           width="140"
           height="140"
           alt="Mucuratouille, a mascote do projeto"
@@ -162,7 +162,7 @@ function tituloSelo(receita) {
       <section class="detalhe__vitrine" aria-labelledby="titulo-vitrine">
         <div class="detalhe__vitrine-hero">
           <img
-            :src="'./imagens/mucura-chef.webp'"
+            :src="'/imagens/mucura-chef.webp'"
             alt="Mascote Mucuratouille com uma panela de comida paraense em Belém do Pará"
           />
           <div class="detalhe__hero-sombra" aria-hidden="true"></div>
@@ -209,7 +209,7 @@ function tituloSelo(receita) {
 
         <div class="detalhe__dica detalhe__dica--aberta">
           <img
-            :src="'./imagens/mucura-dica.webp'"
+            :src="'/imagens/mucura-dica.webp'"
             width="140"
             height="140"
             alt="Mucuratouille, a mascote do projeto"

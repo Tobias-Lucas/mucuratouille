@@ -11,7 +11,7 @@ const emit = defineEmits(['favoritos', 'inicio'])
   <header id="inicio" class="cabecalho">
     <img
       class="cabecalho__fundo"
-      :src="'./imagens/cabecalho-fundo.webp'"
+      :src="'/imagens/cabecalho-fundo.webp'"
       alt="Paisagem de Belém do Pará ao pôr do sol"
       width="1800"
       height="360"
@@ -29,7 +29,7 @@ const emit = defineEmits(['favoritos', 'inicio'])
       >
         <img
           class="cabecalho__logo"
-          :src="'./imagens/cabecalho-logo.png'"
+          :src="'/imagens/cabecalho-logo.png'"
           alt="Mucuratouille — Receitas boas. Conselhos duvidosos."
           width="2172"
           height="724"
@@ -38,7 +38,7 @@ const emit = defineEmits(['favoritos', 'inicio'])
 
       <img
         class="cabecalho__mascote"
-        :src="'./imagens/cabecalho-mascote.webp'"
+        :src="'/imagens/cabecalho-mascote.webp'"
         alt="Mascote Mucuratouille com balão de fala convidando o usuário a cozinhar"
         width="1448"
         height="1086"

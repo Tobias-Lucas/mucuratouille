@@ -6,7 +6,7 @@ const emit = defineEmits(['abrir-info'])
   <footer class="rodape">
     <img
       class="rodape__personagem"
-      :src="'./imagens/mucura-rodape.png'"
+      :src="'/imagens/mucura-rodape.png'"
       alt="Mucuratouille de braços cruzados"
     />
 
@@ -68,7 +68,7 @@ const emit = defineEmits(['abrir-info'])
   padding-top: 56px;
   background-image:
     linear-gradient(rgba(7, 24, 15, 0.32), rgba(7, 24, 15, 0.3)),
-    url('./imagens/rodape-fundo.webp');
+    url('/imagens/rodape-fundo.webp');
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;

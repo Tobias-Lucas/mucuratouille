@@ -60,7 +60,7 @@ const integrantes = [
                   <div class="card-body d-flex align-items-center gap-3 gap-md-4 p-3 p-md-4">
                     <div class="modal-mucura__personagem">
                       <img
-                        :src="`./imagens/${integrante.imagem}.png`"
+                        :src="`/imagens/${integrante.imagem}.png`"
                         :alt="`Personagem Mucura representando ${integrante.nome}`"
                       />
                     </div>
@@ -130,7 +130,7 @@ const integrantes = [
   color: #fff;
   background-image:
     linear-gradient(90deg, rgba(8, 28, 18, 0.88), rgba(8, 28, 18, 0.58)),
-    url('./imagens/rodape-fundo.webp');
+    url('/imagens/rodape-fundo.webp');
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;

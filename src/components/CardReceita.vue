@@ -23,7 +23,7 @@ const emit = defineEmits(['abrir', 'favoritar'])
         @click="emit('abrir', receita)"
       >
         <img
-          :src="receita.imagemUrl || `./imagens/${receita.imagem}.webp`"
+          :src="receita.imagemUrl || `/imagens/${receita.imagem}.webp`"
           alt=""
           width="600"
           height="360"
