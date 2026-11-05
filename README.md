@@ -2,7 +2,7 @@
 
 **Receitas boas. Conselhos duvidosos.**
 
-Mucuratouille é uma aplicação **One Page desenvolvida em Vue 3** para apresentar receitas da culinária paraense de forma simples, visual e bem-humorada. O projeto valoriza a identidade gastronômica de Belém do Pará e possui uma seção especial dedicada ao período do **Círio de Nazaré**.
+Mucuratouille é uma **Single Page Application (SPA) desenvolvida em Vue 3** para apresentar receitas da culinária paraense de forma simples, visual e bem-humorada. O projeto valoriza a identidade gastronômica de Belém do Pará e possui uma seção especial dedicada ao período do **Círio de Nazaré**.
 
 O trabalho foi desenvolvido pela **turma do segundo semestre de Análise e Desenvolvimento de Sistemas (ADS) da UNAMA, em Belém do Pará**, como atividade da disciplina de Front-End Frameworks.
 
@@ -21,7 +21,7 @@ Na primeira etapa, o projeto foi construído para aplicar os fundamentos de Vue 
 
 Na segunda etapa, o projeto foi evoluído com **Bootstrap 5.3.6**, mantendo Vue.js, componentização e reatividade. O Bootstrap foi incluído localmente em `src/vendor/bootstrap.min.css`.
 
-O projeto continua **sem Vue Router**, sem biblioteca externa de gerenciamento de estado e sem biblioteca pronta de componentes Vue.
+Na terceira etapa, o projeto passou a utilizar **Vue Router 4.6.4**, organizando o conteúdo em diferentes rotas sem recarregamento completo da aplicação. O projeto continua sem biblioteca externa de gerenciamento de estado e sem biblioteca pronta de componentes Vue.
 
 ## Proposta
 
@@ -29,15 +29,15 @@ A aplicação apresenta receitas típicas do Pará com uma identidade regional i
 
 ## Funcionalidades
 
-- busca por receita ou ingrediente;
+- busca global por receita ou ingrediente, disponível em todas as páginas;
 - filtros por categoria;
-- categoria especial do Círio de Nazaré;
+- categorias especiais do Círio de Nazaré e de Natal;
 - marcação e remoção de receitas favoritas;
 - contador reativo de favoritos;
-- seleção de uma receita para exibir os detalhes na mesma página;
+- navegação para uma rota dinâmica de detalhes em `/receita/:id`;
 - lista de ingredientes com marcação por checkbox;
 - exibição do modo de preparo com `v-for`;
-- botão para selecionar uma receita aleatória;
+- botão “Surpreenda-me!” para selecionar uma receita aleatória;
 - interface responsiva para desktop, tablet e celular.
 
 ## Evolução — 2ª etapa com Bootstrap
@@ -49,16 +49,16 @@ Principais melhorias:
 - grid responsivo com `container-fluid`, `row`, `col-12`, `col-sm-*`, `col-lg-*` e `col-xl-*`;
 - espaçamentos com `g-3`, `g-4`, `gap-*`, `px-*` e `pb-*`;
 - cards de receitas modernizados com `card`, `card-body`, `card-title`, `rounded-4`, `h-100` e `shadow-sm`;
-- busca com `input-group`, `input-group-text` e `form-control`, agora em uma barra flutuante de largura controlada;
-- botão “Surpreenda-me!” destacado com `btn`, `btn-warning`, `rounded-pill` e `shadow`;
+- busca com `input-group`, `input-group-text` e `form-control`, agora global e disponível em todas as rotas;
+- botão “Surpreenda-me!” destacado em verde ao lado das categorias, mantendo classes Bootstrap de botão e arredondamento;
 - filtros em formato pill, com SVGs próprios e estados ativos mais evidentes;
 - ícones da interface substituídos por SVGs vetoriais consistentes;
 - organização com `d-flex`, `align-items-center`, `justify-content-between` e `flex-wrap`;
-- modal reutilizável com `modal`, `modal-dialog`, `modal-content`, `modal-header`, `modal-body`, cards brancos e identidade amazônica;
+- estrutura visual baseada em cards, formulários, badges, progress e utilities do Bootstrap;
 - equipe representada por quatro personagens Mucura distintos, associados a nome e matrícula;
 - responsividade aprimorada em desktop, tablet e dispositivos móveis;
-- cabeçalho com logo transparente separada, menor e clicável para restaurar o estado inicial;
-- rodapé com recorte ondulado real, personagem próprio e Sobre o projeto, Equipe e Fontes das receitas exibidos dentro da mesma página;
+- cabeçalho com logo transparente, mascote, contador de favoritos e navegação principal;
+- rodapé com recorte ondulado real, personagem próprio e links para Sobre, Equipe e Fontes;
 - novas imagens locais para Vatapá paraense e Chibé.
 - barra reativa de ingredientes com `progress` e `progress-bar`, atualizada conforme os checkboxes são marcados;
 - notificações de favoritos apresentadas com o componente visual `toast`, controlado pelo Vue;
@@ -66,9 +66,25 @@ Principais melhorias:
 
 O CSS próprio continua sendo utilizado para preservar a identidade regional do Mucuratouille, como cores, ondulações, sobreposições, mascote e elementos decorativos.
 
-## Componentes
+## Evolução — 3ª etapa com Vue Router
 
-A interface foi dividida em componentes com responsabilidades específicas:
+A terceira fase reorganiza o projeto como uma SPA com rotas reais, preservando as funcionalidades das etapas anteriores.
+
+Rotas implementadas:
+
+- `/` — página inicial;
+- `/receitas` — catálogo com busca, categorias e favoritos;
+- `/receita/:id` — rota dinâmica para o detalhe de cada receita;
+- `/sobre` — informações sobre o projeto;
+- `/equipe` — integrantes;
+- `/fontes` — fontes das receitas;
+- `/:pathMatch(.*)*` — página 404.
+
+O `App.vue` mantém o cabeçalho, o rodapé e o toast de favoritos. O conteúdo central é trocado pelo `RouterView`. A navegação do cabeçalho, rodapé e cards utiliza `RouterLink`. O estado simples de favoritos foi movido para `src/state/favoritos.js` para continuar disponível durante a troca de rotas.
+
+A configuração `vercel.json` adiciona o fallback necessário para que URLs internas da SPA possam ser abertas diretamente em produção.
+
+## Organização do projeto
 
 ```text
 src/
@@ -78,17 +94,30 @@ src/
 │   ├── CardReceita.vue
 │   ├── DetalheReceita.vue
 │   ├── FiltroCategorias.vue
-│   ├── ModalInformacoes.vue
 │   └── Rodape.vue
 ├── data/
 │   ├── filtros.js
 │   └── receitas.js
+├── router/
+│   └── index.js
+├── state/
+│   └── favoritos.js
+├── styles/
+│   └── paginas-internas.css
+├── views/
+│   ├── HomeView.vue
+│   ├── ReceitasView.vue
+│   ├── ReceitaView.vue
+│   ├── SobreView.vue
+│   ├── EquipeView.vue
+│   ├── FontesView.vue
+│   └── NotFoundView.vue
 ├── App.vue
 ├── main.js
 └── style.css
 ```
 
-O `CardReceita.vue` é reutilizado para exibir diferentes receitas a partir de props. O `DetalheReceita.vue` recebe a receita selecionada e utiliza `v-for` para mostrar ingredientes e etapas do preparo. O `ModalInformacoes.vue` é reutilizado para exibir Sobre o projeto, Equipe e Fontes das receitas sem sair da página.
+Os arquivos em `components` continuam representando partes reutilizáveis da interface. Os arquivos em `views` representam as páginas associadas às rotas. `router/index.js` centraliza a configuração do Vue Router.
 
 ## Como executar
 
@@ -105,7 +134,7 @@ Depois, abra no navegador o endereço informado pelo Vite.
 
 Como proposto no enunciado da tarefa, a inteligência artificial foi utilizada como ferramenta de apoio nas etapas de concepção, identidade visual, componentização, conteúdo, implementação de interações e refinamento da interface.
 
-Os prompts abaixo registram principalmente a **1ª etapa**, quando frameworks CSS ainda não eram permitidos. Na **2ª etapa**, o Bootstrap passou a ser integrado conforme o novo enunciado da atividade.
+Os prompts abaixo registram principalmente a **1ª etapa**, quando frameworks CSS e Vue Router ainda não eram permitidos. Na **2ª etapa**, o Bootstrap passou a ser integrado. Na **3ª etapa**, o projeto foi reorganizado como SPA com Vue Router.
 
 ### Prompt 1 — Definição da proposta
 
@@ -173,6 +202,13 @@ Os prompts abaixo registram principalmente a **1ª etapa**, quando frameworks CS
 
 **Etapa:** refinamento visual e responsividade.
 
+
+### Prompt 12 — Evolução para Vue Router
+
+> Evolua o projeto Mucuratouille desenvolvido nas etapas anteriores incorporando Vue Router. Mantenha as funcionalidades existentes, Bootstrap e identidade visual. Crie páginas para Início, Receitas, Sobre, Equipe e Fontes, implemente uma rota dinâmica `/receita/:id` para os detalhes das receitas e uma página 404. Utilize RouterLink e RouterView e preserve a experiência SPA sem recarregamento completo.
+
+**Etapa:** reorganização da aplicação em rotas e páginas com Vue Router.
+
 ## Imagens e referências visuais
 
 As imagens do projeto têm finalidade acadêmica e ilustrativa.
@@ -200,11 +236,15 @@ As receitas foram adaptadas para fins acadêmicos e de demonstração da interfa
 **Mucuratouille — Receitas boas. Conselhos duvidosos.**  
 Belém do Pará · 2026
 
-## Ajustes mobile da versão 2.2
+## Responsividade atual
 
-- Grade de receitas com duas colunas em celulares.
-- Categorias recolhíveis no mobile, controladas com `ref()`, `@click` e `v-show`.
-- Ao selecionar uma receita no celular, a lista é substituída pelo componente de detalhes na mesma área da página.
-- Botão **Voltar às receitas** retorna ao grid sem navegação entre páginas.
-- Personagens do modal **Equipe** foram reduzidos para melhorar a proporção dos cards.
+- O catálogo mantém duas colunas em celulares.
+- As categorias continuam recolhíveis no mobile.
+- O detalhe da receita agora é exibido pela rota dinâmica `/receita/:id`.
+- Cabeçalho e menu principal foram ajustados para comportar a navegação por rotas.
+- Bootstrap e CSS próprio continuam trabalhando em conjunto na responsividade.
 
+
+## Atualização 3.1
+
+A versão 3.1 refina a identidade visual da SPA, amplia o menu, reforça os fundos das páginas internas, adiciona Receita do Dia, inclui um Especial Natal com quatro receitas, aumenta a legibilidade do modo de preparo e adiciona um botão explícito para voltar ao catálogo ao abrir uma receita.

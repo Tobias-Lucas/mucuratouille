@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 
 const props = defineProps({
   valorInicial: String,
@@ -8,8 +8,15 @@ const props = defineProps({
 const emit = defineEmits(['buscar'])
 const texto = ref(props.valorInicial || '')
 
-function buscar(evento) {
-  emit('buscar', evento.target.value)
+watch(
+  () => props.valorInicial,
+  (valor) => {
+    if (typeof valor === 'string' && valor !== texto.value) texto.value = valor
+  },
+)
+
+function atualizar() {
+  emit('buscar', texto.value)
 }
 
 function limpar() {
@@ -19,7 +26,7 @@ function limpar() {
 </script>
 
 <template>
-  <form class="busca input-group shadow-sm" role="search" @submit.prevent>
+  <div class="busca input-group shadow-sm">
     <label class="visually-hidden" for="busca-receitas">Buscar por receita ou ingrediente</label>
 
     <span class="input-group-text busca__icone" aria-hidden="true">
@@ -36,7 +43,7 @@ function limpar() {
       type="search"
       placeholder="Busque uma receita... (ex.: tacacá, maniçoba, cupuaçu)"
       autocomplete="off"
-      @input="buscar"
+      @input="atualizar"
     />
 
     <button
@@ -48,7 +55,7 @@ function limpar() {
     >
       ×
     </button>
-  </form>
+  </div>
 </template>
 
 <style scoped>
@@ -141,5 +148,4 @@ function limpar() {
     font-size: 21px;
   }
 }
-
 </style>

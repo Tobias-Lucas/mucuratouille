@@ -15,6 +15,7 @@ function limparMarcacoes() {
 
 function tituloSelo(receita) {
   if (receita.cirio) return 'Especial Círio'
+  if (receita.categoria === 'natal') return 'Especial Natal'
   if (receita.categoria === 'doces') return 'Doces e sobremesas'
   if (receita.categoria === 'casa') return 'Comida de casa'
   return 'Clássicos da terrinha'
@@ -334,7 +335,7 @@ function tituloSelo(receita) {
   border: 0;
   border-radius: 10px;
   font: inherit;
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 800;
   cursor: pointer;
 }
@@ -517,14 +518,14 @@ function tituloSelo(receita) {
 
 .detalhe__preparo li {
   display: flex;
-  gap: 10px;
-  padding-bottom: 11px;
+  gap: 12px;
+  padding-bottom: 15px;
 }
 
 .detalhe__numero {
   display: grid;
-  width: 26px;
-  height: 26px;
+  width: 30px;
+  height: 30px;
   flex-shrink: 0;
   place-items: center;
   color: #fff;
@@ -537,8 +538,8 @@ function tituloSelo(receita) {
 .detalhe__preparo li p {
   margin: 2px 0 0;
   color: #4b4e47;
-  font-size: 10px;
-  line-height: 1.42;
+  font-size: 13px;
+  line-height: 1.55;
 }
 
 .detalhe__dica {

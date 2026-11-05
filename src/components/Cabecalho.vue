@@ -1,17 +1,26 @@
 <script setup>
+import { RouterLink, useRoute } from 'vue-router'
+
 defineProps({
   quantidadeFavoritos: Number,
-  favoritosAtivos: Boolean,
 })
 
-const emit = defineEmits(['favoritos', 'inicio'])
+const route = useRoute()
+
+const links = [
+  { nome: 'Início', rota: '/' },
+  { nome: 'Receitas', rota: '/receitas' },
+  { nome: 'Sobre', rota: '/sobre' },
+  { nome: 'Equipe', rota: '/equipe' },
+  { nome: 'Fontes', rota: '/fontes' },
+]
 </script>
 
 <template>
   <header id="inicio" class="cabecalho">
     <img
       class="cabecalho__fundo"
-      :src="'/imagens/cabecalho-fundo.webp'"
+      src="/imagens/cabecalho-fundo.webp"
       alt="Paisagem de Belém do Pará ao pôr do sol"
       width="1800"
       height="360"
@@ -21,35 +30,29 @@ const emit = defineEmits(['favoritos', 'inicio'])
     <div class="cabecalho__sombra" aria-hidden="true"></div>
 
     <div class="cabecalho__conteudo container-fluid px-3 px-lg-4">
-      <a
-        class="cabecalho__logo-link"
-        href="#inicio"
-        aria-label="Voltar ao início do Mucuratouille"
-        @click="emit('inicio')"
-      >
+      <RouterLink class="cabecalho__logo-link" to="/" aria-label="Voltar ao início do Mucuratouille">
         <img
           class="cabecalho__logo"
-          :src="'/imagens/cabecalho-logo.png'"
+          src="/imagens/cabecalho-logo.png"
           alt="Mucuratouille — Receitas boas. Conselhos duvidosos."
           width="2172"
           height="724"
         />
-      </a>
+      </RouterLink>
 
       <img
         class="cabecalho__mascote"
-        :src="'/imagens/cabecalho-mascote.webp'"
+        src="/imagens/cabecalho-mascote.webp"
         alt="Mascote Mucuratouille com balão de fala convidando o usuário a cozinhar"
         width="1448"
         height="1086"
       />
 
-      <a
+      <RouterLink
         class="cabecalho__favoritos d-flex flex-column align-items-center justify-content-center shadow"
-        :class="{ 'cabecalho__favoritos--ativo': favoritosAtivos }"
-        href="#receitas"
+        :class="{ 'cabecalho__favoritos--ativo': route.name === 'receitas' && route.query.favoritos === '1' }"
+        :to="{ name: 'receitas', query: { favoritos: '1' } }"
         :aria-label="`Ver favoritos: ${quantidadeFavoritos}`"
-        @click="emit('favoritos')"
       >
         <div class="d-flex align-items-center gap-1">
           <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -58,7 +61,20 @@ const emit = defineEmits(['favoritos', 'inicio'])
           <strong>{{ quantidadeFavoritos }}</strong>
         </div>
         <small>favoritos</small>
-      </a>
+      </RouterLink>
+
+      <nav class="cabecalho__nav shadow-sm" aria-label="Navegação principal">
+        <RouterLink
+          v-for="link in links"
+          :key="link.rota"
+          :to="link.rota"
+          class="cabecalho__nav-link"
+          active-class="cabecalho__nav-link--ativo"
+          :exact-active-class="link.rota === '/' ? 'cabecalho__nav-link--ativo' : ''"
+        >
+          {{ link.nome }}
+        </RouterLink>
+      </nav>
     </div>
   </header>
 </template>
@@ -68,7 +84,7 @@ const emit = defineEmits(['favoritos', 'inicio'])
   position: relative;
   z-index: 1;
   width: 100%;
-  height: clamp(190px, 14vw, 232px);
+  height: clamp(220px, 16vw, 260px);
   overflow: hidden;
   background: #18241b;
 }
@@ -121,7 +137,7 @@ const emit = defineEmits(['favoritos', 'inicio'])
   right: clamp(86px, 7.5vw, 140px);
   top: -1px;
   width: min(39vw, 520px);
-  height: 100%;
+  height: calc(100% - 24px);
   object-fit: contain;
   object-position: right top;
 }
@@ -169,6 +185,53 @@ const emit = defineEmits(['favoritos', 'inicio'])
   font-size: 9px;
 }
 
+.cabecalho__nav {
+  position: absolute;
+  z-index: 6;
+  left: 50%;
+  bottom: 72px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  max-width: calc(100% - 32px);
+  padding: 7px;
+  overflow-x: auto;
+  background: rgba(8, 29, 19, 0.88);
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  border-radius: 999px;
+  backdrop-filter: blur(8px);
+  transform: translateX(-50%);
+  scrollbar-width: none;
+}
+
+.cabecalho__nav::-webkit-scrollbar {
+  display: none;
+}
+
+.cabecalho__nav-link {
+  display: inline-flex;
+  min-height: var(--altura-acao);
+  align-items: center;
+  flex: 0 0 auto;
+  padding: 7px 17px;
+  color: rgba(255, 255, 255, 0.88);
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 800;
+  text-decoration: none;
+  transition: color 0.16s ease, background 0.16s ease;
+}
+
+.cabecalho__nav-link:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.cabecalho__nav-link--ativo {
+  color: #163523;
+  background: #f3ce78;
+}
+
 @media (max-width: 991.98px) {
   .cabecalho__logo-link {
     width: min(34vw, 390px);
@@ -182,7 +245,7 @@ const emit = defineEmits(['favoritos', 'inicio'])
 
 @media (max-width: 767.98px) {
   .cabecalho {
-    height: 188px;
+    height: 216px;
   }
 
   .cabecalho__fundo {
@@ -199,7 +262,7 @@ const emit = defineEmits(['favoritos', 'inicio'])
     right: 62px;
     top: 4px;
     width: min(43vw, 320px);
-    height: 92%;
+    height: 78%;
   }
 
   .cabecalho__favoritos {
@@ -208,11 +271,21 @@ const emit = defineEmits(['favoritos', 'inicio'])
     right: 10px;
     top: 12px;
   }
+
+  .cabecalho__nav {
+    bottom: 46px;
+  }
+
+  .cabecalho__nav-link {
+    min-height: 34px;
+    padding: 6px 13px;
+    font-size: 10px;
+  }
 }
 
 @media (max-width: 575.98px) {
   .cabecalho {
-    height: 174px;
+    height: 198px;
   }
 
   .cabecalho__fundo {
@@ -229,7 +302,7 @@ const emit = defineEmits(['favoritos', 'inicio'])
     right: 48px;
     top: 6px;
     width: 40vw;
-    height: 88%;
+    height: 72%;
   }
 
   .cabecalho__favoritos {
@@ -253,6 +326,18 @@ const emit = defineEmits(['favoritos', 'inicio'])
   .cabecalho__favoritos small {
     margin-top: 1px;
     font-size: 7px;
+  }
+
+  .cabecalho__nav {
+    bottom: 42px;
+    width: calc(100% - 16px);
+    max-width: none;
+    justify-content: flex-start;
+  }
+
+  .cabecalho__nav-link {
+    padding: 8px 12px;
+    font-size: 9px;
   }
 }
 </style>

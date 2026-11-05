@@ -515,5 +515,152 @@ export const dadosReceitas = [
     "notaTempo": "*10 minutos de preparo + pelo menos 2 horas de geladeira. Descongelamento da polpa à parte.",
     "alerta": "",
     "alergenos": "Contém leite e derivados."
+  },
+  {
+    "id": "arroz-a-grega-natalino",
+    "nome": "Arroz à grega natalino",
+    "categoria": "natal",
+    "imagem": "arroz-grega-natalino",
+    "tempo": "30 min",
+    "minutos": 30,
+    "porcoes": 6,
+    "dificuldade": "Bem fácil",
+    "descricao": "Arroz colorido com pimentões, cenoura, ervilha e uvas-passas para acompanhar a ceia.",
+    "frase": "Tem passa, tem cor e tem discussão na mesa. Natal oficialmente confirmado.",
+    "ingredientes": [
+      "2 xícaras de arroz branco",
+      "1 cebola pequena picada",
+      "2 dentes de alho picados",
+      "1/2 pimentão vermelho em cubos",
+      "1/2 pimentão amarelo em cubos",
+      "1 cenoura pequena ralada",
+      "1/2 xícara de ervilhas",
+      "1/2 xícara de uvas-passas",
+      "2 colheres (sopa) de azeite",
+      "Salsinha, cebolinha e sal a gosto"
+    ],
+    "passos": [
+      "Refogue cebola e alho no azeite. Junte o arroz e uma pitada de sal e mexa por cerca de 1 minuto.",
+      "Acrescente as uvas-passas e aproximadamente 3 xícaras de água quente. Cozinhe em fogo baixo, com a panela semi-tampada, até o arroz ficar macio e a água secar.",
+      "Em uma frigideira, refogue rapidamente os pimentões e a ervilha. Misture ao arroz com a cenoura ralada.",
+      "Finalize com salsinha e cebolinha, ajuste o sal e sirva como acompanhamento da ceia."
+    ],
+    "fonte": {
+      "nome": "Receitas / GNT - Arroz à grega de Natal",
+      "url": "https://receitas.globo.com/datas-comemorativas/natal/arroz-grega-natalino-gnt.ghtml"
+    },
+    "cirio": false,
+    "notaTempo": "Tempo aproximado para a versão do projeto; pode variar conforme o tipo de arroz e o fogão.",
+    "alerta": "",
+    "alergenos": "Confira os rótulos e possíveis contaminações cruzadas."
+  },
+  {
+    "id": "salpicao-de-frango-natalino",
+    "nome": "Salpicão de frango natalino",
+    "categoria": "natal",
+    "imagem": "salpicao-frango-natalino",
+    "tempo": "30 min*",
+    "minutos": 30,
+    "porcoes": 8,
+    "dificuldade": "Bem fácil",
+    "descricao": "Frango desfiado, legumes, maçã, passas e creme com batata palha na finalização.",
+    "frase": "Crocância por cima, cremosidade por baixo e uma uva-passa escondida esperando o debate.",
+    "ingredientes": [
+      "500 g de frango cozido e desfiado",
+      "2 cenouras médias raladas",
+      "1/2 pimentão vermelho em cubinhos",
+      "1 maçã verde em cubinhos",
+      "1/2 xícara de azeitonas picadas",
+      "1/2 xícara de uvas-passas",
+      "Suco de 1 limão",
+      "Maionese suficiente para dar cremosidade",
+      "Salsinha e sal a gosto",
+      "Batata palha para finalizar"
+    ],
+    "passos": [
+      "Use frango completamente cozido, desfie e deixe esfriar antes da montagem. Se partir de frango cru, cozinhe até atingir pelo menos 74 °C no centro.",
+      "Misture o frango, a cenoura, o pimentão, a maçã, as azeitonas, as passas e a salsinha em uma tigela grande.",
+      "Tempere com limão e incorpore a maionese aos poucos até atingir a textura desejada. Ajuste o sal.",
+      "Mantenha refrigerado até servir e coloque a batata palha somente na finalização para preservar a crocância."
+    ],
+    "fonte": {
+      "nome": "Receitas RPC - Salpicão de frango para o Natal",
+      "url": "https://receitas.globo.com/regionais/rpc/receitas-paranaenses/salpicao-de-frango-para-o-natal.ghtml"
+    },
+    "cirio": false,
+    "notaTempo": "*Tempo de montagem considerando o frango já cozido e desfiado; o resfriamento pode exigir tempo adicional.",
+    "alerta": "Mantenha o salpicão refrigerado e evite deixá-lo por longos períodos em temperatura ambiente por conter frango e maionese.",
+    "alergenos": "Pode conter ovos e outros alergênicos conforme a maionese e a batata palha utilizadas. Confira os rótulos."
+  },
+  {
+    "id": "farofa-natalina",
+    "nome": "Farofa natalina",
+    "categoria": "natal",
+    "imagem": "farofa-natalina",
+    "tempo": "20 min",
+    "minutos": 20,
+    "porcoes": 8,
+    "dificuldade": "Bem fácil",
+    "descricao": "Farinha de mandioca, bacon, passas e castanha-do-pará em um acompanhamento crocante para a ceia.",
+    "frase": "Farofa em festa de fim de ano não é coadjuvante. Ela só finge humildade.",
+    "ingredientes": [
+      "3 xícaras de farinha de mandioca torrada",
+      "100 g de bacon em cubinhos",
+      "1 cebola pequena picada",
+      "2 dentes de alho picados",
+      "2 colheres (sopa) de manteiga",
+      "1/2 xícara de uvas-passas",
+      "1/3 xícara de castanha-do-pará picada",
+      "Cheiro-verde e sal a gosto"
+    ],
+    "passos": [
+      "Doure o bacon em uma frigideira ampla até começar a ficar crocante. Retire o excesso de gordura se necessário.",
+      "Junte a manteiga, a cebola e o alho e refogue até ficarem macios e perfumados.",
+      "Acrescente as passas e a castanha-do-pará. Adicione a farinha de mandioca aos poucos, mexendo para dourar de maneira uniforme.",
+      "Finalize com cheiro-verde, prove e ajuste o sal. Sirva morna ou em temperatura ambiente."
+    ],
+    "fonte": {
+      "nome": "Receitas RPC - Farofa natalina; castanha-do-pará adicionada como adaptação regional",
+      "url": "https://receitas.globo.com/regionais/rpc/receitas-paranaenses/farofa-natalina.ghtml"
+    },
+    "cirio": false,
+    "notaTempo": "Tempo aproximado para a versão do projeto.",
+    "alerta": "",
+    "alergenos": "Contém leite se preparada com manteiga e contém castanha-do-pará. Confira também os rótulos do bacon."
+  },
+  {
+    "id": "rabanada-de-natal",
+    "nome": "Rabanada de Natal",
+    "categoria": "natal",
+    "imagem": "rabanada-natal",
+    "tempo": "20 min",
+    "minutos": 20,
+    "porcoes": 12,
+    "dificuldade": "Bem fácil",
+    "descricao": "Pão amanhecido, leite, ovos, açúcar e canela em um clássico doce das festas de fim de ano.",
+    "frase": "Pão de ontem com fama de sobremesa de Natal. Reinvenção de carreira é isso.",
+    "ingredientes": [
+      "4 pães franceses amanhecidos",
+      "600 ml de leite",
+      "3 ovos batidos",
+      "1/2 xícara de açúcar",
+      "Canela em pó a gosto",
+      "Óleo suficiente para fritar"
+    ],
+    "passos": [
+      "Corte os pães em fatias médias. Em uma tigela, misture o leite com parte do açúcar; em outra, mantenha os ovos batidos.",
+      "Passe cada fatia rapidamente no leite e depois nos ovos, sem deixar o pão desmanchar.",
+      "Frite em óleo quente, em pequenas porções, até dourar dos dois lados. Retire com escumadeira e deixe escorrer em papel absorvente.",
+      "Misture açúcar e canela e passe as rabanadas ainda mornas. Sirva morna ou fria."
+    ],
+    "fonte": {
+      "nome": "É de Casa / Receitas - Rabanada tradicional",
+      "url": "https://receitas.globo.com/receitas-da-tv/e-de-casa/rabanada.ghtml"
+    },
+    "cirio": false,
+    "notaTempo": "Tempo aproximado; frite em pequenas porções e considere tempo adicional caso faça uma quantidade maior.",
+    "alerta": "Tenha cuidado com óleo quente durante a fritura e mantenha crianças afastadas do fogão.",
+    "alergenos": "Contém trigo (glúten), leite e ovos."
   }
+
 ]

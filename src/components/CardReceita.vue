@@ -1,11 +1,13 @@
 <script setup>
+import { RouterLink } from 'vue-router'
+
 defineProps({
   receita: Object,
   favorita: Boolean,
   selecionada: Boolean,
 })
 
-const emit = defineEmits(['abrir', 'favoritar'])
+const emit = defineEmits(['favoritar'])
 </script>
 
 <template>
@@ -15,27 +17,31 @@ const emit = defineEmits(['abrir', 'favoritar'])
     :data-receita="receita.id"
   >
     <div class="card-receita__visual">
-      <a
-        href="#receitas"
+      <RouterLink
+        :to="{ name: 'receita', params: { id: receita.id } }"
         class="card-receita__imagem-link"
         tabindex="-1"
         aria-hidden="true"
-        @click="emit('abrir', receita)"
       >
         <img
+          v-if="receita.imagemUrl || receita.imagem"
           :src="receita.imagemUrl || `/imagens/${receita.imagem}.webp`"
           alt=""
           width="600"
           height="360"
           loading="lazy"
         />
-      </a>
+        <div v-else class="card-receita__placeholder card-receita__placeholder--natal" aria-hidden="true">
+          <img src="/imagens/mucura-avatar.webp" alt="" />
+          <span>Especial Natal</span>
+        </div>
+      </RouterLink>
 
       <span
         class="badge rounded-pill card-receita__selo"
         :class="`card-receita__selo--${receita.cirio ? 'cirio' : receita.categoria}`"
       >
-        {{ receita.cirio ? 'Especial Círio' : receita.categoria === 'doces' ? 'Doces e sobremesas' : receita.categoria === 'casa' ? 'Comida de casa' : 'Clássicos da terrinha' }}
+        {{ receita.cirio ? 'Especial Círio' : receita.categoria === 'natal' ? 'Especial Natal' : receita.categoria === 'doces' ? 'Doces e sobremesas' : receita.categoria === 'casa' ? 'Comida de casa' : 'Clássicos da terrinha' }}
       </span>
 
       <button
@@ -54,9 +60,9 @@ const emit = defineEmits(['abrir', 'favoritar'])
 
     <div class="card-body d-flex flex-column p-3">
       <h2 class="card-title mb-2">
-        <a href="#receitas" @click="emit('abrir', receita)">
+        <RouterLink :to="{ name: 'receita', params: { id: receita.id } }">
           {{ receita.nome }}
-        </a>
+        </RouterLink>
       </h2>
 
       <div class="card-receita__meta d-flex flex-wrap gap-2 mt-auto">
@@ -128,6 +134,37 @@ const emit = defineEmits(['abrir', 'favoritar'])
   transform: scale(1.045);
 }
 
+
+.card-receita__placeholder {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding: 12px 15px;
+}
+
+.card-receita__placeholder--natal {
+  color: #fff;
+  background:
+    radial-gradient(circle at 24% 20%, rgba(246, 202, 118, 0.28), transparent 28%),
+    linear-gradient(135deg, #8f2631, #173b28 72%);
+}
+
+.card-receita__placeholder img {
+  width: 74px !important;
+  height: 74px !important;
+  object-fit: contain !important;
+  filter: drop-shadow(0 5px 10px rgba(0, 0, 0, 0.18));
+}
+
+.card-receita__placeholder span {
+  max-width: 90px;
+  padding-bottom: 6px;
+  font: 800 15px/1.05 Georgia, 'Times New Roman', serif;
+  text-align: right;
+}
+
 .card-receita__selo {
   position: absolute;
   top: 11px;
@@ -146,6 +183,10 @@ const emit = defineEmits(['abrir', 'favoritar'])
 .card-receita__selo--cirio,
 .card-receita__selo--doces {
   background: #a40b52;
+}
+
+.card-receita__selo--natal {
+  background: #9d2634;
 }
 
 .card-receita__selo--casa {

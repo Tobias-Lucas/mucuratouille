@@ -1,5 +1,5 @@
 <script setup>
-const emit = defineEmits(['abrir-info'])
+import { RouterLink } from 'vue-router'
 </script>
 
 <template>
@@ -12,32 +12,28 @@ const emit = defineEmits(['abrir-info'])
 
     <div class="rodape__superficie">
       <div class="container d-flex flex-column flex-md-row align-items-center justify-content-between gap-3 rodape__conteudo">
-        <button
-          class="rodape__marca btn p-0 border-0 text-start"
-          type="button"
-          @click="emit('abrir-info', 'sobre')"
-        >
+        <RouterLink class="rodape__marca btn p-0 border-0 text-start" to="/">
           <span>
             <strong class="rodape__titulo">Mucuratouille</strong>
             <small class="rodape__subtitulo">Receitas boas. Conselhos duvidosos.</small>
           </span>
-        </button>
+        </RouterLink>
 
         <nav
           class="rodape__nav d-flex align-items-center justify-content-center flex-wrap gap-2 gap-lg-3"
           aria-label="Navegação do rodapé"
         >
-          <button type="button" class="btn btn-link p-0 rodape__link" @click="emit('abrir-info', 'sobre')">
+          <RouterLink class="btn btn-link p-0 rodape__link" to="/sobre">
             Sobre o projeto
-          </button>
+          </RouterLink>
           <span aria-hidden="true">|</span>
-          <button type="button" class="btn btn-link p-0 rodape__link" @click="emit('abrir-info', 'equipe')">
+          <RouterLink class="btn btn-link p-0 rodape__link" to="/equipe">
             Equipe
-          </button>
+          </RouterLink>
           <span aria-hidden="true">|</span>
-          <button type="button" class="btn btn-link p-0 rodape__link" @click="emit('abrir-info', 'fontes')">
+          <RouterLink class="btn btn-link p-0 rodape__link" to="/fontes">
             Fontes das receitas
-          </button>
+          </RouterLink>
         </nav>
 
         <div class="rodape__credito d-flex align-items-center justify-content-center justify-content-md-end gap-2">

@@ -12,6 +12,7 @@ const aberto = ref(false)
 const categorias = [
   { id: 'todas', nome: 'Todas', icone: 'grade' },
   { id: 'cirio', nome: 'Especial Círio', icone: 'igreja' },
+  { id: 'natal', nome: 'Especial Natal', icone: 'natal' },
   { id: 'classicos', nome: 'Clássicos da terrinha', icone: 'peixe' },
   { id: 'casa', nome: 'Comida de casa', icone: 'panela' },
   { id: 'doces', nome: 'Doces e sobremesas', icone: 'cupcake' },
@@ -102,6 +103,11 @@ function nomeSelecionado(selecionada, somenteFavoritos) {
             <path d="M8 6.5c0-1.1.7-2 1.6-2.5M12 6c0-1.3.8-2.4 1.9-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
           </svg>
 
+          <svg v-else-if="item.icone === 'natal'" viewBox="0 0 24 24" fill="none">
+            <path d="M12 2.5 8.8 7h2l-4 5.2h2.4L5.5 17h13l-3.7-4.8h2.4l-4-5.2h2L12 2.5Z" fill="currentColor"/>
+            <rect x="10.6" y="17" width="2.8" height="4" rx="0.7" fill="currentColor"/>
+          </svg>
+
           <svg v-else viewBox="0 0 24 24" fill="none">
             <path d="M12 5.2c0-1.7 1.4-3.1 3.1-3.1S18.2 3.5 18.2 5.2c0 1-.5 1.8-1.2 2.4 1.9.9 3.4 2.7 4 5V14H3v-1.4c.6-2.3 2.1-4.1 4-5-.7-.6-1.2-1.5-1.2-2.4C5.8 3.5 7.2 2.1 8.9 2.1S12 3.5 12 5.2Z" fill="currentColor"/>
             <path d="M5 15h14v1.5c0 2.5-2 4.5-4.5 4.5h-5C7 21 5 19 5 16.5V15Z" fill="currentColor"/>
@@ -154,6 +160,11 @@ function nomeSelecionado(selecionada, somenteFavoritos) {
             <path d="M8 6.5c0-1.1.7-2 1.6-2.5M12 6c0-1.3.8-2.4 1.9-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
           </svg>
 
+          <svg v-else-if="item.icone === 'natal'" viewBox="0 0 24 24" fill="none">
+            <path d="M12 2.5 8.8 7h2l-4 5.2h2.4L5.5 17h13l-3.7-4.8h2.4l-4-5.2h2L12 2.5Z" fill="currentColor"/>
+            <rect x="10.6" y="17" width="2.8" height="4" rx="0.7" fill="currentColor"/>
+          </svg>
+
           <svg v-else viewBox="0 0 24 24" fill="none">
             <path d="M12 5.2c0-1.7 1.4-3.1 3.1-3.1S18.2 3.5 18.2 5.2c0 1-.5 1.8-1.2 2.4 1.9.9 3.4 2.7 4 5V14H3v-1.4c.6-2.3 2.1-4.1 4-5-.7-.6-1.2-1.5-1.2-2.4C5.8 3.5 7.2 2.1 8.9 2.1S12 3.5 12 5.2Z" fill="currentColor"/>
             <path d="M5 15h14v1.5c0 2.5-2 4.5-4.5 4.5h-5C7 21 5 19 5 16.5V15Z" fill="currentColor"/>
@@ -168,8 +179,10 @@ function nomeSelecionado(selecionada, somenteFavoritos) {
 
 <style scoped>
 .filtros {
-  width: min(1320px, 100%);
-  margin: 16px auto 0;
+  width: 100%;
+  min-width: 0;
+  margin: 0;
+  flex: 1 1 auto;
 }
 
 .filtros__toggle {
@@ -288,10 +301,6 @@ function nomeSelecionado(selecionada, somenteFavoritos) {
 }
 
 @media (max-width: 767.98px) {
-  .filtros {
-    margin-top: 10px;
-  }
-
   .filtros__botao {
     min-height: 38px;
     padding: 7px 10px;

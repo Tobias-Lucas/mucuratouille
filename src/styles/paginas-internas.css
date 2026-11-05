@@ -1,0 +1,83 @@
+.pagina-interna {
+  width: min(1100px, 100%);
+  margin: 0 auto;
+  padding-top: 80px;
+  padding-bottom: 64px;
+}
+
+.pagina-interna__hero {
+  padding: clamp(26px, 4vw, 44px);
+  color: #fff;
+  background-image:
+    linear-gradient(90deg, rgba(8, 28, 18, 0.72), rgba(8, 28, 18, 0.34)),
+    url('/imagens/rodape-fundo.webp');
+  background-position: center 44%;
+  background-size: cover;
+}
+
+.pagina-interna__sobretitulo {
+  display: block;
+  margin-bottom: 5px;
+  color: #f4ca76;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+}
+
+.pagina-interna__hero h1 {
+  margin: 0;
+  font: 800 clamp(30px, 4vw, 46px)/1.05 Georgia, 'Times New Roman', serif;
+}
+
+.pagina-interna__hero p {
+  max-width: 680px;
+  margin: 12px 0 0;
+  color: rgba(255, 255, 255, 0.88);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.pagina-interna__conteudo {
+  margin-top: 20px;
+  color: #50524a;
+  background: rgba(255, 255, 255, 0.96);
+  font-size: 14px;
+  line-height: 1.75;
+}
+
+.pagina-interna__acoes {
+  margin-top: 22px;
+}
+
+.btn-mucura {
+  color: #fff;
+  background: #bd4a0a;
+  border-color: #bd4a0a;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.btn-mucura:hover {
+  color: #fff;
+  background: #9f3d08;
+  border-color: #9f3d08;
+}
+
+.btn-outline-mucura {
+  color: #244c36;
+  background: transparent;
+  border: 1px solid #244c36;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.btn-outline-mucura:hover {
+  color: #fff;
+  background: #244c36;
+}
+
+@media (max-width: 767.98px) {
+  .pagina-interna {
+    padding-top: 60px;
+  }
+}
