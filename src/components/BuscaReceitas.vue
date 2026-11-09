@@ -1,151 +1,67 @@
 <script setup>
 import { ref, watch } from 'vue'
-
-const props = defineProps({
-  valorInicial: String,
-})
-
+const props = defineProps({ valorInicial: String, placeholder: { type: String, default: 'Busque uma receita...' } })
 const emit = defineEmits(['buscar'])
 const texto = ref(props.valorInicial || '')
-
-watch(
-  () => props.valorInicial,
-  (valor) => {
-    if (typeof valor === 'string' && valor !== texto.value) texto.value = valor
-  },
-)
-
-function atualizar() {
-  emit('buscar', texto.value)
-}
-
-function limpar() {
-  texto.value = ''
-  emit('buscar', '')
-}
+watch(() => props.valorInicial, (valor) => { if ((valor || '') !== texto.value) texto.value = valor || '' })
+watch(texto, (valor) => emit('buscar', valor))
 </script>
 
 <template>
-  <div class="busca input-group shadow-sm">
-    <label class="visually-hidden" for="busca-receitas">Buscar por receita ou ingrediente</label>
-
-    <span class="input-group-text busca__icone" aria-hidden="true">
-      <svg viewBox="0 0 24 24">
-        <circle cx="10.5" cy="10.5" r="6.5" />
-        <path d="m16 16 5 5" />
-      </svg>
-    </span>
-
-    <input
-      id="busca-receitas"
-      v-model="texto"
-      class="form-control busca__campo"
-      type="search"
-      placeholder="Busque uma receita... (ex.: tacacá, maniçoba, cupuaçu)"
-      autocomplete="off"
-      @input="atualizar"
-    />
-
-    <button
-      v-if="texto"
-      type="button"
-      class="btn btn-light busca__limpar"
-      aria-label="Limpar busca"
-      @click="limpar"
-    >
-      ×
-    </button>
+  <div class="busca flex-grow-1">
+    <span class="busca__icone" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4 4"/></svg></span>
+    <input v-model="texto" class="form-control busca__campo" type="search" :placeholder="placeholder" aria-label="Buscar receitas" />
   </div>
 </template>
 
 <style scoped>
 .busca {
-  min-width: 0;
-  min-height: 58px;
-  overflow: hidden;
-  background: #fff;
-  border: 1px solid #d8d0c0;
-  border-radius: 18px;
-  box-shadow: 0 10px 24px rgba(73, 49, 24, 0.14) !important;
-}
-
-.busca:focus-within {
-  border-color: var(--verde);
-  box-shadow: 0 0 0 3px rgba(36, 75, 56, 0.15), 0 10px 24px rgba(73, 49, 24, 0.14) !important;
+  position: relative;
 }
 
 .busca__icone {
-  padding-left: 18px;
-  padding-right: 8px;
-  color: var(--verde);
-  background: #fff;
-  border: 0;
+  position: absolute;
+  z-index: 2;
+  top: 50%;
+  left: 18px;
+  display: grid;
+  width: 20px;
+  height: 20px;
+  place-items: center;
+  color: #123c2c;
+  transform: translateY(-50%);
 }
 
 .busca__icone svg {
-  width: 23px;
-  height: 23px;
+  width: 20px;
+  height: 20px;
   fill: none;
   stroke: currentColor;
-  stroke-width: 2;
+  stroke-width: 1.8;
+  stroke-linecap: round;
 }
 
 .busca__campo {
-  min-width: 0;
-  min-height: 56px;
-  padding: 14px 12px;
-  color: #4a4b43;
-  background: #fff;
-  border: 0;
-  font-size: 14px;
+  min-height: 52px;
+  padding: 10px 18px 10px 52px;
+  color: #292a24;
+  background: #fffdf8;
+  border: 1px solid #d9d0c1;
+  border-radius: 18px;
+  font-size: 12px;
+  box-shadow: 0 8px 20px rgba(50,38,24,.08);
 }
 
 .busca__campo:focus {
-  box-shadow: none;
+  border-color: #4f87c7;
+  box-shadow: 0 0 0 .2rem rgba(79,135,199,.12);
 }
 
-.busca__campo::placeholder {
-  color: #77766e;
-  opacity: 1;
-}
-
-.busca__campo::-webkit-search-cancel-button {
-  display: none;
-}
-
-.busca__limpar {
-  width: 48px;
-  color: #666;
-  background: #fff;
-  border: 0;
-  font-size: 24px;
-}
-
-@media (max-width: 575.98px) {
-  .busca {
-    min-height: 50px;
-    border-radius: 16px;
-  }
-
-  .busca__icone {
-    padding-left: 15px;
-    padding-right: 6px;
-  }
-
-  .busca__icone svg {
-    width: 20px;
-    height: 20px;
-  }
-
+@media (max-width:575.98px) {
   .busca__campo {
-    min-height: 48px;
-    padding: 11px 8px;
-    font-size: 12px;
-  }
-
-  .busca__limpar {
-    width: 42px;
-    font-size: 21px;
+    min-height: 46px;
+    font-size: 10px;
+    border-radius: 15px;
   }
 }
 </style>

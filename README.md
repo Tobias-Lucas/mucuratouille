@@ -84,6 +84,40 @@ O `App.vue` mantém o cabeçalho, o rodapé e o toast de favoritos. O conteúdo 
 
 A configuração `vercel.json` adiciona o fallback necessário para que URLs internas da SPA possam ser abertas diretamente em produção.
 
+
+## Evolução — 4ª etapa com integração à PokéAPI
+
+A quarta fase evolui o Mucuratouille com a integração entre Front-End e Back-End por meio de uma API REST pública. A aplicação passou a consumir dados da **PokéAPI** utilizando requisições HTTP assíncronas, mantendo Vue 3, Bootstrap, Vue Router, componentização, reatividade e responsividade das etapas anteriores.
+
+Nesta fase, o conceito do projeto foi adaptado para um cardápio fictício e bem-humorado de receitas inspiradas em Pokémon, preservando a identidade do Mucuratouille.
+
+Principais implementações:
+
+- integração com a API pública **PokéAPI**;
+- requisições HTTP `GET` realizadas de forma assíncrona;
+- separação da lógica de comunicação com a API em `src/services/pokeapi.js`;
+- consumo e tratamento de dados JSON retornados pela API;
+- nova rota `/pokedex` para consulta dos Pokémon;
+- pesquisa de Pokémon por nome ou número;
+- exibição dinâmica de nome, número, imagem oficial, tipos, habilidades, altura, peso, experiência base e demais informações disponibilizadas pela API;
+- consulta de espécies e cadeias evolutivas quando necessárias à interface;
+- tratamento e tradução de informações exibidas ao usuário;
+- indicação visual dos Pokémon que já possuem receitas disponíveis no Mucuratouille;
+- associação entre as receitas locais e os Pokémon consultados na API;
+- substituição do cardápio anterior por **20 receitas temáticas fictícias**;
+- uso de `ref()`, `v-if`, `v-for`, interpolação e eventos para apresentar e manipular os dados recebidos;
+- estados de carregamento, erro e ausência de resultados durante as consultas;
+- busca do catálogo integrada aos nomes das receitas, ingredientes e Pokémon;
+- tipo do Pokémon utilizado para influenciar detalhes visuais da interface e do componente de receita;
+- página de detalhes da receita combinando informações autorais do prato com dados obtidos em tempo real pela PokéAPI;
+- manutenção das rotas, favoritos, Bootstrap, responsividade, cabeçalho, rodapé e demais funcionalidades das etapas anteriores;
+- nova identidade visual combinando o tema culinário do Mucuratouille com uma estética inspirada em jogos de criaturas e aventura;
+- imagens autorais e ilustrativas criadas especificamente para as novas receitas e para a identidade visual da quarta fase.
+
+A comunicação com a API ocorre no Front-End. Quando uma página necessita de informações de um Pokémon, a aplicação executa uma requisição assíncrona para a PokéAPI, recebe a resposta em formato JSON, trata os dados necessários e atualiza a interface reativamente.
+
+A quarta etapa utiliza operações `GET`. Não foi necessário desenvolver um servidor próprio nem implementar operações de cadastro, edição ou exclusão na API.
+
 ## Organização do projeto
 
 ```text
@@ -117,6 +151,21 @@ src/
 └── style.css
 ```
 
+
+### Arquivos acrescentados ou ampliados na 4ª etapa
+
+```text
+src/
+├── services/
+│   └── pokeapi.js
+├── views/
+│   └── PokedexView.vue
+└── data/
+    └── receitas.js
+```
+
+`services/pokeapi.js` concentra a comunicação com a PokéAPI e o tratamento dos dados externos. `PokedexView.vue` apresenta a consulta e exploração dos Pokémon, enquanto `receitas.js` mantém o conteúdo autoral das receitas e sua associação com os Pokémon utilizados na integração.
+
 Os arquivos em `components` continuam representando partes reutilizáveis da interface. Os arquivos em `views` representam as páginas associadas às rotas. `router/index.js` centraliza a configuração do Vue Router.
 
 ## Como executar
@@ -135,6 +184,9 @@ Depois, abra no navegador o endereço informado pelo Vite.
 Como proposto no enunciado da tarefa, a inteligência artificial foi utilizada como ferramenta de apoio nas etapas de concepção, identidade visual, componentização, conteúdo, implementação de interações e refinamento da interface.
 
 Os prompts abaixo registram principalmente a **1ª etapa**, quando frameworks CSS e Vue Router ainda não eram permitidos. Na **2ª etapa**, o Bootstrap passou a ser integrado. Na **3ª etapa**, o projeto foi reorganizado como SPA com Vue Router.
+
+
+Na **4ª etapa**, a IA também foi utilizada como apoio para planejar a integração com a PokéAPI, organizar o serviço de requisições, adaptar a identidade visual, estruturar a Pokédex e desenvolver o novo conjunto de receitas temáticas.
 
 ### Prompt 1 — Definição da proposta
 
@@ -209,6 +261,13 @@ Os prompts abaixo registram principalmente a **1ª etapa**, quando frameworks CS
 
 **Etapa:** reorganização da aplicação em rotas e páginas com Vue Router.
 
+
+### Prompt 13 — Integração com PokéAPI
+
+> Evolua o projeto Mucuratouille desenvolvido nas etapas anteriores incorporando integração com uma API REST pública. Utilize a PokéAPI para consultar dados de Pokémon por meio de requisições HTTP GET assíncronas. Mantenha Vue 3, Bootstrap, Vue Router, componentização, reatividade e responsividade. Adapte o conceito do projeto para um cardápio fictício de receitas inspiradas em Pokémon, crie uma página Pokédex que permita pesquisar e visualizar informações retornadas pela API e indique quais Pokémon possuem receitas disponíveis. Separe, quando possível, a lógica de requisições dos componentes visuais e preserve a identidade bem-humorada do Mucuratouille.
+
+**Etapa:** integração Front-End e Back-End por API REST, consumo de JSON e programação assíncrona.
+
 ## Imagens e referências visuais
 
 As imagens do projeto têm finalidade acadêmica e ilustrativa.
@@ -248,3 +307,7 @@ Belém do Pará · 2026
 ## Atualização 3.1
 
 A versão 3.1 refina a identidade visual da SPA, amplia o menu, reforça os fundos das páginas internas, adiciona Receita do Dia, inclui um Especial Natal com quatro receitas, aumenta a legibilidade do modo de preparo e adiciona um botão explícito para voltar ao catálogo ao abrir uma receita.
+
+## Atualização 4.1.3
+
+A versão 4.1.3 consolida a quarta etapa do projeto com integração à PokéAPI, nova rota Pokédex, 20 receitas temáticas, dados externos carregados de forma assíncrona, identidade visual atualizada, novos fundos e ilustrações, responsividade refinada e ajustes nos componentes de navegação, receitas e rodapé.

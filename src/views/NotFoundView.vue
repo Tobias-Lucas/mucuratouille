@@ -4,13 +4,14 @@ import { RouterLink } from 'vue-router'
 
 <template>
   <section class="not-found container-fluid px-3 px-lg-4 text-center">
-    <img src="/imagens/mucura-avatar.webp" alt="Mascote Mucuratouille" width="112" height="112" />
+    <img src="/imagens/nao-encontrado.webp" alt="Mascote Mucuratouille" width="134" height="89" />
     <span class="sobretitulo">ERRO 404</span>
-    <h1>Essa receita a mucura ainda não encontrou.</h1>
+    <h1>Essa rota a Mucura ainda não encontrou.</h1>
     <p>A página que você tentou acessar não existe ou mudou de endereço.</p>
     <div class="d-flex flex-wrap justify-content-center gap-2">
       <RouterLink class="btn btn-mucura rounded-pill px-4" to="/">Voltar ao início</RouterLink>
       <RouterLink class="btn btn-outline-mucura rounded-pill px-4" to="/receitas">Ver receitas</RouterLink>
+      <RouterLink class="btn btn-outline-mucura rounded-pill px-4" to="/pokedex">Abrir Pokédex</RouterLink>
     </div>
   </section>
 </template>
@@ -44,15 +45,15 @@ import { RouterLink } from 'vue-router'
 
 .btn-mucura {
   color: #fff;
-  background: #bd4a0a;
-  border-color: #bd4a0a;
+  background: #c94c08;
+  border-color: #c94c08;
   font-size: 12px;
   font-weight: 800;
 }
 
 .btn-outline-mucura {
-  color: #244c36;
-  border-color: #244c36;
+  color: #123c2c;
+  border-color: #123c2c;
   font-size: 12px;
   font-weight: 800;
 }

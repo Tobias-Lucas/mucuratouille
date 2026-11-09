@@ -1,164 +1,155 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
 import fs from 'node:fs'
-import { dadosReceitas } from '../src/data/receitas.js'
+import { dadosReceitas, nomesPokemonComReceita } from '../src/data/receitas.js'
 import { filtrarReceitas, normalizar } from '../src/data/filtros.js'
-
-const filtrar = (busca='', categoria='todas', fav=false, ids=[], rapidas=false, ordem='selecao') => filtrarReceitas(dadosReceitas,busca,categoria,fav,ids,rapidas,ordem)
+import { coresTipo, nomesTipo } from '../src/utils/pokemonTheme.js'
 
 const ler = (caminho) => fs.readFileSync(new URL(caminho, import.meta.url), 'utf8')
+const filtrar = ({ busca='', categoria='todas', favoritos=false, ids=[], ordem='selecao', tipo='todos', tipos={} }={}) => filtrarReceitas(dadosReceitas,busca,categoria,favoritos,ids,ordem,tipo,tipos)
 
-test('19 receitas completas, IDs unicos e referencias HTTPS', () => {
-  assert.equal(dadosReceitas.length,19)
-  assert.equal(new Set(dadosReceitas.map(r=>r.id)).size,19)
-  for(const r of dadosReceitas) {
-    for(const key of ['id','nome','categoria','tempo','dificuldade','descricao','frase','notaTempo','alergenos']) assert.ok(r[key])
-    assert.ok(r.ingredientes.length>=2 && r.passos.length>=3)
-    assert.ok(r.minutos>0 && r.porcoes>0)
-    assert.equal(new URL(r.fonte.url).protocol,'https:')
+test('catalogo possui exatamente 20 receitas Pokemon completas', () => {
+  assert.equal(dadosReceitas.length, 20)
+  assert.equal(new Set(dadosReceitas.map(r=>r.id)).size,20)
+  assert.equal(new Set(dadosReceitas.map(r=>r.pokemon)).size,20)
+  for (const r of dadosReceitas) {
+    for (const chave of ['id','pokemon','nome','categoria','tempo','minutos','porcoes','dificuldade','descricao','frase','alerta','alergenos','notaTempo','imagem']) assert.ok(r[chave], `${r.id}: ${chave}`)
+    assert.ok(r.ingredientes.length >= 8, `${r.id}: ingredientes insuficientes`)
+    assert.ok(r.passos.length >= 6, `${r.id}: preparo pouco detalhado`)
+    assert.equal(r.imagem, r.id)
   }
 })
 
-test('imagens principais e assets locais existem',()=>{
-  assert.ok(fs.existsSync(new URL('../public/imagens/mucura-chef.webp',import.meta.url)))
-  assert.ok(fs.existsSync(new URL('../public/imagens/mucura-avatar.webp',import.meta.url)))
-  for(const r of dadosReceitas) if(r.imagem) assert.ok(fs.existsSync(new URL(`../public/imagens/${r.imagem}.webp`,import.meta.url)))
-  for(const asset of ['mucura-rodape.png','equipe-ana.png','equipe-clayton.png','equipe-jonatas.png','equipe-lucas.png']) {
-    assert.ok(fs.existsSync(new URL(`../public/imagens/${asset}`,import.meta.url)))
-  }
+test('todos os 20 placeholders 1200x675 existem', () => {
+  for (const r of dadosReceitas) assert.ok(fs.existsSync(new URL(`../public/placeholders/receitas/${r.imagem}.png`, import.meta.url)), r.id)
+  assert.ok(fs.existsSync(new URL('../public/placeholders/home-hero.png', import.meta.url)))
 })
 
-test('normalizacao ignora acentos, caixa e espacos externos',()=>assert.equal(normalizar('  TACAC\u00c1  '),'tacaca'))
-test('busca encontra nome sem acento',()=>assert.deepEqual(filtrar('manicoba').map(r=>r.id),['manicoba']))
-test('busca encontra ingredientes',()=>assert.ok(filtrar('jambu').some(r=>r.id==='tacaca')))
-test('busca combina palavras',()=>assert.ok(filtrar('jambu camarao').every(r=>normalizar(r.ingredientes.join(' ')).includes('camarao'))))
-test('busca inexistente retorna vazio',()=>assert.equal(filtrar('zzzxxyy').length,0))
-test('especial de Cirio possui quatro receitas',()=>assert.equal(filtrar('','cirio').length,4))
-test('categoria doces possui tres receitas',()=>assert.equal(filtrar('','doces').length,3))
-test('especial de Natal possui quatro receitas',()=>assert.equal(filtrar('','natal').length,4))
-test('favoritos vazios nao retornam receitas',()=>assert.equal(filtrar('','todas',true).length,0))
-test('favoritos retornam apenas os IDs marcados',()=>assert.deepEqual(filtrar('','todas',true,['tacaca','manicoba']).map(r=>r.id),['manicoba','tacaca']))
-test('filtro rapido exclui tempos com espera adicional',()=>{
-  const r=filtrar('','todas',false,[],true)
-  assert.ok(r.length>0)
-  assert.ok(r.every(r=>r.minutos<=45&&!r.tempo.includes('*')))
-  assert.ok(!r.some(r=>r.id==='creme-cupuacu'))
+test('mapa de Pokemon com receita cobre o catalogo', () => {
+  assert.equal(nomesPokemonComReceita.size,20)
+  for (const r of dadosReceitas) assert.ok(nomesPokemonComReceita.has(r.pokemon))
 })
-test('ordenacao por tempo e crescente',()=>{
-  const r=filtrar('','todas',false,[],false,'tempo')
-  assert.ok(r.every((x,i)=>i===0||x.minutos>=r[i-1].minutos))
+
+test('normalizacao ignora acentos e caixa', () => assert.equal(normalizar('  POKÉMON  '),'pokemon'))
+test('busca encontra receita pelo nome do Pokemon', () => assert.deepEqual(filtrar({busca:'psyduck'}).map(r=>r.id), ['psyduck-assado-com-batatas']))
+test('busca encontra ingrediente', () => assert.ok(filtrar({busca:'parmesao'}).some(r=>r.id==='paras-risoto-cogumelos')))
+test('categorias novas funcionam', () => {
+  assert.ok(filtrar({categoria:'sobremesas'}).length >= 4)
+  assert.ok(filtrar({categoria:'massas'}).every(r=>r.categoria==='massas'))
 })
-test('ordenacao nao modifica o catalogo original',()=>{
-  const ids=dadosReceitas.map(r=>r.id)
-  filtrar('','todas',false,[],false,'nome')
+test('favoritos filtram apenas ids marcados', () => assert.deepEqual(filtrar({favoritos:true,ids:['pikachu-flambado']}).map(r=>r.id),['pikachu-flambado']))
+test('filtro por tipo usa dados vindos da API', () => {
+  const tipos = { psyduck:['water'], pikachu:['electric'] }
+  assert.deepEqual(filtrar({tipo:'electric',tipos}).map(r=>r.id), ['pikachu-flambado'])
+})
+test('ordenacao por tempo preserva catalogo original', () => {
+  const ids = dadosReceitas.map(r=>r.id)
+  const ordenadas = filtrar({ordem:'tempo'})
+  assert.ok(ordenadas.every((r,i)=>i===0 || r.minutos>=ordenadas[i-1].minutos))
   assert.deepEqual(dadosReceitas.map(r=>r.id),ids)
 })
 
-test('fase 3 integra Vue Router e registra o plugin no main',()=>{
-  const pkg=JSON.parse(ler('../package.json'))
-  assert.equal(pkg.dependencies.vue, '^3.5.13')
-  assert.equal(pkg.dependencies['vue-router'], '^4.6.4')
-  assert.ok(fs.existsSync(new URL('../src/vendor/bootstrap.min.css',import.meta.url)))
-  const main=ler('../src/main.js')
-  assert.ok(main.includes("import router from './router/index.js'"))
-  assert.ok(main.includes('.use(router).mount'))
-  assert.ok(main.includes("./vendor/bootstrap.min.css"))
+test('paleta de tipos contem os 18 tipos principais', () => {
+  assert.equal(Object.keys(coresTipo).length,18)
+  assert.equal(Object.keys(nomesTipo).length,18)
+  assert.equal(nomesTipo.water,'Água')
+  assert.ok(coresTipo.electric.startsWith('#'))
 })
 
-test('router possui rotas principais, dinamica e 404',()=>{
+test('service separa integracao PokéAPI e usa fetch com cache', () => {
+  const service = ler('../src/services/pokeapi.js')
+  assert.ok(service.includes("const BASE_URL = 'https://pokeapi.co/api/v2'"))
+  assert.ok(service.includes('fetch(url)'))
+  assert.ok(service.includes('const cache = new Map()'))
+  for (const nome of ['listarTodasEspecies','buscarPokemon','buscarEspecie','buscarTipo','buscarCadeiaEvolutiva']) assert.ok(service.includes(`function ${nome}`) || service.includes(`export function ${nome}`))
+})
+
+test('router preserva fases anteriores e adiciona Pokedex e Pokemon dinamico', () => {
   const router=ler('../src/router/index.js')
-  for(const path of ["path: '/'", "path: '/receitas'", "path: '/receita/:id'", "path: '/sobre'", "path: '/equipe'", "path: '/fontes'", "path: '/:pathMatch(.*)*'"]) {
-    assert.ok(router.includes(path), `Rota ausente: ${path}`)
-  }
-  assert.ok(router.includes('createRouter'))
+  for(const path of ["path: '/'","path: '/receitas'","path: '/receita/:id'","path: '/pokedex'","path: '/pokemon/:nome'","path: '/sobre'","path: '/equipe'","path: '/fontes'","path: '/:pathMatch(.*)*'"]) assert.ok(router.includes(path), path)
   assert.ok(router.includes('createWebHistory'))
 })
 
-test('App usa RouterView e componentes globais permanecem na moldura',()=>{
+test('App preserva moldura SPA, busca global e RouterView', () => {
   const app=ler('../src/App.vue')
-  assert.ok(app.includes('<RouterView'))
   assert.ok(app.includes('<Cabecalho'))
+  assert.ok(app.includes('<RouterView'))
   assert.ok(app.includes('<Rodape'))
-  assert.ok(app.includes('class="toast show aviso'))
+  assert.ok(app.includes('@submit.prevent="executarBusca"'))
+  assert.ok(app.includes('Pokémon do cardápio'))
 })
 
-test('cabecalho e rodape usam RouterLink para navegacao SPA',()=>{
-  const cabecalho=ler('../src/components/Cabecalho.vue')
-  const rodape=ler('../src/components/Rodape.vue')
-  assert.ok(cabecalho.includes('RouterLink'))
-  assert.ok(rodape.includes('RouterLink'))
-  for(const rota of ['/receitas','/sobre','/equipe','/fontes']) assert.ok(cabecalho.includes(rota))
+test('cabecalho preserva logo visual, efeito de movimento e link Pokedex', () => {
+  const cab=ler('../src/components/Cabecalho.vue')
+  assert.ok(cab.includes('/imagens/cabecalho-logo.png'))
+  assert.ok(cab.includes('cabecalho__marca:hover .cabecalho__logo'))
+  assert.ok(!cab.includes('<span>Receitas duvidosas. Conselhos mais ainda.</span>'))
+  assert.ok(cab.includes("{ nome: 'Pokédex', rota: '/pokedex'"))
 })
 
-test('views estao separadas em componentes Vue',()=>{
-  const dir=new URL('../src/views/',import.meta.url)
-  const files=fs.readdirSync(dir).filter(f=>f.endsWith('.vue')).sort()
-  assert.deepEqual(files, ['EquipeView.vue','FontesView.vue','HomeView.vue','NotFoundView.vue','ReceitaView.vue','ReceitasView.vue','SobreView.vue'])
-  for(const f of files) assert.ok(fs.readFileSync(new URL(f,dir),'utf8').includes('<script setup>'))
-})
-
-test('rota dinamica usa useRoute e reaproveita DetalheReceita',()=>{
+test('pagina de receita consome Pokemon e passa para DetalheReceita', () => {
   const view=ler('../src/views/ReceitaView.vue')
-  assert.ok(view.includes('useRoute'))
-  assert.ok(view.includes('route.params.id'))
-  assert.ok(view.includes('<DetalheReceita'))
-})
-
-test('Bootstrap, progress, toast e badges foram preservados',()=>{
+  assert.ok(view.includes('buscarPokemon'))
+  assert.ok(view.includes(':pokemon="pokemon"'))
   const detalhe=ler('../src/components/DetalheReceita.vue')
-  const app=ler('../src/App.vue')
-  assert.ok(detalhe.includes('class="progress detalhe__progress"'))
-  assert.ok(detalhe.includes('class="progress-bar detalhe__progress-bar"'))
-  assert.ok(detalhe.includes('badge rounded-pill detalhe__info-badge'))
-  assert.ok(app.includes('class="toast show aviso'))
+  assert.ok(detalhe.includes('<PokemonInfo'))
+  assert.ok(detalhe.includes('--poke-accent'))
+  assert.ok(detalhe.includes('Demais ingredientes'))
+  assert.ok(detalhe.includes('Modo de preparo'))
 })
 
-test('Vercel possui fallback para historico da SPA',()=>{
+test('Pokedex implementa busca filtros paginacao e disponibilidade de receita', () => {
+  const view=ler('../src/views/PokedexView.vue')
+  assert.ok(view.includes('TAMANHO_PAGINA = 24'))
+  assert.ok(view.includes('buscarTipo'))
+  assert.ok(view.includes('nomesPokemonComReceita'))
+  assert.ok(view.includes('Com receita'))
+  assert.ok(view.includes('Sem receita'))
+  assert.ok(view.includes('<PokemonCard'))
+})
+
+test('ficha Pokemon usa especie stats e cadeia evolutiva', () => {
+  const view=ler('../src/views/PokemonView.vue')
+  for(const termo of ['buscarPokemon','buscarEspecie','buscarCadeiaEvolutiva','PokemonEvolucao','base_stat']) assert.ok(view.includes(termo))
+})
+
+test('Bootstrap, Vue Router e Vite permanecem instalados', () => {
+  const pkg=JSON.parse(ler('../package.json'))
+  assert.equal(pkg.version,'4.1.3')
+  assert.equal(pkg.dependencies.vue,'^3.5.13')
+  assert.equal(pkg.dependencies['vue-router'],'^4.6.4')
+  assert.ok(fs.existsSync(new URL('../src/vendor/bootstrap.min.css',import.meta.url)))
+})
+
+test('Vercel preserva fallback de historico da SPA', () => {
   const vercel=JSON.parse(ler('../vercel.json'))
   assert.deepEqual(vercel.rewrites,[{source:'/(.*)',destination:'/index.html'}])
 })
 
 
-test('fase 3.1 preserva Router e adiciona melhorias solicitadas',()=>{
-  const home=ler('../src/views/HomeView.vue')
-  const receita=ler('../src/views/ReceitaView.vue')
+test('ajustes visuais v4.1 preservam logo, icones e traducao em portugues', () => {
+  const cab=ler('../src/components/Cabecalho.vue')
   const detalhe=ler('../src/components/DetalheReceita.vue')
-  const filtros=ler('../src/components/FiltroCategorias.vue')
-  const internas=ler('../src/styles/paginas-internas.css')
-  assert.ok(home.includes('Receita do dia'))
-  assert.ok(home.includes('home-apresentacao__imagem'))
-  assert.ok(receita.includes('Voltar às receitas'))
-  assert.ok(detalhe.includes('font-size: 13px'))
-  assert.ok(filtros.includes("id: 'natal'"))
-  assert.ok(internas.includes('rgba(8, 28, 18, 0.72)'))
+  const info=ler('../src/components/PokemonInfo.vue')
+  const view=ler('../src/views/PokemonView.vue')
+  const service=ler('../src/services/pokeapi.js')
+  assert.ok(cab.includes('/imagens/cabecalho-logo.png'))
+  assert.ok(!info.includes('Dados da PokéAPI'))
+  assert.ok(detalhe.includes('<svg viewBox="0 0 24 24">'))
+  assert.ok(view.includes('Atributos base'))
+  assert.ok(service.includes('export function nomeHabilidade'))
+  assert.ok(service.includes('A PokéAPI não disponibiliza uma descrição em português'))
 })
 
 
-test('fase 3.2 usa busca global com botao Buscar e Enter pelo submit',()=>{
-  const app=ler('../src/App.vue')
-  assert.ok(app.includes('<BuscaReceitas'))
-  assert.ok(app.includes('@submit.prevent="executarBusca"'))
-  assert.ok(app.includes('>Buscar</button>'))
-  assert.ok(app.includes("name: 'receitas'"))
-  assert.ok(app.includes("query: termo ? { q: termo } : {}"))
-})
-
-test('Surpreenda-me fica ao lado das categorias e usa destaque verde',()=>{
-  const view=ler('../src/views/ReceitasView.vue')
-  const css=ler('../src/style.css')
-  assert.ok(view.includes('controles__categorias'))
-  assert.ok(view.includes('botao-surpresa--verde'))
-  assert.ok(view.includes('<FiltroCategorias'))
-  assert.ok(css.includes('.botao-surpresa--verde'))
-  assert.ok(view.includes('justify-content-between'))
-})
-
-test('Home possui Especial Natal abaixo do Especial Cirio e quatro imagens natalinas',()=>{
-  const home=ler('../src/views/HomeView.vue')
-  assert.ok(home.indexOf('id="titulo-cirio"') < home.indexOf('id="titulo-natal"'))
-  assert.ok(home.includes("const natal = dadosReceitas.filter((receita) => receita.categoria === 'natal')"))
-  const natal = dadosReceitas.filter(r=>r.categoria==='natal')
-  assert.equal(natal.length,4)
-  assert.ok(natal.every(r=>r.imagem))
-  for(const r of natal) assert.ok(fs.existsSync(new URL(`../public/imagens/${r.imagem}.webp`,import.meta.url)))
+test('ajustes visuais v4.1.3 preservam numeros vazados, busca vermelha e CTA padronizado', () => {
+  const detalhe=ler('../src/components/DetalheReceita.vue')
+  const appStyle=ler('../src/style.css')
+  const receitas=ler('../src/views/ReceitasView.vue')
+  assert.match(detalhe,/border:\s*2px solid var\(--poke-accent\)/)
+  assert.match(detalhe,/background:\s*transparent/)
+  assert.ok(appStyle.includes('#d8343b'))
+  assert.match(appStyle,/font-size:\s*13px/)
+  assert.ok(receitas.includes('btn btn-mucura btn-acao rounded-pill'))
+  assert.match(receitas,/font-size:\s*12\.5px/)
 })

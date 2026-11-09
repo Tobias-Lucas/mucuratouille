@@ -1,52 +1,38 @@
 <script setup>
 import { RouterLink, useRoute } from 'vue-router'
 
-defineProps({
-  quantidadeFavoritos: Number,
-})
-
+defineProps({ quantidadeFavoritos: Number })
 const route = useRoute()
 
 const links = [
   { nome: 'Início', rota: '/' },
   { nome: 'Receitas', rota: '/receitas' },
+  { nome: 'Pokédex', rota: '/pokedex', destaque: true },
   { nome: 'Sobre', rota: '/sobre' },
   { nome: 'Equipe', rota: '/equipe' },
   { nome: 'Fontes', rota: '/fontes' },
 ]
+
+function rotaAtiva(link) {
+  if (link.rota === '/') return route.path === '/'
+  if (link.rota === '/receitas') return route.path === '/receitas' || route.path.startsWith('/receita/')
+  if (link.rota === '/pokedex') return route.path === '/pokedex' || route.path.startsWith('/pokemon/')
+  return route.path === link.rota
+}
 </script>
 
 <template>
   <header id="inicio" class="cabecalho">
-    <img
-      class="cabecalho__fundo"
-      src="/imagens/cabecalho-fundo.webp"
-      alt="Paisagem de Belém do Pará ao pôr do sol"
-      width="1800"
-      height="360"
-      fetchpriority="high"
-    />
-
+    <img class="cabecalho__fundo" src="/imagens/cabecalho-fundo.webp" alt="Paisagem de Belém do Pará ao pôr do sol" />
     <div class="cabecalho__sombra" aria-hidden="true"></div>
+    <div class="cabecalho__grade" aria-hidden="true"></div>
 
     <div class="cabecalho__conteudo container-fluid px-3 px-lg-4">
-      <RouterLink class="cabecalho__logo-link" to="/" aria-label="Voltar ao início do Mucuratouille">
-        <img
-          class="cabecalho__logo"
-          src="/imagens/cabecalho-logo.png"
-          alt="Mucuratouille — Receitas boas. Conselhos duvidosos."
-          width="2172"
-          height="724"
-        />
+      <RouterLink class="cabecalho__marca" to="/" aria-label="Voltar ao início do Mucuratouille">
+        <img class="cabecalho__logo" src="/imagens/cabecalho-logo.png" alt="Mucuratouille" />
       </RouterLink>
 
-      <img
-        class="cabecalho__mascote"
-        src="/imagens/cabecalho-mascote.webp"
-        alt="Mascote Mucuratouille com balão de fala convidando o usuário a cozinhar"
-        width="1448"
-        height="1086"
-      />
+      <img class="cabecalho__mascote" src="/imagens/cabecalho-mascote.webp" alt="Mascote Mucuratouille" />
 
       <RouterLink
         class="cabecalho__favoritos d-flex flex-column align-items-center justify-content-center shadow"
@@ -55,9 +41,7 @@ const links = [
         :aria-label="`Ver favoritos: ${quantidadeFavoritos}`"
       >
         <div class="d-flex align-items-center gap-1">
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M12 20.5 4.1 13C-.5 8.7 2 3.5 6.4 3.5c2.4 0 4.1 1.5 5.6 3.2 1.5-1.7 3.2-3.2 5.6-3.2 4.4 0 6.9 5.2 2.3 9.5L12 20.5Z" />
-          </svg>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.5 4.1 13C-.5 8.7 2 3.5 6.4 3.5c2.4 0 4.1 1.5 5.6 3.2 1.5-1.7 3.2-3.2 5.6-3.2 4.4 0 6.9 5.2 2.3 9.5L12 20.5Z" /></svg>
           <strong>{{ quantidadeFavoritos }}</strong>
         </div>
         <small>favoritos</small>
@@ -69,11 +53,11 @@ const links = [
           :key="link.rota"
           :to="link.rota"
           class="cabecalho__nav-link"
-          active-class="cabecalho__nav-link--ativo"
-          :exact-active-class="link.rota === '/' ? 'cabecalho__nav-link--ativo' : ''"
-        >
-          {{ link.nome }}
-        </RouterLink>
+          :class="{
+            'cabecalho__nav-link--pokedex': link.destaque,
+            'cabecalho__nav-link--ativo': rotaAtiva(link)
+          }"
+        >{{ link.nome }}</RouterLink>
       </nav>
     </div>
   </header>
@@ -84,9 +68,9 @@ const links = [
   position: relative;
   z-index: 1;
   width: 100%;
-  height: clamp(220px, 16vw, 260px);
+  height: clamp(238px, 18vw, 282px);
   overflow: hidden;
-  background: #18241b;
+  background: #08261b;
 }
 
 .cabecalho__fundo {
@@ -95,78 +79,88 @@ const links = [
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center 54%;
+  object-position: center 52%;
 }
 
 .cabecalho__sombra {
   position: absolute;
   inset: 0;
-  background: linear-gradient(90deg, rgba(7, 22, 14, 0.2), transparent 45%, rgba(7, 22, 14, 0.08));
-  pointer-events: none;
+  background: linear-gradient(
+      90deg,
+      rgba(4, 20, 13, 0.82),
+      rgba(4, 20, 13, 0.47) 44%,
+      rgba(4, 20, 13, 0.08) 72%
+    ),
+    linear-gradient(0deg, rgba(5, 20, 14, 0.45), transparent 60%);
+}
+
+.cabecalho__grade {
+  position: absolute;
+  inset: 0;
+  opacity: 0.12;
+  background-image: radial-gradient(circle at 1px 1px, #fff 1px, transparent 0);
+  background-size: 22px 22px;
+  mask-image: linear-gradient(90deg, #000, transparent 70%);
 }
 
 .cabecalho__conteudo {
   position: relative;
-  width: 100%;
   height: 100%;
 }
 
-.cabecalho__logo-link {
+.cabecalho__marca {
   position: absolute;
-  z-index: 3;
-  left: clamp(12px, 2vw, 36px);
-  top: clamp(10px, 1.1vw, 20px);
-  display: block;
-  width: min(25vw, 420px);
-  transition: transform 0.18s ease, filter 0.18s ease;
-}
-
-.cabecalho__logo-link:hover {
-  transform: translateY(-2px) scale(1.015);
-  filter: drop-shadow(0 8px 15px rgba(0, 0, 0, 0.18));
+  z-index: 4;
+  top: 30px;
+  left: clamp(18px, 4vw, 70px);
+  display: flex;
+  max-width: 560px;
+  flex-direction: column;
+  color: #fff;
+  text-decoration: none;
+  text-shadow: 0 3px 18px rgba(0, 0, 0, 0.28);
 }
 
 .cabecalho__logo {
-  width: 100%;
+  width: clamp(290px, 27vw, 485px);
   height: auto;
   object-fit: contain;
+  object-position: left center;
+  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.18));
+  transform-origin: left center;
+  transition: transform 0.24s ease, filter 0.24s ease;
+}
+
+.cabecalho__marca:hover .cabecalho__logo {
+  transform: translateY(-5px) rotate(-1.2deg) scale(1.025);
+  filter: drop-shadow(0 9px 14px rgba(0, 0, 0, 0.25));
 }
 
 .cabecalho__mascote {
   position: absolute;
-  right: clamp(86px, 7.5vw, 140px);
-  top: -1px;
-  width: min(39vw, 520px);
+  right: clamp(80px, 8vw, 145px);
+  top: -5px;
+  width: min(38vw, 510px);
   height: calc(100% - 24px);
   object-fit: contain;
   object-position: right top;
+  filter: drop-shadow(0 10px 14px rgba(0, 0, 0, 0.2));
 }
 
 .cabecalho__favoritos {
   position: absolute;
   z-index: 5;
-  top: clamp(14px, 1.4vw, 24px);
-  right: clamp(12px, 2vw, 34px);
-  width: 76px;
-  min-height: 68px;
-  padding: 8px 7px;
+  top: 22px;
+  right: clamp(14px, 2.2vw, 36px);
+  width: 78px;
+  min-height: 70px;
+  padding: 8px;
   color: #fff;
   text-decoration: none;
-  background: rgba(11, 38, 26, 0.94);
+  background: rgba(8, 38, 27, 0.95);
   border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 15px;
-  backdrop-filter: blur(6px);
-  transition: transform 0.18s ease, background 0.18s ease;
-}
-
-.cabecalho__favoritos:hover {
-  color: #fff;
-  transform: translateY(-2px);
-  background: rgba(17, 59, 40, 0.98);
-}
-
-.cabecalho__favoritos--ativo {
-  background: rgba(24, 84, 55, 0.98);
+  border-radius: 16px;
+  backdrop-filter: blur(7px);
 }
 
 .cabecalho__favoritos svg {
@@ -177,49 +171,46 @@ const links = [
 
 .cabecalho__favoritos strong {
   font-size: 16px;
-  line-height: 1;
 }
 
 .cabecalho__favoritos small {
-  margin-top: 3px;
   font-size: 9px;
+}
+
+.cabecalho__favoritos--ativo {
+  background: #174f39;
 }
 
 .cabecalho__nav {
   position: absolute;
   z-index: 6;
   left: 50%;
-  bottom: 72px;
+  bottom: 78px;
   display: flex;
   align-items: center;
   gap: 4px;
-  max-width: calc(100% - 32px);
+  max-width: calc(100% - 28px);
   padding: 7px;
-  overflow-x: auto;
-  background: rgba(8, 29, 19, 0.88);
-  border: 1px solid rgba(255, 255, 255, 0.13);
+  background: rgba(8, 29, 19, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.14);
   border-radius: 999px;
-  backdrop-filter: blur(8px);
+  backdrop-filter: blur(9px);
   transform: translateX(-50%);
-  scrollbar-width: none;
-}
-
-.cabecalho__nav::-webkit-scrollbar {
-  display: none;
 }
 
 .cabecalho__nav-link {
   display: inline-flex;
-  min-height: var(--altura-acao);
+  min-height: 42px;
   align-items: center;
-  flex: 0 0 auto;
+  justify-content: center;
   padding: 7px 17px;
-  color: rgba(255, 255, 255, 0.88);
+  color: rgba(255, 255, 255, 0.9);
   border-radius: 999px;
   font-size: 12px;
   font-weight: 800;
   text-decoration: none;
-  transition: color 0.16s ease, background 0.16s ease;
+  white-space: nowrap;
+  transition: color 0.18s ease, background 0.18s ease, box-shadow 0.18s ease;
 }
 
 .cabecalho__nav-link:hover {
@@ -227,91 +218,61 @@ const links = [
   background: rgba(255, 255, 255, 0.1);
 }
 
-.cabecalho__nav-link--ativo {
-  color: #163523;
-  background: #f3ce78;
+.cabecalho__nav-link--pokedex {
+  box-shadow: inset 0 0 0 3px rgba(198, 40, 40, 0.88);
 }
 
-@media (max-width: 991.98px) {
-  .cabecalho__logo-link {
-    width: min(34vw, 390px);
-  }
+.cabecalho__nav-link--ativo {
+  color: #183326;
+  background: #f4c542;
+}
 
-  .cabecalho__mascote {
-    right: 70px;
-    width: min(45vw, 470px);
-  }
+.cabecalho__nav-link--ativo:hover {
+  color: #183326;
+  background: #f4c542;
+}
+
+.cabecalho__nav-link--pokedex.cabecalho__nav-link--ativo {
+  color: #fff;
+  background: #c62828;
+  box-shadow: inset 0 0 0 3px #ef5350;
+}
+
+.cabecalho__nav-link--pokedex.cabecalho__nav-link--ativo:hover {
+  color: #fff;
+  background: #b71c1c;
 }
 
 @media (max-width: 767.98px) {
   .cabecalho {
-    height: 216px;
+    height: 210px;
   }
 
-  .cabecalho__fundo {
-    object-position: 50% 54%;
-  }
-
-  .cabecalho__logo-link {
-    top: 12px;
+  .cabecalho__marca {
+    top: 14px;
     left: 12px;
-    width: min(39vw, 280px);
+    max-width: 49%;
+  }
+
+  .cabecalho__logo {
+    width: min(190px, 48vw);
   }
 
   .cabecalho__mascote {
-    right: 62px;
-    top: 4px;
-    width: min(43vw, 320px);
-    height: 78%;
+    top: 10px;
+    right: 49px;
+    width: min(25vw, 96px);
+    height: 108px;
+    opacity: 0.96;
   }
 
   .cabecalho__favoritos {
-    width: 62px;
-    min-height: 58px;
-    right: 10px;
     top: 12px;
-  }
-
-  .cabecalho__nav {
-    bottom: 46px;
-  }
-
-  .cabecalho__nav-link {
-    min-height: 34px;
-    padding: 6px 13px;
-    font-size: 10px;
-  }
-}
-
-@media (max-width: 575.98px) {
-  .cabecalho {
-    height: 198px;
-  }
-
-  .cabecalho__fundo {
-    object-position: 49% 55%;
-  }
-
-  .cabecalho__logo-link {
-    top: 10px;
-    left: 10px;
-    width: min(47vw, 205px);
-  }
-
-  .cabecalho__mascote {
-    right: 48px;
-    top: 6px;
-    width: 40vw;
-    height: 72%;
-  }
-
-  .cabecalho__favoritos {
-    width: 52px;
-    min-height: 50px;
     right: 8px;
-    top: 10px;
-    padding: 5px 4px;
-    border-radius: 12px;
+    width: 52px;
+    min-height: 52px;
+    padding: 5px;
+    border-radius: 13px;
   }
 
   .cabecalho__favoritos svg {
@@ -320,24 +281,64 @@ const links = [
   }
 
   .cabecalho__favoritos strong {
-    font-size: 12px;
+    font-size: 13px;
   }
 
   .cabecalho__favoritos small {
-    margin-top: 1px;
     font-size: 7px;
   }
 
   .cabecalho__nav {
-    bottom: 42px;
-    width: calc(100% - 16px);
+    bottom: 50px;
+    width: calc(100% - 18px);
     max-width: none;
-    justify-content: flex-start;
+    gap: 2px;
+    padding: 5px;
+    overflow: hidden;
   }
 
   .cabecalho__nav-link {
-    padding: 8px 12px;
-    font-size: 9px;
+    flex: 1 1 0;
+    min-width: 0;
+    min-height: 36px;
+    padding: 5px 2px;
+    font-size: 8px;
+  }
+
+  .cabecalho__nav-link--pokedex {
+    box-shadow: inset 0 0 0 2px rgba(198, 40, 40, 0.88);
+  }
+
+  .cabecalho__nav-link--pokedex.cabecalho__nav-link--ativo {
+    box-shadow: inset 0 0 0 2px #ef5350;
+  }
+}
+
+@media (max-width: 380px) {
+  .cabecalho__logo {
+    width: min(168px, 46vw);
+  }
+
+  .cabecalho__mascote {
+    right: 43px;
+    width: 23vw;
+    height: 98px;
+  }
+
+  .cabecalho__nav-link {
+    padding-right: 1px;
+    padding-left: 1px;
+    font-size: 7.2px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cabecalho__logo {
+    transition: none;
+  }
+
+  .cabecalho__marca:hover .cabecalho__logo {
+    transform: none;
   }
 }
 </style>

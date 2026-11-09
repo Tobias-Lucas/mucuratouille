@@ -2,6 +2,8 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import ReceitasView from '../views/ReceitasView.vue'
 import ReceitaView from '../views/ReceitaView.vue'
+import PokedexView from '../views/PokedexView.vue'
+import PokemonView from '../views/PokemonView.vue'
 import SobreView from '../views/SobreView.vue'
 import EquipeView from '../views/EquipeView.vue'
 import FontesView from '../views/FontesView.vue'
@@ -13,14 +15,14 @@ const router = createRouter({
     { path: '/', name: 'inicio', component: HomeView },
     { path: '/receitas', name: 'receitas', component: ReceitasView },
     { path: '/receita/:id', name: 'receita', component: ReceitaView },
+    { path: '/pokedex', name: 'pokedex', component: PokedexView },
+    { path: '/pokemon/:nome', name: 'pokemon', component: PokemonView },
     { path: '/sobre', name: 'sobre', component: SobreView },
     { path: '/equipe', name: 'equipe', component: EquipeView },
     { path: '/fontes', name: 'fontes', component: FontesView },
     { path: '/:pathMatch(.*)*', name: 'nao-encontrada', component: NotFoundView },
   ],
-  scrollBehavior() {
-    return { top: 0, behavior: 'smooth' }
-  },
+  scrollBehavior() { return { top: 0, behavior: 'smooth' } },
 })
 
 export default router

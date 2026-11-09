@@ -1,666 +1,407 @@
 export const dadosReceitas = [
   {
-    "id": "pato-no-tucupi",
-    "nome": "Pato no tucupi",
-    "categoria": "classicos",
-    "imagem": "pato-no-tucupi",
-    "tempo": "2 h 30",
-    "minutos": 150,
-    "porcoes": 6,
-    "dificuldade": "Caprichado",
-    "descricao": "Pato dourado, tucupi e jambu. Uma receita com lugar de honra na mesa do Círio.",
-    "frase": "O pato entrou no tucupi. Eu entrei para a história. Cada um com seu destino.",
-    "ingredientes": [
-      "2 kg de pato em pedaços",
-      "2 litros de tucupi pronto para uso culinário",
-      "2 maços de jambu higienizado",
-      "4 dentes de alho amassados",
-      "1 cebola picada",
-      "4 folhas de chicória e 1 ramo de alfavaca",
-      "2 colheres (sopa) de óleo",
-      "Sal e pimenta-do-reino a gosto"
+    id: 'psyduck-assado-com-batatas', pokemon: 'psyduck', nome: 'Psyduck Assado com Batatas', categoria: 'principais',
+    descricao: 'Assado dourado, batatas macias e ervas aromáticas. O único problema é a dor de cabeça do ingrediente principal.',
+    tempo: '1 h 10 min', minutos: 70, porcoes: 4, dificuldade: 'Médio', imagem: 'psyduck-assado-com-batatas',
+    ingredientes: ['800 g de batatas bolinha', '4 dentes de alho amassados', '2 cebolas em pétalas', '3 colheres (sopa) de azeite', '1 colher (chá) de páprica doce', '1 colher (chá) de tomilho seco', '2 ramos de alecrim', 'Suco de 1 limão', 'Sal e pimenta-do-reino a gosto'],
+    passos: [
+      'Preaqueça o forno a 210 °C. Lave bem as batatas, corte as maiores ao meio e seque com papel-toalha para que dourem melhor.',
+      'Misture azeite, alho, páprica, tomilho, sal, pimenta e metade do suco de limão. Use essa mistura para temperar o ingrediente principal e deixe descansar por 15 minutos.',
+      'Distribua as batatas e a cebola em uma assadeira larga, tempere com um pouco de azeite e sal e espalhe o alecrim por cima.',
+      'Acomode o ingrediente principal no centro da assadeira, deixando espaço entre as batatas para o ar quente circular.',
+      'Asse por cerca de 45 minutos, virando as batatas na metade do tempo. Se estiver dourando rápido demais, cubra frouxamente com papel-alumínio.',
+      'Retire do forno, regue com o restante do limão e deixe descansar por 8 minutos antes de servir para que os sabores se acomodem.'
     ],
-    "passos": [
-      "Tempere o pato com metade do alho, sal e pimenta. Mantenha refrigerado até assar. Não lave a ave crua. Preaqueça o forno a 200 °C.",
-      "Distribua numa assadeira, regue com óleo e asse até dourar e cozinhar por inteiro, por cerca de 1 h 30 a 2 h. Confira 74 °C no centro das partes mais espessas, sem tocar no osso.",
-      "Numa panela, aqueça o tucupi já processado com cebola, alho restante, chicória e alfavaca por cerca de 15 minutos.",
-      "Cozinhe o jambu em água até ficar macio e escorra. Junte o pato assado e o jambu ao tucupi, aqueça bem e ajuste o sal. Sirva com arroz branco."
-    ],
-    "fonte": {
-      "nome": "Receita da chef Lúcia Torres, publicada no Diário do Pará",
-      "url": "https://diariodopara.com.br/cirio-de-nazare/veja-como-fazer-um-delicioso-pato-no-tucupi/"
-    },
-    "cirio": true,
-    "notaTempo": "Tempo estimado para esta versão; pode variar conforme ingredientes e equipamentos.",
-    "alerta": "Use tucupi de fornecedor regularizado, já fermentado e cozido, pronto para uso culinário. Nunca substitua por manipueira crua. O aquecimento desta receita não é um processo de detoxificação.",
-    "alergenos": "Confira os rótulos e possíveis contaminações cruzadas."
+    frase: 'Se ele começar a segurar a cabeça, abaixe o forno. Ou saia da cozinha.',
+    alerta: 'Receita fictícia e humorística ambientada no universo do projeto. Não substitui orientação culinária real.',
+    alergenos: 'Não contém alergênicos obrigatórios por padrão; confira os ingredientes utilizados.',
+    notaTempo: 'O tempo pode variar de acordo com o tamanho das batatas e a potência do forno.',
+    fonte: { nome: 'Receita autoral do Mucuratouille', url: 'https://pokeapi.co/' }
   },
   {
-    "id": "manicoba",
-    "nome": "Maniçoba",
-    "categoria": "classicos",
-    "imagem": "manicoba",
-    "tempo": "3 h*",
-    "minutos": 180,
-    "porcoes": 8,
-    "dificuldade": "Planejado",
-    "descricao": "Maniva e carnes em um encontro de sabores que pede tempo, cuidado e mesa cheia.",
-    "frase": "Eu esperei essa panela com a paciência de um sábio. Reclamei, mas esperei.",
-    "ingredientes": [
-      "1 kg de maniva com processamento completo, segura para uso culinário",
-      "300 g de carne-seca já dessalgada",
-      "300 g de carne suína em cubos",
-      "150 g de bacon em cubos",
-      "200 g de linguiça calabresa",
-      "1 cebola picada e 3 dentes de alho",
-      "2 folhas de louro",
-      "Água potável quente, conforme necessário"
+    id: 'magikarp-fish-and-chips', pokemon: 'magikarp', nome: 'Magikarp Fish & Chips', categoria: 'principais',
+    descricao: 'Empanado crocante, batatas douradas e molho cítrico. Finalmente o Splash encontrou uma utilidade prática.',
+    tempo: '55 min', minutos: 55, porcoes: 4, dificuldade: 'Médio', imagem: 'magikarp-fish-and-chips',
+    ingredientes: ['700 g de batatas', '1 xícara de farinha de trigo', '1/2 xícara de amido de milho', '1 colher (chá) de fermento químico', '250 ml de água com gás bem gelada', '1 limão', 'Óleo para fritura', 'Sal e pimenta-do-reino a gosto', 'Maionese e picles para o molho'],
+    passos: [
+      'Corte as batatas em palitos grossos, lave em água fria até a água sair quase transparente e seque muito bem.',
+      'Frite as batatas primeiro a 150 °C por 6 a 7 minutos, sem dourar. Escorra e reserve enquanto prepara o empanado.',
+      'Misture farinha, amido, fermento e uma pitada de sal. Acrescente a água com gás aos poucos, mexendo apenas até formar uma massa espessa e irregular.',
+      'Tempere o ingrediente principal com sal, pimenta e algumas gotas de limão. Passe levemente em farinha e depois mergulhe na massa gelada.',
+      'Aumente o óleo para cerca de 180 °C e frite até o empanado ficar dourado e crocante. Escorra sobre grade ou papel absorvente.',
+      'Volte as batatas ao óleo quente por mais 2 a 3 minutos para finalizar a crocância. Tempere imediatamente com sal.',
+      'Misture maionese, picles picado e um pouco de limão e sirva junto com o prato.'
     ],
-    "passos": [
-      "Antes de começar, confirme a procedência e as instruções da maniva. Esta receita parte de um ingrediente cujo processamento de segurança já foi concluído.",
-      "Doure o bacon em panela grande. Refogue a cebola e o alho. Adicione as carnes, a calabresa e o louro.",
-      "Junte a maniva segura e a água necessária para manter a mistura úmida. Cozinhe em fogo baixo, mexendo e completando a água quando necessário.",
-      "Finalize quando todas as carnes estiverem completamente cozidas e macias, seguindo também as instruções do produto. O tempo indicado é de finalização culinária, não de eliminação de toxinas."
-    ],
-    "fonte": {
-      "nome": "Portal Amazônia, com adaptação de segurança baseada na Embrapa",
-      "url": "https://portalamazonia.com/gastronomia/almoco-do-cirio-confira-as-receitas-do-tradicional-almoco-de-domingoe-outubro/"
-    },
-    "cirio": true,
-    "notaTempo": "*Cerca de 3 horas para finalizar com maniva integralmente processada. Dessalga e processamento da maniva não estão incluídos.",
-    "alerta": "Use apenas maniva com processamento completo e segurança de uso assegurada pelo fabricante. A expressão \"pré-cozida\" não basta. Não use folhas cruas nem improvise seu processamento. Siga as instruções do fornecedor; este preparo não elimina toxinas de uma maniva insegura.",
-    "alergenos": "Confira os rótulos e possíveis contaminações cruzadas."
+    frase: 'Se usar Splash durante a fritura, ignore. Como sempre, não muda absolutamente nada.',
+    alerta: 'Óleo quente exige atenção. Evite encher demais a panela e mantenha cabos voltados para dentro do fogão.',
+    alergenos: 'Glúten e ovos, se a maionese utilizada contiver ovos.',
+    notaTempo: 'A fritura em duas etapas deixa as batatas mais crocantes.',
+    fonte: { nome: 'Receita autoral inspirada em fish & chips', url: 'https://pokeapi.co/' }
   },
   {
-    "id": "arroz-paraense",
-    "nome": "Arroz paraense",
-    "categoria": "classicos",
-    "imagem": "arroz-paraense",
-    "tempo": "50 min",
-    "minutos": 50,
-    "porcoes": 6,
-    "dificuldade": "Tranquilo",
-    "descricao": "Arroz, camarão, jambu e tucupi. Aqui, até o acompanhamento quer ser protagonista.",
-    "frase": "Era só um acompanhamento. Aí ele descobriu o próprio potencial.",
-    "ingredientes": [
-      "2 xícaras de arroz",
-      "200 g de camarão seco limpo e dessalgado",
-      "1 maço de jambu higienizado",
-      "500 ml de tucupi pronto para uso culinário",
-      "500 ml de água quente, aproximadamente",
-      "1/2 cebola e 2 dentes de alho picados",
-      "2 colheres (sopa) de azeite",
-      "Chicória, cheiro-verde e sal a gosto"
+    id: 'krabby-burger-especial', pokemon: 'krabby', nome: 'Krabby Burger Especial', categoria: 'lanches',
+    descricao: 'Hambúrguer suculento, molho rosé e salada crocante. Certo restaurante submarino preferiria não comentar.',
+    tempo: '40 min', minutos: 40, porcoes: 4, dificuldade: 'Fácil', imagem: 'krabby-burger-especial',
+    ingredientes: ['4 pães de brioche', '4 hambúrgueres de 160 g', '4 fatias de queijo cheddar', '1 tomate em rodelas', 'Folhas de alface', '1 cebola roxa em rodelas finas', '4 colheres (sopa) de maionese', '2 colheres (sopa) de ketchup', '1 colher (chá) de mostarda', 'Manteiga, sal e pimenta a gosto'],
+    passos: [
+      'Misture maionese, ketchup e mostarda até formar um molho homogêneo. Reserve na geladeira.',
+      'Abra os pães, passe uma camada fina de manteiga nas partes cortadas e doure em frigideira quente por 1 a 2 minutos.',
+      'Modele o ingrediente principal em discos sem apertar demais. Tempere apenas a superfície com sal e pimenta pouco antes de grelhar.',
+      'Aqueça bem uma frigideira ou chapa e sele os discos por cerca de 3 minutos de cada lado, ajustando o tempo ao ponto desejado.',
+      'Coloque o cheddar sobre cada hambúrguer no último minuto e tampe a frigideira por alguns segundos para derreter.',
+      'Monte com molho, alface, tomate, hambúrguer, queijo e cebola roxa. Finalize com mais molho e feche o pão.',
+      'Sirva imediatamente para preservar o contraste entre pão tostado, queijo derretido e salada fresca.'
     ],
-    "passos": [
-      "Cozinhe o jambu em água até ficar macio, escorra e pique. Reserve o camarão já limpo e dessalgado.",
-      "Refogue cebola e alho no azeite. Acrescente o camarão e o arroz e mexa por 2 minutos.",
-      "Acrescente o tucupi pronto e a água quente aos poucos. Cozinhe em fogo baixo até o arroz ficar macio; ajuste a quantidade de água conforme o grão.",
-      "Junte jambu, chicória e cheiro-verde, misture e aqueça. Prove antes de adicionar sal. Sirva em seguida."
-    ],
-    "fonte": {
-      "nome": "Elen Oliveira da Silva / TudoGostoso; quantidades adaptadas",
-      "url": "https://www.tudogostoso.com.br/receita/61478-arroz-paraense.html"
-    },
-    "cirio": true,
-    "notaTempo": "Tempo estimado para esta versão; pode variar conforme ingredientes e equipamentos.",
-    "alerta": "Use tucupi de fornecedor regularizado, já fermentado e cozido, pronto para uso culinário. Nunca substitua por manipueira crua. O aquecimento desta receita não é um processo de detoxificação.",
-    "alergenos": "Contém crustáceos. Confira os rótulos dos demais ingredientes."
+    frase: 'A fórmula secreta continua secreta. A Mucura só copiou a parte boa.',
+    alerta: 'Cozinhe o ingrediente principal completamente quando necessário e mantenha utensílios crus separados dos prontos.',
+    alergenos: 'Glúten, leite, ovos e mostarda.',
+    notaTempo: 'O tempo considera montagem de quatro lanches.',
+    fonte: { nome: 'Receita autoral do Mucuratouille', url: 'https://pokeapi.co/' }
   },
   {
-    "id": "vatapa",
-    "nome": "Vatapá paraense",
-    "categoria": "classicos",
-    "imagem": "vatapa",
-    "tempo": "50 min",
-    "minutos": 50,
-    "porcoes": 6,
-    "dificuldade": "Tranquilo",
-    "descricao": "Cremoso, cheio de camarão e com dendê na medida. Nesta versão, a base é de trigo.",
-    "frase": "Mexa com convicção. A panela percebe quando o chef está inseguro.",
-    "ingredientes": [
-      "250 g de camarão seco limpo e dessalgado",
-      "1 xícara de farinha de trigo sem fermento",
-      "200 ml de leite de coco",
-      "1 litro de água ou caldo de camarão caseiro",
-      "3 colheres (sopa) de azeite de dendê",
-      "1 cebola e 2 dentes de alho picados",
-      "1/2 pimentão picado",
-      "Cheiro-verde e sal a gosto"
+    id: 'kingler-manteiga-ervas', pokemon: 'kingler', nome: 'Kingler na Manteiga de Ervas', categoria: 'principais',
+    descricao: 'Manteiga dourada, alho, limão e ervas. Sofisticado o bastante para justificar duas pinças gigantes.',
+    tempo: '35 min', minutos: 35, porcoes: 3, dificuldade: 'Fácil', imagem: 'kingler-manteiga-ervas',
+    ingredientes: ['100 g de manteiga', '3 dentes de alho picados', '1 colher (sopa) de salsinha picada', '1 colher (sopa) de cebolinha', 'Raspas de 1 limão-siciliano', 'Suco de 1/2 limão-siciliano', '1 colher (chá) de páprica', 'Sal e pimenta-do-reino a gosto', 'Pão rústico para acompanhar'],
+    passos: [
+      'Derreta metade da manteiga em fogo baixo e acrescente o alho. Cozinhe por cerca de 1 minuto, sem deixar queimar.',
+      'Adicione páprica, raspas de limão, sal e pimenta e misture até perfumar.',
+      'Junte o ingrediente principal e aqueça cuidadosamente, envolvendo-o na manteiga aromática por 5 a 7 minutos.',
+      'Acrescente o restante da manteiga aos poucos para formar um molho brilhante e cremoso.',
+      'Desligue o fogo, adicione salsinha, cebolinha e suco de limão e misture delicadamente.',
+      'Ajuste o sal e sirva imediatamente com pão rústico para aproveitar o molho.'
     ],
-    "passos": [
-      "Refogue cebola, alho e pimentão no dendê. Junte o camarão e misture.",
-      "Em outra tigela, dissolva completamente a farinha em 300 ml da água fria. Não coloque farinha seca diretamente na panela.",
-      "Adicione o restante da água ao refogado. Quando aquecer, despeje a mistura de farinha aos poucos, mexendo sempre.",
-      "Cozinhe em fogo baixo por cerca de 20 minutos, mexendo até cozinhar a farinha. Junte leite de coco e cheiro-verde, aqueça e ajuste a textura com água. Sirva com arroz."
-    ],
-    "fonte": {
-      "nome": "Amanda / TudoGostoso; proporções adaptadas para o projeto",
-      "url": "https://www.tudogostoso.com.br/receita/303486-vatapa-paraense.html"
-    },
-    "cirio": true,
-    "notaTempo": "Tempo estimado para esta versão; pode variar conforme ingredientes e equipamentos.",
-    "alerta": "",
-    "alergenos": "Contém trigo (glúten) e crustáceos."
+    frase: 'Se ele levantar as duas pinças ao mesmo tempo, talvez a negociação tenha falhado.',
+    alerta: 'Manteiga e frutos do mar exigem refrigeração adequada até o momento do preparo.',
+    alergenos: 'Crustáceos e leite.',
+    notaTempo: 'Sirva assim que finalizar para preservar a textura.',
+    fonte: { nome: 'Receita autoral do Mucuratouille', url: 'https://pokeapi.co/' }
   },
   {
-    "id": "tacaca",
-    "nome": "Tacacá",
-    "categoria": "classicos",
-    "imagem": "tacaca",
-    "tempo": "45 min",
-    "minutos": 45,
-    "porcoes": 4,
-    "dificuldade": "Tranquilo",
-    "descricao": "Tucupi, goma, jambu e camarão na cuia. Uma pausa com gosto de Belém.",
-    "frase": "Cuia na mão, pose de especialista. O resto a gente improvisa na conversa.",
-    "ingredientes": [
-      "1,5 litro de tucupi pronto para uso culinário",
-      "1 maço de jambu higienizado",
-      "200 g de camarão seco limpo e dessalgado",
-      "1/2 xícara de goma de mandioca (fécula, não tapioca granulada)",
-      "600 ml de água",
-      "2 dentes de alho",
-      "3 folhas de chicória e 2 pimentas-de-cheiro",
-      "Sal, se necessário"
+    id: 'farfetchd-legumes-assados', pokemon: 'farfetchd', nome: "Farfetch'd com Legumes Assados", categoria: 'principais',
+    descricao: 'Legumes caramelizados, ervas e um ingrediente principal que teve a infelicidade de chegar com o próprio alho-poró.',
+    tempo: '1 h', minutos: 60, porcoes: 4, dificuldade: 'Fácil', imagem: 'farfetchd-legumes-assados',
+    ingredientes: ['2 cenouras em bastões', '2 abobrinhas em meias-luas', '1 pimentão vermelho', '1 pimentão amarelo', '1 alho-poró em rodelas', '1 cebola roxa', '3 colheres (sopa) de azeite', '1 colher (chá) de tomilho', '1 colher (chá) de mel', 'Sal e pimenta a gosto'],
+    passos: [
+      'Preaqueça o forno a 200 °C e forre uma assadeira grande com papel manteiga.',
+      'Corte os legumes em tamanhos semelhantes para que assem de maneira uniforme.',
+      'Misture azeite, mel, tomilho, sal e pimenta e envolva todos os legumes nessa mistura.',
+      'Espalhe os legumes em uma única camada e asse por 20 minutos.',
+      'Tempere o ingrediente principal e coloque-o sobre os legumes parcialmente assados.',
+      'Asse por mais 25 a 30 minutos, mexendo os legumes uma vez para dourarem por igual.',
+      'Finalize com a parte verde do alho-poró bem fatiada e um fio de azeite antes de servir.'
     ],
-    "passos": [
-      "Aqueça o tucupi já processado com alho, chicória e pimenta-de-cheiro. Cozinhe o jambu em água, separadamente, até ficar macio.",
-      "Aqueça bem o camarão dessalgado em uma panela com um pouco de água. Escorra.",
-      "Dissolva a goma em 100 ml de água fria. Ferva os 500 ml restantes e despeje a goma dissolvida, mexendo continuamente até ficar translúcida e espessa.",
-      "Em cada cuia, coloque goma a gosto, tucupi quente, jambu e camarão. Sirva com cuidado: a cuia e o caldo podem estar muito quentes."
-    ],
-    "fonte": {
-      "nome": "Marcelo Melo / Receiteria; quantidades adaptadas",
-      "url": "https://www.receiteria.com.br/receita/tacaca/"
-    },
-    "cirio": false,
-    "notaTempo": "Tempo estimado para esta versão; pode variar conforme ingredientes e equipamentos.",
-    "alerta": "Use tucupi de fornecedor regularizado, já fermentado e cozido, pronto para uso culinário. Nunca substitua por manipueira crua. O aquecimento desta receita não é um processo de detoxificação.",
-    "alergenos": "Contém crustáceos."
+    frase: 'Ele trouxe o alho-poró. A Mucura trouxe a falta de limites.',
+    alerta: 'Use uma assadeira ampla para evitar que os legumes cozinhem no vapor em vez de assar.',
+    alergenos: 'Pode conter traços conforme os temperos utilizados.',
+    notaTempo: 'Legumes menores assam mais rápido; ajuste o corte conforme necessário.',
+    fonte: { nome: 'Receita autoral do Mucuratouille', url: 'https://pokeapi.co/' }
   },
   {
-    "id": "pirarucu",
-    "nome": "Pirarucu de casaca",
-    "categoria": "classicos",
-    "imagem": "pirarucu",
-    "tempo": "1 h 20*",
-    "minutos": 80,
-    "porcoes": 6,
-    "dificuldade": "Caprichado",
-    "descricao": "Peixe em lascas, banana-da-terra e farofa úmida. Camadas de sabor amazônico.",
-    "frase": "O peixe veio de casaca. Eu vim de avental. Ninguém avisou o traje.",
-    "ingredientes": [
-      "500 g de pirarucu já dessalgado",
-      "2 bananas-da-terra maduras fatiadas",
-      "1,5 xícara de farinha de mandioca torrada",
-      "200 ml de leite de coco",
-      "1 cebola e 1/2 pimentão picados",
-      "2 ovos cozidos e 1/2 xícara de azeitonas",
-      "3 colheres (sopa) de azeite, mais óleo para dourar a banana",
-      "Cheiro-verde a gosto"
+    id: 'tauros-steak-batatas', pokemon: 'tauros', nome: 'Tauros Steak com Batatas Rústicas', categoria: 'principais',
+    descricao: 'Steak selado, manteiga aromática e batatas crocantes. Uma batalha de ginásio convertida em jantar.',
+    tempo: '50 min', minutos: 50, porcoes: 2, dificuldade: 'Médio', imagem: 'tauros-steak-batatas',
+    ingredientes: ['2 steaks altos', '500 g de batatas pequenas', '2 colheres (sopa) de azeite', '2 colheres (sopa) de manteiga', '2 dentes de alho', '2 ramos de alecrim', '1 colher (chá) de páprica defumada', 'Sal grosso e pimenta-do-reino', 'Mostarda para acompanhar'],
+    passos: [
+      'Corte as batatas ao meio, tempere com azeite, páprica, sal e pimenta e asse a 220 °C por cerca de 35 minutos.',
+      'Retire os steaks da geladeira 20 minutos antes de cozinhar para reduzir a diferença de temperatura.',
+      'Seque bem a superfície, tempere com sal e pimenta e aqueça uma frigideira pesada até ficar bem quente.',
+      'Sele cada lado por 2 a 4 minutos, conforme a espessura e o ponto desejado, sem ficar movimentando a carne.',
+      'Nos minutos finais, acrescente manteiga, alho e alecrim e regue repetidamente o steak com a manteiga quente.',
+      'Retire da frigideira e deixe descansar por 5 a 8 minutos antes de cortar para redistribuir os sucos.',
+      'Sirva com as batatas rústicas e mostarda à parte.'
     ],
-    "passos": [
-      "Cozinhe o peixe dessalgado até ficar completamente cozido e se separar em lascas. Escorra, retire espinhas e desfie.",
-      "Doure as bananas em um pouco de óleo. Em outra panela, refogue cebola e pimentão no azeite; junte o peixe e o cheiro-verde.",
-      "Umedeça a farinha com leite de coco. Distribua em uma travessa camadas de farofa, peixe, banana e azeitonas.",
-      "Leve ao forno preaquecido a 180 °C por cerca de 20 minutos, até aquecer por inteiro. Finalize com ovos cozidos e cheiro-verde."
-    ],
-    "fonte": {
-      "nome": "Freire.cerosrest / Receitas Globo",
-      "url": "https://receitas.globo.com/tipos-de-prato/peixes-e-frutos-do-mar/pirarucu-de-casaca-557620054d38855b2b000040.ghtml"
-    },
-    "cirio": false,
-    "notaTempo": "*Não inclui a dessalga, que deve seguir o fabricante e ocorrer sob refrigeração.",
-    "alerta": "",
-    "alergenos": "Contém peixe e ovos."
+    frase: 'Capturar um Tauros era mais fácil no Safari. Agora tenta convencer ele a entrar na frigideira.',
+    alerta: 'Use termômetro culinário se precisar controlar com precisão o ponto de cocção.',
+    alergenos: 'Leite e mostarda.',
+    notaTempo: 'O repouso após selar é parte do preparo e melhora a textura.',
+    fonte: { nome: 'Receita autoral do Mucuratouille', url: 'https://pokeapi.co/' }
   },
   {
-    "id": "peixe-acai",
-    "nome": "Peixe frito com açaí",
-    "categoria": "casa",
-    "imagem": "peixe-acai",
-    "tempo": "40 min",
-    "minutos": 40,
-    "porcoes": 4,
-    "dificuldade": "Tranquilo",
-    "descricao": "Peixe crocante, açaí sem adoçar e farinha d’água. Uma combinação da nossa mesa.",
-    "frase": "O açaí veio acompanhar o peixe. A sobremesa que espere a vez dela.",
-    "ingredientes": [
-      "800 g de filés de pescada ou outro peixe sem espinhas",
-      "1 limão e 2 dentes de alho amassados",
-      "1/2 xícara de farinha de trigo para empanar",
-      "Óleo para fritar, sem encher a panela",
-      "800 g de polpa de açaí pasteurizada, sem açúcar",
-      "Farinha d’água para acompanhar",
-      "Sal e pimenta a gosto"
+    id: 'slowpoke-milanesa', pokemon: 'slowpoke', nome: 'Slowpoke à Milanesa', categoria: 'principais',
+    descricao: 'Casquinha dourada, interior macio e limão. Demora para ficar pronto. Ninguém sabe se é culpa da receita.',
+    tempo: '45 min', minutos: 45, porcoes: 4, dificuldade: 'Fácil', imagem: 'slowpoke-milanesa',
+    ingredientes: ['1 xícara de farinha de trigo', '2 ovos batidos', '1 1/2 xícara de farinha panko', '1 colher (chá) de alho em pó', '1 colher (chá) de páprica', 'Óleo para fritura ou azeite para assar', '1 limão', 'Sal e pimenta-do-reino', 'Salsinha para finalizar'],
+    passos: [
+      'Separe três pratos fundos: um com farinha temperada com sal e pimenta, outro com ovos batidos e outro com panko, páprica e alho em pó.',
+      'Seque bem o ingrediente principal e corte em porções de espessura uniforme.',
+      'Passe cada porção primeiro na farinha, depois no ovo e por último no panko, pressionando levemente para aderir.',
+      'Para fritar, aqueça óleo a cerca de 175 °C e doure em pequenas quantidades. Para assar, disponha em assadeira untada e borrife azeite.',
+      'Cozinhe até o empanado ficar dourado e a parte interna atingir o ponto adequado.',
+      'Escorra ou descanse sobre grade por alguns minutos para não perder a crocância.',
+      'Finalize com salsinha e limão e sirva imediatamente.'
     ],
-    "passos": [
-      "Tempere o peixe com alho, limão, sal e pimenta. Reserve por 10 minutos na geladeira e seque o excesso de líquido com papel-toalha.",
-      "Passe levemente na farinha. Frite em pequenas porções, com cuidado, até dourar e cozinhar completamente por dentro (63 °C no centro). Escorra.",
-      "Sirva a polpa de açaí fria, preparada conforme o rótulo, numa tigela separada. Leve o peixe quente e a farinha à mesa.",
-      "Mantenha o açaí refrigerado até servir. Esta é uma sugestão de montagem do projeto, não uma receita oficial única."
-    ],
-    "fonte": {
-      "nome": "Montagem autoral do projeto; referência cultural: Turismo de Santarém",
-      "url": "https://turismo.santarem.pa.gov.br/culinaria"
-    },
-    "cirio": false,
-    "notaTempo": "Tempo estimado para esta versão; pode variar conforme ingredientes e equipamentos.",
-    "alerta": "Use polpa de açaí pasteurizada e de procedência regular. Siga a conservação indicada no rótulo.",
-    "alergenos": "Contém peixe e trigo (glúten)."
+    frase: 'Ele ainda não entendeu o que aconteceu. Isso ajuda bastante na logística.',
+    alerta: 'Evite reaproveitar utensílios que tocaram ingredientes crus sem higienização.',
+    alergenos: 'Glúten e ovos.',
+    notaTempo: 'A farinha panko produz uma crosta mais aerada e crocante.',
+    fonte: { nome: 'Receita autoral do Mucuratouille', url: 'https://pokeapi.co/' }
   },
   {
-    "id": "creme-cupuacu",
-    "nome": "Creme de cupuaçu",
-    "categoria": "doces",
-    "imagem": "creme-cupuacu",
-    "tempo": "10 min*",
-    "minutos": 10,
-    "porcoes": 6,
-    "dificuldade": "Bem fácil",
-    "descricao": "Cremoso, gelado e com a acidez do cupuaçu. O final feliz do almoço.",
-    "frase": "Separei uma porção para depois. Depois chegou muito rápido.",
-    "ingredientes": [
-      "300 g de polpa de cupuaçu",
-      "395 g de leite condensado",
-      "400 g de creme de leite gelado"
+    id: 'squirtle-provencal', pokemon: 'squirtle', nome: 'Squirtle à Provençal', categoria: 'principais',
+    descricao: 'Tomate, alho, ervas e azeite num preparo leve. O Squirtle não aprovou a parte do forno.',
+    tempo: '45 min', minutos: 45, porcoes: 4, dificuldade: 'Fácil', imagem: 'squirtle-provencal',
+    ingredientes: ['4 tomates maduros em cubos', '4 dentes de alho fatiados', '1 cebola pequena picada', '1/2 xícara de vinho branco seco', '3 colheres (sopa) de azeite', '1 colher (sopa) de salsinha', '1 colher (chá) de tomilho', 'Azeitonas pretas a gosto', 'Sal, pimenta e limão'],
+    passos: [
+      'Aqueça o azeite em uma frigideira larga e refogue cebola e alho em fogo médio até ficarem macios.',
+      'Acrescente os tomates, tomilho, sal e pimenta e cozinhe por 8 minutos para formar um molho rústico.',
+      'Adicione o vinho branco e deixe ferver por 2 a 3 minutos para reduzir o álcool e concentrar o sabor.',
+      'Acomode o ingrediente principal sobre o molho, tampe parcialmente e cozinhe em fogo baixo até atingir o ponto adequado.',
+      'Junte as azeitonas e cozinhe por mais 2 minutos, regando o ingrediente principal com o molho.',
+      'Desligue, finalize com salsinha e algumas gotas de limão e sirva com pão ou arroz branco.'
     ],
-    "passos": [
-      "Descongele a polpa na geladeira, seguindo as instruções da embalagem.",
-      "Bata a polpa com leite condensado no liquidificador. Acrescente o creme de leite e bata até ficar uniforme.",
-      "Distribua em tigelas, cubra e refrigere por pelo menos 2 horas para firmar. Sirva gelado."
-    ],
-    "fonte": {
-      "nome": "Jaqueline Souza / Receiteria; versão sem cobertura",
-      "url": "https://www.receiteria.com.br/receita/creme-de-cupuacu/"
-    },
-    "cirio": false,
-    "notaTempo": "*10 minutos de preparo + pelo menos 2 horas de geladeira. Descongelamento da polpa à parte.",
-    "alerta": "",
-    "alergenos": "Contém leite e derivados."
+    frase: 'Tipo Água não significa que ele queria nadar no molho.',
+    alerta: 'Evite deixar o molho secar completamente; acrescente pequenas quantidades de água se necessário.',
+    alergenos: 'Sulfitos, se o vinho utilizado os contiver.',
+    notaTempo: 'O vinho pode ser substituído por caldo de legumes e algumas gotas de limão.',
+    fonte: { nome: 'Receita autoral do Mucuratouille', url: 'https://pokeapi.co/' }
   },
   {
-    "id": "bolo-macaxeira",
-    "nome": "Bolo de macaxeira",
-    "categoria": "doces",
-    "imagem": "bolo-macaxeira",
-    "tempo": "1 h 15",
-    "minutos": 75,
-    "porcoes": 12,
-    "dificuldade": "Tranquilo",
-    "descricao": "Macaxeira cozida, coco e uma casquinha dourada. O café já pode passar.",
-    "frase": "Cortei só uma fatia. A espessura é um assunto particular.",
-    "ingredientes": [
-      "500 g de macaxeira de mesa descascada",
-      "4 ovos",
-      "395 g de leite condensado",
-      "1/2 xícara de açúcar",
-      "1 colher (sopa) de manteiga, mais um pouco para untar",
-      "200 ml de leite de coco",
-      "1 xícara de coco ralado"
+    id: 'torchic-crocante', pokemon: 'torchic', nome: 'Torchic Crocante', categoria: 'lanches',
+    descricao: 'Petisco dourado, apimentado e crocante. Frango frito com a vantagem de talvez chegar pré-aquecido.',
+    tempo: '50 min', minutos: 50, porcoes: 4, dificuldade: 'Médio', imagem: 'torchic-crocante',
+    ingredientes: ['1 xícara de buttermilk ou leite com limão', '1 1/2 xícara de farinha de trigo', '1/2 xícara de amido de milho', '1 colher (chá) de páprica picante', '1 colher (chá) de alho em pó', '1/2 colher (chá) de pimenta-caiena', 'Óleo para fritura', 'Sal e pimenta-do-reino', 'Molho barbecue para acompanhar'],
+    passos: [
+      'Misture o buttermilk com uma pitada de sal e pimenta e deixe o ingrediente principal marinar por pelo menos 20 minutos.',
+      'Em uma tigela, combine farinha, amido, páprica, alho em pó, caiena, sal e pimenta.',
+      'Retire as porções da marinada e passe na mistura seca, apertando a farinha contra a superfície para criar irregularidades crocantes.',
+      'Aqueça o óleo a 175 °C e frite em pequenas quantidades para não reduzir demais a temperatura.',
+      'Vire quando necessário e retire apenas quando estiver bem dourado e cozido por dentro.',
+      'Escorra sobre grade, não diretamente em um prato fechado, para manter a crocância.',
+      'Sirva com barbecue e ajuste o nível de pimenta conforme o público.'
     ],
-    "passos": [
-      "Cozinhe a macaxeira em água até amolecer, escorra e retire a fibra central. Use macaxeira de mesa; não substitua por mandioca-brava.",
-      "Preaqueça o forno a 200 °C. Unte uma assadeira de aproximadamente 20 x 30 cm.",
-      "Bata a macaxeira morna com ovos, leite condensado, açúcar, manteiga e leite de coco. Coloque na forma e espalhe o coco por cima.",
-      "Asse por cerca de 40 minutos, até firmar e dourar. Espere amornar antes de cortar."
-    ],
-    "fonte": {
-      "nome": "Receitas Nestlé / Bolo de mandioca cozida",
-      "url": "https://www.receitasnestle.com.br/receitas/bolo-de-mandioca-cozida"
-    },
-    "cirio": false,
-    "notaTempo": "Tempo estimado para esta versão; pode variar conforme ingredientes e equipamentos.",
-    "alerta": "",
-    "alergenos": "Contém ovos e leite. Confira os rótulos de todos os ingredientes."
+    frase: 'O fogo já vem incluso. A crocância é responsabilidade da cozinha.',
+    alerta: 'Tenha cuidado com óleo quente e confirme a cocção interna antes de servir.',
+    alergenos: 'Glúten e leite.',
+    notaTempo: 'A marinada melhora sabor e maciez.',
+    fonte: { nome: 'Receita autoral do Mucuratouille', url: 'https://pokeapi.co/' }
   },
   {
-    "id": "caruru",
-    "nome": "Caruru paraense",
-    "categoria": "classicos",
-    "imagem": "caruru",
-    "tempo": "1 h",
-    "minutos": 60,
-    "porcoes": 6,
-    "dificuldade": "Tranquilo",
-    "descricao": "Quiabo, camarão e dendê num acompanhamento cheio de personalidade.",
-    "frase": "O quiabo tem personalidade. Eu respeito. Ele também deveria respeitar a minha.",
-    "ingredientes": [
-      "600 g de quiabo higienizado e fatiado",
-      "250 g de camarão seco limpo e dessalgado",
-      "1 cebola, 1 tomate e 2 dentes de alho picados",
-      "3 colheres (sopa) de azeite de dendê",
-      "3 colheres (sopa) de farinha de mandioca",
-      "800 ml de água, aproximadamente",
-      "Coentro e pimenta-de-cheiro a gosto"
+    id: 'tepig-bacon-burger', pokemon: 'tepig', nome: 'Tepig Bacon Burger', categoria: 'lanches',
+    descricao: 'Burger alto, queijo, cebola caramelizada e bacon crocante. O nome do prato já explica o clima da cozinha.',
+    tempo: '45 min', minutos: 45, porcoes: 4, dificuldade: 'Fácil', imagem: 'tepig-bacon-burger',
+    ingredientes: ['4 pães de hambúrguer', '4 hambúrgueres de 160 g', '8 fatias de bacon', '4 fatias de queijo prato', '2 cebolas fatiadas', '1 colher (sopa) de açúcar mascavo', '1 colher (sopa) de manteiga', 'Maionese defumada', 'Sal e pimenta'],
+    passos: [
+      'Comece pela cebola: derreta a manteiga, acrescente as fatias e cozinhe em fogo baixo por 12 a 15 minutos.',
+      'Junte o açúcar mascavo e uma pitada de sal e continue mexendo até a cebola ficar brilhante e caramelizada.',
+      'Doure o bacon em frigideira até ficar crocante e escorra o excesso de gordura.',
+      'Tempere os hambúrgueres somente na hora de grelhar e sele em chapa bem quente até atingir o ponto desejado.',
+      'Adicione o queijo nos minutos finais e cubra a chapa para ajudar a derreter.',
+      'Toste rapidamente os pães na mesma chapa.',
+      'Monte com maionese, burger com queijo, bacon e cebola caramelizada e sirva imediatamente.'
     ],
-    "passos": [
-      "Refogue cebola e alho com parte do dendê. Adicione tomate e camarão e cozinhe por alguns minutos.",
-      "Junte quiabo e água. Cozinhe em fogo baixo até o quiabo ficar bem macio, mexendo de vez em quando.",
-      "Umedeça a farinha em um pouco de água fria e adicione aos poucos, mexendo. Cozinhe por mais 5 a 10 minutos, ajuste o sal e finalize com o dendê restante e coentro."
-    ],
-    "fonte": {
-      "nome": "Beth Y / TudoGostoso",
-      "url": "https://www.tudogostoso.com.br/receita/138495-caruru-paraense-simples.html"
-    },
-    "cirio": false,
-    "notaTempo": "Tempo estimado para esta versão; pode variar conforme ingredientes e equipamentos.",
-    "alerta": "",
-    "alergenos": "Contém crustáceos."
+    frase: 'Se o Tepig olhar para o bacon por tempo demais, mude de assunto.',
+    alerta: 'Separe utensílios usados em carnes cruas dos ingredientes prontos para consumo.',
+    alergenos: 'Glúten, leite e ovos.',
+    notaTempo: 'A cebola caramelizada pode ser feita com antecedência.',
+    fonte: { nome: 'Receita autoral do Mucuratouille', url: 'https://pokeapi.co/' }
   },
   {
-    "id": "caldeirada",
-    "nome": "Caldeirada paraense",
-    "categoria": "classicos",
-    "imagem": "caldeirada",
-    "tempo": "45 min",
-    "minutos": 45,
-    "porcoes": 4,
-    "dificuldade": "Tranquilo",
-    "descricao": "Peixe, ervas e caldo perfumado. Esta versão leva tucupi já processado.",
-    "frase": "Essa panela não faz barulho. Ela anuncia minha chegada.",
-    "ingredientes": [
-      "800 g de peixe em postas",
-      "1 litro de tucupi pronto para uso culinário",
-      "1 cebola, 2 tomates e 1 pimentão fatiados",
-      "3 dentes de alho picados",
-      "2 colheres (sopa) de azeite",
-      "4 ovos cozidos e descascados",
-      "Chicória, alfavaca, cheiro-verde e sal a gosto"
+    id: 'exeggcute-omelete-suprema', pokemon: 'exeggcute', nome: 'Exeggcute Omelete Suprema', categoria: 'cafe',
+    descricao: 'Omelete alta, queijo e ervas. São ovos? São sementes? A cozinha decidiu não abrir sindicância.',
+    tempo: '25 min', minutos: 25, porcoes: 2, dificuldade: 'Fácil', imagem: 'exeggcute-omelete-suprema',
+    ingredientes: ['6 ovos', '60 ml de leite', '80 g de queijo muçarela ralado', '1 tomate sem sementes em cubos', '2 colheres (sopa) de cebolinha', '1 colher (sopa) de manteiga', '1 pitada de noz-moscada', 'Sal e pimenta-do-reino'],
+    passos: [
+      'Bata os ovos apenas até claras e gemas se misturarem. Acrescente leite, sal, pimenta e noz-moscada.',
+      'Aqueça uma frigideira antiaderente em fogo médio-baixo e derreta a manteiga sem deixar escurecer.',
+      'Despeje a mistura e mexa lentamente as bordas para o líquido cru escorrer para baixo.',
+      'Quando o centro ainda estiver levemente úmido, distribua tomate, queijo e cebolinha sobre metade da omelete.',
+      'Dobre cuidadosamente e mantenha em fogo baixo por mais 1 a 2 minutos até o queijo derreter.',
+      'Deslize para o prato e sirva imediatamente para manter a textura macia.'
     ],
-    "passos": [
-      "Tempere o peixe com alho e sal. Refogue cebola, tomate e pimentão no azeite em panela larga.",
-      "Junte tucupi já processado e ervas e aqueça. Acomode o peixe sem sobrepor demais as postas.",
-      "Cozinhe em fervura suave até o peixe ficar completamente cozido (63 °C no centro). Evite mexer as postas; o tempo varia conforme a espessura.",
-      "Adicione os ovos cozidos, aqueça e finalize com cheiro-verde. Sirva com arroz e farinha."
-    ],
-    "fonte": {
-      "nome": "Rodolfo Lyra / TudoGostoso; cocção e quantidades adaptadas",
-      "url": "https://www.tudogostoso.com.br/receita/11313-caldeirada-paraense.html"
-    },
-    "cirio": false,
-    "notaTempo": "Tempo estimado para esta versão; pode variar conforme ingredientes e equipamentos.",
-    "alerta": "Use tucupi de fornecedor regularizado, já fermentado e cozido, pronto para uso culinário. Nunca substitua por manipueira crua. O aquecimento desta receita não é um processo de detoxificação.",
-    "alergenos": "Contém peixe e ovos."
+    frase: 'Tecnicamente são ovos. Provavelmente. Não estraga a piada perguntando demais.',
+    alerta: 'Use ovos bem armazenados e cozinhe ao ponto adequado para seu público.',
+    alergenos: 'Ovos e leite.',
+    notaTempo: 'Fogo baixo ajuda a evitar uma omelete ressecada.',
+    fonte: { nome: 'Receita autoral do Mucuratouille', url: 'https://pokeapi.co/' }
   },
   {
-    "id": "bolinho-piracui",
-    "nome": "Bolinho de piracuí",
-    "categoria": "casa",
-    "imagem": null,
-    "imagemUrl": "https://www.receitasnestle.com.br/sites/default/files/srh_recipes/dbc628f47c071f6ad89e90f6facbb54c.png",
-    "tempo": "50 min",
-    "minutos": 50,
-    "porcoes": 6,
-    "dificuldade": "Tranquilo",
-    "descricao": "Por fora, crocante. Por dentro, batata, temperos e farinha de peixe.",
-    "frase": "Fiz vinte bolinhos. A contagem final passa por auditoria interna.",
-    "ingredientes": [
-      "500 g de batata",
-      "125 g de piracuí sem espinhas",
-      "1 ovo",
-      "1 cebola pequena picada",
-      "2 colheres (sopa) de cheiro-verde",
-      "1 pimenta-de-cheiro picada",
-      "1 colher (sopa) de azeite",
-      "Óleo para fritar e sal, se necessário"
+    id: 'paras-risoto-cogumelos', pokemon: 'paras', nome: 'Risoto de Paras com Cogumelos', categoria: 'massas',
+    descricao: 'Arroz cremoso, cogumelos dourados e parmesão. Ingredientes frescos. Frescos até demais.',
+    tempo: '45 min', minutos: 45, porcoes: 4, dificuldade: 'Médio', imagem: 'paras-risoto-cogumelos',
+    ingredientes: ['2 xícaras de arroz arbóreo', '300 g de cogumelos variados', '1,2 litro de caldo de legumes quente', '1/2 cebola picada', '1/2 xícara de vinho branco seco', '2 colheres (sopa) de manteiga', '80 g de parmesão ralado', '2 colheres (sopa) de azeite', 'Sal, pimenta e salsinha'],
+    passos: [
+      'Mantenha o caldo de legumes aquecido em fogo baixo durante todo o preparo.',
+      'Doure os cogumelos em azeite, em pequenas porções, para evitar excesso de água. Tempere e reserve.',
+      'Na mesma panela, refogue a cebola em metade da manteiga até ficar translúcida.',
+      'Adicione o arroz e mexa por 1 minuto para envolver os grãos na gordura. Junte o vinho e deixe evaporar.',
+      'Acrescente o caldo quente uma concha por vez, mexendo com frequência e adicionando mais apenas quando o líquido anterior tiver sido absorvido.',
+      'Quando o arroz estiver al dente e cremoso, incorpore os cogumelos dourados.',
+      'Desligue o fogo, misture o restante da manteiga e o parmesão, ajuste sal e pimenta e deixe repousar por 2 minutos.',
+      'Finalize com salsinha e sirva imediatamente, enquanto o risoto ainda se espalha suavemente no prato.'
     ],
-    "passos": [
-      "Examine o piracuí e retire eventuais espinhas. Cozinhe as batatas, escorra bem e amasse. Deixe amornar.",
-      "Refogue cebola e pimenta no azeite. Misture ao purê com piracuí, cheiro-verde e ovo. Ajuste o sal.",
-      "Modele cerca de 20 bolinhos pequenos. Frite em pequenas levas, sem encher a panela, até dourar e cozinhar completamente o centro. Não prove a massa crua, pois contém ovo.",
-      "Retire com escumadeira e escorra. Sirva ainda quente."
-    ],
-    "fonte": {
-      "nome": "Edilena da Silva e Sousa / TudoGostoso",
-      "url": "https://www.tudogostoso.com.br/receita/26931-bolinho-de-piracui.html"
-    },
-    "cirio": false,
-    "notaTempo": "Tempo estimado para esta versão; pode variar conforme ingredientes e equipamentos.",
-    "alerta": "",
-    "alergenos": "Contém peixe e ovo. O piracuí pode conter traços de outros ingredientes."
+    frase: 'Os cogumelos vieram com o Paras. A nota fiscal não especificava quem era o acompanhamento.',
+    alerta: 'Use apenas cogumelos próprios para consumo e adquiridos de fornecedores confiáveis.',
+    alergenos: 'Leite e sulfitos, se o vinho contiver.',
+    notaTempo: 'O risoto deve ser servido logo após finalizar para manter a cremosidade.',
+    fonte: { nome: 'Receita autoral do Mucuratouille', url: 'https://pokeapi.co/' }
   },
   {
-    "id": "farofa-camarao",
-    "nome": "Farofa de camarão",
-    "categoria": "casa",
-    "imagem": null,
-    "imagemUrl": "https://static.itdg.com.br/images/1200-630/4475d5404d15813428c1397670e59f8e/219257-original.jpg",
-    "tempo": "25 min",
-    "minutos": 25,
-    "porcoes": 4,
-    "dificuldade": "Bem fácil",
-    "descricao": "Farinha de mandioca, camarão e cheiro-verde. Acompanhamento que rouba a cena.",
-    "frase": "Só um acompanhamento, disseram. Ninguém avisou a farofa.",
-    "ingredientes": [
-      "200 g de camarão seco limpo e dessalgado",
-      "200 g de farinha de mandioca torrada",
-      "1 cebola pequena picada",
-      "2 colheres (sopa) de manteiga",
-      "1 colher (sopa) de azeite",
-      "Cheiro-verde picado e sal a gosto"
+    id: 'tangela-espaguete-pesto', pokemon: 'tangela', nome: 'Espaguete de Tangela ao Pesto', categoria: 'massas',
+    descricao: 'Massa longa, pesto fresco e parmesão. Ninguém sabe onde termina o espaguete e começa o Tangela.',
+    tempo: '30 min', minutos: 30, porcoes: 4, dificuldade: 'Fácil', imagem: 'tangela-espaguete-pesto',
+    ingredientes: ['400 g de espaguete', '2 xícaras de folhas de manjericão', '1/2 xícara de parmesão ralado', '1/3 xícara de castanhas ou pinoli', '1 dente de alho', '1/2 xícara de azeite', 'Suco de 1/2 limão', 'Sal e pimenta', 'Tomates-cereja opcionais'],
+    passos: [
+      'Leve uma panela grande de água salgada ao fogo e cozinhe o espaguete até ficar al dente.',
+      'Enquanto a massa cozinha, bata manjericão, parmesão, castanhas, alho e metade do azeite em processador ou pilão.',
+      'Adicione o restante do azeite aos poucos até obter um pesto cremoso. Tempere com sal, pimenta e limão.',
+      'Reserve cerca de uma xícara da água do cozimento antes de escorrer o espaguete.',
+      'Misture a massa quente com o pesto fora do fogo, adicionando pequenas quantidades da água reservada até o molho envolver os fios.',
+      'Acrescente o ingrediente principal de forma cenográfica e misture apenas o necessário para manter o efeito visual.',
+      'Finalize com parmesão e tomates-cereja e sirva imediatamente.'
     ],
-    "passos": [
-      "Aqueça a manteiga e o azeite. Refogue a cebola até amaciar e acrescente o camarão já limpo e dessalgado.",
-      "Cozinhe, mexendo, até aquecer bem. Adicione a farinha em porções pequenas, misturando até chegar à textura desejada.",
-      "Mexa em fogo baixo por alguns minutos, sem deixar queimar. Desligue, finalize com cheiro-verde e ajuste o sal."
-    ],
-    "fonte": {
-      "nome": "Monique / TudoGostoso; versão adaptada",
-      "url": "https://www.tudogostoso.com.br/receita/178395-farofa-de-camarao-seco-da-tia-socorro.html"
-    },
-    "cirio": false,
-    "notaTempo": "Tempo estimado para esta versão; pode variar conforme ingredientes e equipamentos.",
-    "alerta": "",
-    "alergenos": "Contém crustáceos e leite (manteiga)."
+    frase: 'Se você perder o espaguete de vista, provavelmente ele virou parte do Tangela.',
+    alerta: 'Não cozinhe o pesto diretamente em fogo alto; o calor excessivo escurece o manjericão.',
+    alergenos: 'Glúten, leite e castanhas.',
+    notaTempo: 'A água do cozimento ajuda a emulsificar o molho.',
+    fonte: { nome: 'Receita autoral do Mucuratouille', url: 'https://pokeapi.co/' }
   },
   {
-    "id": "chibe",
-    "nome": "Chibé",
-    "categoria": "casa",
-    "imagem": "chibe",
-    "tempo": "10 min",
-    "minutos": 10,
-    "porcoes": 2,
-    "dificuldade": "Bem fácil",
-    "descricao": "Farinha d’água e água potável. Um preparo simples, de raízes amazônicas.",
-    "frase": "Dois ingredientes. Finalmente uma receita com menos etapas que a minha apresentação.",
-    "ingredientes": [
-      "1/2 xícara de farinha d’água pronta para consumo",
-      "500 ml de água potável fresca",
-      "Uma pitada de sal, opcional"
+    id: 'octillery-mediterranea', pokemon: 'octillery', nome: 'Octillery à Mediterrânea', categoria: 'principais',
+    descricao: 'Tomates, azeitonas, alho e ervas em um prato vibrante. Oito braços ajudam na apresentação.',
+    tempo: '50 min', minutos: 50, porcoes: 4, dificuldade: 'Médio', imagem: 'octillery-mediterranea',
+    ingredientes: ['400 g de tomates-cereja', '1 cebola roxa fatiada', '3 dentes de alho', '1/2 xícara de azeitonas pretas', '2 colheres (sopa) de alcaparras', '1/2 xícara de vinho branco', '3 colheres (sopa) de azeite', 'Orégano e salsinha', 'Sal, pimenta e limão'],
+    passos: [
+      'Aqueça uma frigideira larga com azeite e refogue a cebola por 3 minutos.',
+      'Adicione alho, tomates, orégano e uma pitada de sal e cozinhe até os tomates começarem a romper.',
+      'Junte o vinho e reduza por 2 minutos para formar a base do molho.',
+      'Acrescente o ingrediente principal e cozinhe em fogo médio apenas pelo tempo necessário para ficar macio, evitando excesso de cocção.',
+      'Misture azeitonas e alcaparras e ajuste a pimenta.',
+      'Desligue o fogo, finalize com salsinha, limão e um fio de azeite extra virgem.',
+      'Sirva com pão rústico, batatas ou arroz.'
     ],
-    "passos": [
-      "Coloque a farinha em duas cuias ou tigelas limpas. Use farinha alimentícia pronta para consumo, não mandioca crua.",
-      "Acrescente a água potável, mexa e deixe hidratar por 5 a 10 minutos. Ajuste a proporção de farinha e água ao seu gosto.",
-      "O sal é opcional. Sirva em seguida. Esta proporção é uma sugestão do projeto; os preparos familiares variam."
-    ],
-    "fonte": {
-      "nome": "Pará Mais / Chibé; proporção sugerida pelo projeto",
-      "url": "https://paramais.com.br/chibe-a-bebida-ancestral-de-farinha-que-refresca-o-calor/"
-    },
-    "cirio": false,
-    "notaTempo": "Tempo estimado para esta versão; pode variar conforme ingredientes e equipamentos.",
-    "alerta": "",
-    "alergenos": "Confira os rótulos e possíveis contaminações cruzadas."
+    frase: 'Oito braços e mesmo assim não conseguiu fugir da frigideira. Questão de planejamento.',
+    alerta: 'Frutos do mar podem ficar borrachudos se cozidos por tempo excessivo.',
+    alergenos: 'Moluscos e sulfitos, se o vinho contiver.',
+    notaTempo: 'Prepare o molho antes de adicionar o ingrediente principal.',
+    fonte: { nome: 'Receita autoral do Mucuratouille', url: 'https://pokeapi.co/' }
   },
   {
-    "id": "doce-bacuri",
-    "nome": "Doce cremoso de bacuri",
-    "categoria": "doces",
-    "imagem": null,
-    "imagemUrl": "https://static.itdg.com.br/images/640-400/2d7b16c9e581aeb0c8e52daf04851be1/189441-original.jpg",
-    "tempo": "10 min*",
-    "minutos": 10,
-    "porcoes": 6,
-    "dificuldade": "Bem fácil",
-    "descricao": "Bacuri, leite condensado e creme de leite. Poucos ingredientes, muito assunto.",
-    "frase": "Eu ia dividir. Ainda estou amadurecendo essa ideia.",
-    "ingredientes": [
-      "300 g de polpa de bacuri sem sementes",
-      "395 g de leite condensado",
-      "300 g de creme de leite"
+    id: 'snorlax-costela-panela', pokemon: 'snorlax', nome: 'Costela de Snorlax de Panela', categoria: 'principais',
+    descricao: 'Cozimento lento, molho encorpado e legumes macios. Serve uma família inteira. Ou metade de um Snorlax.',
+    tempo: '2 h 40 min', minutos: 160, porcoes: 8, dificuldade: 'Médio', imagem: 'snorlax-costela-panela',
+    ingredientes: ['1,8 kg de costela em pedaços grandes', '2 cebolas fatiadas', '4 dentes de alho', '2 cenouras em rodelas', '500 g de batatas', '2 colheres (sopa) de extrato de tomate', '500 ml de caldo de carne', '1 folha de louro', '1 colher (chá) de páprica defumada', 'Sal, pimenta e cheiro-verde'],
+    passos: [
+      'Tempere a costela com sal, pimenta e páprica e deixe descansar enquanto prepara os legumes.',
+      'Aqueça uma panela pesada e sele os pedaços de costela em pequenas quantidades até dourarem bem todos os lados.',
+      'Retire a carne e refogue cebola e alho na mesma panela, aproveitando o fundo dourado.',
+      'Junte extrato de tomate e cozinhe por 1 minuto. Volte a costela, acrescente o caldo e o louro e raspe o fundo da panela.',
+      'Tampe e cozinhe em fogo baixo por cerca de 1 hora e 40 minutos, verificando o líquido ocasionalmente.',
+      'Adicione cenouras e batatas e continue o cozimento por 35 a 45 minutos, até tudo ficar macio.',
+      'Retire excesso de gordura da superfície, ajuste o sal e a pimenta e deixe o molho reduzir sem tampa por alguns minutos se necessário.',
+      'Finalize com cheiro-verde e espere 10 minutos antes de servir.'
     ],
-    "passos": [
-      "Descongele a polpa sob refrigeração, conforme o fabricante, e confira se não há sementes.",
-      "Bata bacuri, leite condensado e creme de leite no liquidificador até formar um creme homogêneo.",
-      "Coloque em tigelas, cubra e leve à geladeira por pelo menos 2 horas. Sirva gelado."
-    ],
-    "fonte": {
-      "nome": "João Vasconcelos Siqueira / TudoGostoso",
-      "url": "https://www.tudogostoso.com.br/receita/194572-creme-de-bacuri.html"
-    },
-    "cirio": false,
-    "notaTempo": "*10 minutos de preparo + pelo menos 2 horas de geladeira. Descongelamento da polpa à parte.",
-    "alerta": "",
-    "alergenos": "Contém leite e derivados."
+    frase: 'A receita rende bastante. O desafio é levar o ingrediente principal até a cozinha.',
+    alerta: 'Cozimentos longos exigem monitoramento do líquido para evitar que o fundo queime.',
+    alergenos: 'Pode conter aipo ou outros alergênicos conforme o caldo utilizado.',
+    notaTempo: 'Panela de pressão reduz significativamente o tempo, mas exige adaptação da técnica.',
+    fonte: { nome: 'Receita autoral do Mucuratouille', url: 'https://pokeapi.co/' }
   },
   {
-    "id": "arroz-a-grega-natalino",
-    "nome": "Arroz à grega natalino",
-    "categoria": "natal",
-    "imagem": "arroz-grega-natalino",
-    "tempo": "30 min",
-    "minutos": 30,
-    "porcoes": 6,
-    "dificuldade": "Bem fácil",
-    "descricao": "Arroz colorido com pimentões, cenoura, ervilha e uvas-passas para acompanhar a ceia.",
-    "frase": "Tem passa, tem cor e tem discussão na mesa. Natal oficialmente confirmado.",
-    "ingredientes": [
-      "2 xícaras de arroz branco",
-      "1 cebola pequena picada",
-      "2 dentes de alho picados",
-      "1/2 pimentão vermelho em cubos",
-      "1/2 pimentão amarelo em cubos",
-      "1 cenoura pequena ralada",
-      "1/2 xícara de ervilhas",
-      "1/2 xícara de uvas-passas",
-      "2 colheres (sopa) de azeite",
-      "Salsinha, cebolinha e sal a gosto"
+    id: 'jigglypuff-cheesecake-morango', pokemon: 'jigglypuff', nome: 'Cheesecake de Jigglypuff com Morango', categoria: 'sobremesas',
+    descricao: 'Cremoso, rosado e delicado. Depois da sobremesa talvez todo mundo durma antes da louça.',
+    tempo: '5 h 30 min', minutos: 330, porcoes: 10, dificuldade: 'Médio', imagem: 'jigglypuff-cheesecake-morango',
+    ingredientes: ['220 g de biscoito maisena', '100 g de manteiga derretida', '600 g de cream cheese', '180 g de açúcar', '3 ovos', '1 colher (chá) de baunilha', '200 g de creme de leite', '300 g de morangos', '2 colheres (sopa) de açúcar para a calda', 'Suco de 1/2 limão'],
+    passos: [
+      'Triture os biscoitos, misture com a manteiga e pressione no fundo de uma forma de aro removível. Leve à geladeira por 15 minutos.',
+      'Bata o cream cheese com o açúcar apenas até ficar liso. Acrescente os ovos um a um, misturando em velocidade baixa.',
+      'Incorpore baunilha e creme de leite sem bater demais para não adicionar excesso de ar.',
+      'Despeje sobre a base e asse a 160 °C por 50 a 60 minutos, até as bordas firmarem e o centro ainda balançar levemente.',
+      'Desligue o forno, deixe a porta entreaberta por 20 minutos e depois esfrie completamente antes de refrigerar por pelo menos 3 horas.',
+      'Para a calda, cozinhe morangos, açúcar e limão por 8 a 10 minutos, amassando parte das frutas.',
+      'Espere a calda esfriar e espalhe sobre o cheesecake gelado.',
+      'Decore com morangos frescos e sirva bem frio.'
     ],
-    "passos": [
-      "Refogue cebola e alho no azeite. Junte o arroz e uma pitada de sal e mexa por cerca de 1 minuto.",
-      "Acrescente as uvas-passas e aproximadamente 3 xícaras de água quente. Cozinhe em fogo baixo, com a panela semi-tampada, até o arroz ficar macio e a água secar.",
-      "Em uma frigideira, refogue rapidamente os pimentões e a ervilha. Misture ao arroz com a cenoura ralada.",
-      "Finalize com salsinha e cebolinha, ajuste o sal e sirva como acompanhamento da ceia."
-    ],
-    "fonte": {
-      "nome": "Receitas / GNT - Arroz à grega de Natal",
-      "url": "https://receitas.globo.com/datas-comemorativas/natal/arroz-grega-natalino-gnt.ghtml"
-    },
-    "cirio": false,
-    "notaTempo": "Tempo aproximado para a versão do projeto; pode variar conforme o tipo de arroz e o fogão.",
-    "alerta": "",
-    "alergenos": "Confira os rótulos e possíveis contaminações cruzadas."
+    frase: 'Se ele cantar antes da sobremesa, talvez ninguém chegue acordado ao café.',
+    alerta: 'Respeite o tempo de refrigeração para que o cheesecake firme corretamente.',
+    alergenos: 'Glúten, leite e ovos.',
+    notaTempo: 'A maior parte do tempo é de resfriamento e refrigeração.',
+    fonte: { nome: 'Receita autoral do Mucuratouille', url: 'https://pokeapi.co/' }
   },
   {
-    "id": "salpicao-de-frango-natalino",
-    "nome": "Salpicão de frango natalino",
-    "categoria": "natal",
-    "imagem": "salpicao-frango-natalino",
-    "tempo": "30 min*",
-    "minutos": 30,
-    "porcoes": 8,
-    "dificuldade": "Bem fácil",
-    "descricao": "Frango desfiado, legumes, maçã, passas e creme com batata palha na finalização.",
-    "frase": "Crocância por cima, cremosidade por baixo e uma uva-passa escondida esperando o debate.",
-    "ingredientes": [
-      "500 g de frango cozido e desfiado",
-      "2 cenouras médias raladas",
-      "1/2 pimentão vermelho em cubinhos",
-      "1 maçã verde em cubinhos",
-      "1/2 xícara de azeitonas picadas",
-      "1/2 xícara de uvas-passas",
-      "Suco de 1 limão",
-      "Maionese suficiente para dar cremosidade",
-      "Salsinha e sal a gosto",
-      "Batata palha para finalizar"
+    id: 'vanillite-sundae', pokemon: 'vanillite', nome: 'Vanillite Sundae', categoria: 'sobremesas',
+    descricao: 'Sorvete, calda quente, crocantes e chantilly. O ingrediente principal praticamente chegou montado.',
+    tempo: '20 min', minutos: 20, porcoes: 4, dificuldade: 'Fácil', imagem: 'vanillite-sundae',
+    ingredientes: ['8 bolas de sorvete de baunilha', '150 g de chocolate meio amargo', '100 ml de creme de leite', '4 colheres (sopa) de amendoim torrado picado', 'Chantilly a gosto', '4 cerejas', 'Biscoitos ou wafers para decorar', '1 pitada de sal'],
+    passos: [
+      'Pique o chocolate e coloque em uma tigela resistente ao calor.',
+      'Aqueça o creme de leite até começar a formar pequenas bolhas nas bordas e despeje sobre o chocolate.',
+      'Espere 1 minuto e mexa do centro para fora até formar uma calda lisa. Acrescente uma pitada de sal.',
+      'Distribua duas bolas de sorvete em cada taça gelada.',
+      'Regue com a calda ainda morna em pequena quantidade para criar contraste sem derreter todo o sorvete.',
+      'Finalize com amendoim, chantilly, cereja e wafer.',
+      'Sirva imediatamente antes que o Vanillite descubra que virou apresentação de sobremesa.'
     ],
-    "passos": [
-      "Use frango completamente cozido, desfie e deixe esfriar antes da montagem. Se partir de frango cru, cozinhe até atingir pelo menos 74 °C no centro.",
-      "Misture o frango, a cenoura, o pimentão, a maçã, as azeitonas, as passas e a salsinha em uma tigela grande.",
-      "Tempere com limão e incorpore a maionese aos poucos até atingir a textura desejada. Ajuste o sal.",
-      "Mantenha refrigerado até servir e coloque a batata palha somente na finalização para preservar a crocância."
-    ],
-    "fonte": {
-      "nome": "Receitas RPC - Salpicão de frango para o Natal",
-      "url": "https://receitas.globo.com/regionais/rpc/receitas-paranaenses/salpicao-de-frango-para-o-natal.ghtml"
-    },
-    "cirio": false,
-    "notaTempo": "*Tempo de montagem considerando o frango já cozido e desfiado; o resfriamento pode exigir tempo adicional.",
-    "alerta": "Mantenha o salpicão refrigerado e evite deixá-lo por longos períodos em temperatura ambiente por conter frango e maionese.",
-    "alergenos": "Pode conter ovos e outros alergênicos conforme a maionese e a batata palha utilizadas. Confira os rótulos."
+    frase: 'A única receita em que o ingrediente principal já chega praticamente pronto.',
+    alerta: 'Sirva imediatamente para evitar derretimento excessivo.',
+    alergenos: 'Leite, amendoim, glúten e possíveis traços de soja.',
+    notaTempo: 'Taças previamente geladas ajudam a manter a sobremesa firme por mais tempo.',
+    fonte: { nome: 'Receita autoral do Mucuratouille', url: 'https://pokeapi.co/' }
   },
   {
-    "id": "farofa-natalina",
-    "nome": "Farofa natalina",
-    "categoria": "natal",
-    "imagem": "farofa-natalina",
-    "tempo": "20 min",
-    "minutos": 20,
-    "porcoes": 8,
-    "dificuldade": "Bem fácil",
-    "descricao": "Farinha de mandioca, bacon, passas e castanha-do-pará em um acompanhamento crocante para a ceia.",
-    "frase": "Farofa em festa de fim de ano não é coadjuvante. Ela só finge humildade.",
-    "ingredientes": [
-      "3 xícaras de farinha de mandioca torrada",
-      "100 g de bacon em cubinhos",
-      "1 cebola pequena picada",
-      "2 dentes de alho picados",
-      "2 colheres (sopa) de manteiga",
-      "1/2 xícara de uvas-passas",
-      "1/3 xícara de castanha-do-pará picada",
-      "Cheiro-verde e sal a gosto"
+    id: 'appletun-apple-pie', pokemon: 'appletun', nome: 'Appletun Apple Pie', categoria: 'sobremesas',
+    descricao: 'Torta aromática de maçã, canela e massa amanteigada. Appletun já parecia sobremesa. Era inevitável.',
+    tempo: '1 h 40 min', minutos: 100, porcoes: 8, dificuldade: 'Médio', imagem: 'appletun-apple-pie',
+    ingredientes: ['2 discos de massa para torta', '6 maçãs firmes', '100 g de açúcar mascavo', '60 g de açúcar', '2 colheres (sopa) de farinha de trigo', '1 colher (chá) de canela', '1/4 colher (chá) de noz-moscada', 'Suco de 1 limão', '1 colher (sopa) de manteiga', '1 ovo para pincelar'],
+    passos: [
+      'Descasque as maçãs, retire as sementes e corte em fatias de espessura semelhante.',
+      'Misture as maçãs com açúcar mascavo, açúcar comum, farinha, canela, noz-moscada e limão e deixe descansar por 15 minutos.',
+      'Forre uma forma de torta com um disco de massa e faça pequenos furos no fundo com um garfo.',
+      'Distribua o recheio, evitando despejar líquido em excesso, e espalhe pequenos pedaços de manteiga por cima.',
+      'Cubra com o segundo disco ou faça tiras entrelaçadas. Sele as bordas e abra pequenos respiros na massa.',
+      'Pincele com ovo batido e asse a 200 °C por 20 minutos; reduza para 180 °C e asse por mais 35 a 45 minutos.',
+      'Retire quando a massa estiver dourada e o recheio borbulhando nas bordas.',
+      'Espere pelo menos 30 minutos antes de cortar para o recheio estabilizar.'
     ],
-    "passos": [
-      "Doure o bacon em uma frigideira ampla até começar a ficar crocante. Retire o excesso de gordura se necessário.",
-      "Junte a manteiga, a cebola e o alho e refogue até ficarem macios e perfumados.",
-      "Acrescente as passas e a castanha-do-pará. Adicione a farinha de mandioca aos poucos, mexendo para dourar de maneira uniforme.",
-      "Finalize com cheiro-verde, prove e ajuste o sal. Sirva morna ou em temperatura ambiente."
-    ],
-    "fonte": {
-      "nome": "Receitas RPC - Farofa natalina; castanha-do-pará adicionada como adaptação regional",
-      "url": "https://receitas.globo.com/regionais/rpc/receitas-paranaenses/farofa-natalina.ghtml"
-    },
-    "cirio": false,
-    "notaTempo": "Tempo aproximado para a versão do projeto.",
-    "alerta": "",
-    "alergenos": "Contém leite se preparada com manteiga e contém castanha-do-pará. Confira também os rótulos do bacon."
+    frase: 'A evolução que já vem com cheiro de torta. A cozinha apenas formalizou a situação.',
+    alerta: 'O recheio fica extremamente quente; respeite o tempo de descanso antes de servir.',
+    alergenos: 'Glúten, leite e ovos.',
+    notaTempo: 'O descanso final é essencial para fatias mais firmes.',
+    fonte: { nome: 'Receita autoral do Mucuratouille', url: 'https://pokeapi.co/' }
   },
   {
-    "id": "rabanada-de-natal",
-    "nome": "Rabanada de Natal",
-    "categoria": "natal",
-    "imagem": "rabanada-natal",
-    "tempo": "20 min",
-    "minutos": 20,
-    "porcoes": 12,
-    "dificuldade": "Bem fácil",
-    "descricao": "Pão amanhecido, leite, ovos, açúcar e canela em um clássico doce das festas de fim de ano.",
-    "frase": "Pão de ontem com fama de sobremesa de Natal. Reinvenção de carreira é isso.",
-    "ingredientes": [
-      "4 pães franceses amanhecidos",
-      "600 ml de leite",
-      "3 ovos batidos",
-      "1/2 xícara de açúcar",
-      "Canela em pó a gosto",
-      "Óleo suficiente para fritar"
+    id: 'alcremie-cupcake-cremoso', pokemon: 'alcremie', nome: 'Cupcake Cremoso de Alcremie', categoria: 'sobremesas',
+    descricao: 'Massa de baunilha, cobertura leve e confeitos. Provavelmente o Pokémon mais preparado para trabalhar em confeitaria.',
+    tempo: '1 h', minutos: 60, porcoes: 12, dificuldade: 'Médio', imagem: 'alcremie-cupcake-cremoso',
+    ingredientes: ['180 g de farinha de trigo', '150 g de açúcar', '2 ovos', '100 g de manteiga', '120 ml de leite', '1 colher (chá) de baunilha', '1 1/2 colher (chá) de fermento', '300 g de cream cheese', '100 g de açúcar de confeiteiro', 'Confeitos coloridos'],
+    passos: [
+      'Preaqueça o forno a 180 °C e distribua forminhas de papel em uma assadeira para cupcakes.',
+      'Bata manteiga e açúcar até obter um creme claro. Adicione os ovos um de cada vez e depois a baunilha.',
+      'Misture farinha e fermento em outra tigela. Incorpore os secos à massa alternando com o leite, sem bater em excesso.',
+      'Preencha cada forminha até cerca de dois terços da capacidade e asse por 18 a 22 minutos.',
+      'Deixe esfriar completamente sobre uma grade antes de aplicar a cobertura.',
+      'Bata cream cheese com açúcar de confeiteiro até ficar liso e firme. Mantenha refrigerado se o ambiente estiver quente.',
+      'Decore os cupcakes frios com a cobertura e finalize com confeitos.',
+      'Sirva no mesmo dia ou mantenha refrigerado em recipiente fechado.'
     ],
-    "passos": [
-      "Corte os pães em fatias médias. Em uma tigela, misture o leite com parte do açúcar; em outra, mantenha os ovos batidos.",
-      "Passe cada fatia rapidamente no leite e depois nos ovos, sem deixar o pão desmanchar.",
-      "Frite em óleo quente, em pequenas porções, até dourar dos dois lados. Retire com escumadeira e deixe escorrer em papel absorvente.",
-      "Misture açúcar e canela e passe as rabanadas ainda mornas. Sirva morna ou fria."
+    frase: 'Se a cobertura ficar perfeita demais, provavelmente o Alcremie fez metade do trabalho.',
+    alerta: 'Não aplique cobertura em cupcakes quentes, pois ela perde estrutura.',
+    alergenos: 'Glúten, leite e ovos.',
+    notaTempo: 'Espere os bolinhos esfriarem totalmente antes de decorar.',
+    fonte: { nome: 'Receita autoral do Mucuratouille', url: 'https://pokeapi.co/' }
+  },
+  {
+    id: 'pikachu-flambado', pokemon: 'pikachu', nome: 'Pikachu Flambado', categoria: 'especial',
+    descricao: 'Molho cítrico, manteiga e um toque flambado. Não precisa de fósforo. Talvez nem de fogão.',
+    tempo: '30 min', minutos: 30, porcoes: 2, dificuldade: 'Avançado', imagem: 'pikachu-flambado',
+    ingredientes: ['2 colheres (sopa) de manteiga', '1 laranja', '1 limão', '1 colher (sopa) de mel', '50 ml de conhaque ou suco de maçã para versão sem álcool', '1 colher (chá) de mostarda', '1 dente de alho', 'Sal e pimenta', 'Ervas frescas para finalizar'],
+    passos: [
+      'Misture suco de laranja, algumas gotas de limão, mel e mostarda e reserve.',
+      'Aqueça uma frigideira larga, derreta metade da manteiga e doure levemente o alho.',
+      'Sele o ingrediente principal até ganhar cor uniforme, mantendo fogo médio-alto.',
+      'Reduza o fogo e despeje a mistura cítrica, raspando o fundo da frigideira para incorporar os sabores.',
+      'Se usar conhaque e tiver experiência com flambagem, retire a panela da fonte direta de chama, adicione a bebida e siga técnica segura. Para uma versão simples, use suco de maçã e apenas reduza o molho.',
+      'Quando o molho estiver brilhante e levemente espesso, acrescente a manteiga restante e movimente a frigideira para emulsionar.',
+      'Ajuste sal e pimenta e finalize com ervas frescas.',
+      'Sirva imediatamente e mantenha garfos metálicos longe de qualquer piada elétrica.'
     ],
-    "fonte": {
-      "nome": "É de Casa / Receitas - Rabanada tradicional",
-      "url": "https://receitas.globo.com/receitas-da-tv/e-de-casa/rabanada.ghtml"
-    },
-    "cirio": false,
-    "notaTempo": "Tempo aproximado; frite em pequenas porções e considere tempo adicional caso faça uma quantidade maior.",
-    "alerta": "Tenha cuidado com óleo quente durante a fritura e mantenha crianças afastadas do fogão.",
-    "alergenos": "Contém trigo (glúten), leite e ovos."
+    frase: 'Não aproxime garfos metálicos. Experiência própria.',
+    alerta: 'Flambagem envolve chama aberta e álcool. Só faça se tiver experiência; a versão sem álcool entrega o mesmo conceito visual sem fogo.',
+    alergenos: 'Leite e mostarda.',
+    notaTempo: 'A etapa de flambagem é opcional e pode ser substituída por redução simples do molho.',
+    fonte: { nome: 'Receita autoral do Mucuratouille', url: 'https://pokeapi.co/' }
   }
-
 ]
+
+export const receitasPorPokemon = new Map(dadosReceitas.map((receita) => [receita.pokemon, receita]))
+export const nomesPokemonComReceita = new Set(dadosReceitas.map((receita) => receita.pokemon))

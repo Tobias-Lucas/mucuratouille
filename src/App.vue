@@ -10,49 +10,29 @@ const route = useRoute()
 const router = useRouter()
 const textoBusca = ref(typeof route.query.q === 'string' ? route.query.q : '')
 
-watch(
-  () => route.query.q,
-  (valor) => {
-    textoBusca.value = typeof valor === 'string' ? valor : ''
-  },
-)
+watch(() => route.query.q, (valor) => { textoBusca.value = typeof valor === 'string' ? valor : '' })
 
 function executarBusca() {
   const termo = textoBusca.value.trim()
-  router.push({
-    name: 'receitas',
-    query: termo ? { q: termo } : {},
-  })
+  router.push({ name: 'receitas', query: termo ? { q: termo } : {} })
 }
 </script>
 
 <template>
   <a class="pular-conteudo" href="#conteudo-principal">Pular para o conteúdo</a>
-
   <Cabecalho :quantidade-favoritos="favoritos.length" />
-
   <main id="conteudo-principal" class="pagina">
     <section class="busca-global container-fluid px-3 px-lg-4" aria-label="Busca global de receitas">
       <form class="busca-global__linha d-flex align-items-center gap-2 gap-md-3" role="search" @submit.prevent="executarBusca">
-        <BuscaReceitas :valor-inicial="textoBusca" @buscar="textoBusca = $event" />
+        <BuscaReceitas :valor-inicial="textoBusca" placeholder="Busque uma receita ou Pokémon do cardápio..." @buscar="textoBusca = $event" />
         <button class="busca-global__botao btn rounded-pill shadow" type="submit">Buscar</button>
       </form>
     </section>
-
     <RouterView />
   </main>
-
   <Rodape />
-
   <div v-show="aviso" class="toast show aviso border-0 shadow" role="status" aria-live="polite" aria-atomic="true">
-    <div class="toast-header aviso__cabeca">
-      <svg class="aviso__icone" viewBox="0 0 24 24" aria-hidden="true">
-        <path d="M12 20.5 4.1 13C-.5 8.7 2 3.5 6.4 3.5c2.4 0 4.1 1.5 5.6 3.2 1.5-1.7 3.2-3.2 5.6-3.2 4.4 0 6.9 5.2 2.3 9.5L12 20.5Z" />
-      </svg>
-      <strong class="me-auto">Favoritos</strong>
-      <small>Mucuratouille</small>
-      <button type="button" class="btn-close ms-2" aria-label="Fechar aviso" @click="limparAviso"></button>
-    </div>
+    <div class="toast-header aviso__cabeca"><strong class="me-auto">Favoritos</strong><small>Mucuratouille</small><button type="button" class="btn-close ms-2" aria-label="Fechar aviso" @click="limparAviso"></button></div>
     <div class="toast-body aviso__corpo">{{ aviso }}</div>
   </div>
 </template>
