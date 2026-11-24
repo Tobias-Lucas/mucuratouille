@@ -25,7 +25,7 @@ onMounted(async () => {
       </RouterLink>
       <div class="card-receita__tipo-linha" aria-hidden="true"></div>
       <span class="badge rounded-pill card-receita__selo">{{ receita.categoria === 'principais' ? 'Prato principal' : receita.categoria === 'lanches' ? 'Lanche / petisco' : receita.categoria === 'massas' ? 'Massa / risoto' : receita.categoria === 'cafe' ? 'Café da manhã' : receita.categoria === 'sobremesas' ? 'Sobremesa' : 'Especial da Mucura' }}</span>
-      <button class="btn btn-light rounded-circle shadow-sm card-receita__coracao" :class="{ 'card-receita__coracao--ativo': favorita }" type="button" :aria-pressed="favorita" @click="emit('favoritar', receita)">
+      <button class="btn btn-light rounded-circle shadow-sm card-receita__coracao" :class="{ 'card-receita__coracao--ativo': favorita }" :aria-label="favorita ? `Remover ${receita.nome} dos favoritos` : `Adicionar ${receita.nome} aos favoritos`" type="button" :aria-pressed="favorita" @click="emit('favoritar', receita)">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.5 4.1 13C-.5 8.7 2 3.5 6.4 3.5c2.4 0 4.1 1.5 5.6 3.2 1.5-1.7 3.2-3.2 5.6-3.2 4.4 0 6.9 5.2 2.3 9.5L12 20.5Z" /></svg>
       </button>
     </div>

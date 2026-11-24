@@ -29,7 +29,7 @@ function tituloCategoria(categoria){
           <span v-if="pokemon">#{{ String(pokemon.id).padStart(4,'0') }} {{ pokemon.name }}</span>
         </div>
       </div>
-      <button class="detalhe__favorito" type="button" :aria-pressed="favorita" @click="emit('favoritar', receita)">
+      <button class="detalhe__favorito" type="button" :aria-label="favorita ? `Remover ${receita.nome} dos favoritos` : `Adicionar ${receita.nome} aos favoritos`" :aria-pressed="favorita" @click="emit('favoritar', receita)">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.5 4.1 13C-.5 8.7 2 3.5 6.4 3.5c2.4 0 4.1 1.5 5.6 3.2 1.5-1.7 3.2-3.2 5.6-3.2 4.4 0 6.9 5.2 2.3 9.5L12 20.5Z" /></svg>
         {{ favorita ? 'Favorito' : 'Favoritar' }}
       </button>

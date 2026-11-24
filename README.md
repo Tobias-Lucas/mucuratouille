@@ -1,8 +1,8 @@
 # Mucuratouille
 
-**Receitas boas. Conselhos duvidosos.**
+**Receitas duvidosas. Conselhos mais ainda.**
 
-Mucuratouille é uma **Single Page Application (SPA) desenvolvida em Vue 3** para apresentar receitas da culinária paraense de forma simples, visual e bem-humorada. O projeto valoriza a identidade gastronômica de Belém do Pará e possui uma seção especial dedicada ao período do **Círio de Nazaré**.
+Mucuratouille é uma **Single Page Application (SPA) desenvolvida em Vue 3** que combina o universo da culinária com o mundo Pokémon. A aplicação apresenta um catálogo interativo com **20 receitas fictícias inspiradas em Pokémon**, permitindo explorar pratos temáticos, consultar ingredientes, acompanhar modos de preparo e descobrir informações sobre os Pokémon relacionados a cada receita.
 
 O trabalho foi desenvolvido pela **turma do segundo semestre de Análise e Desenvolvimento de Sistemas (ADS) da UNAMA, em Belém do Pará**, como atividade da disciplina de Front-End Frameworks.
 
@@ -23,22 +23,35 @@ Na segunda etapa, o projeto foi evoluído com **Bootstrap 5.3.6**, mantendo Vue.
 
 Na terceira etapa, o projeto passou a utilizar **Vue Router 4.6.4**, organizando o conteúdo em diferentes rotas sem recarregamento completo da aplicação. O projeto continua sem biblioteca externa de gerenciamento de estado e sem biblioteca pronta de componentes Vue.
 
+Na quarta etapa, o projeto foi ampliado com a integração à **PokéAPI**, uma API REST pública que permite consultar informações do universo Pokémon por meio de requisições HTTP GET assíncronas. 
+
 ## Proposta
 
-A aplicação apresenta receitas típicas do Pará com uma identidade regional inspirada em Belém. A mascote é uma mucura cozinheira chamada **Mucuratouille**, personagem confiante, atrapalhada e bem-humorada que acompanha a experiência sem substituir as informações culinárias.
+O **Mucuratouille** é uma aplicação interativa que une culinária e o universo Pokémon, apresentando um cardápio fictício com 20 receitas inspiradas em diferentes Pokémon. A experiência permite explorar pratos temáticos, consultar ingredientes e modos de preparo, marcar favoritos e descobrir informações sobre os personagens relacionados às receitas por meio de uma Pokédex integrada à PokéAPI.
+
+A identidade visual mantém a mascote Mucuratouille, uma mucura cozinheira de personalidade confiante, atrapalhada e bem-humorada, que representa o estilo descontraído do projeto e acompanha o usuário durante a navegação.
 
 ## Funcionalidades
 
 - busca global por receita ou ingrediente, disponível em todas as páginas;
 - filtros por categoria;
-- categorias especiais do Círio de Nazaré e de Natal;
 - marcação e remoção de receitas favoritas;
+- histórico de receitas acessadas
 - contador reativo de favoritos;
+- favoritos com persistência no localStorage;
+- pokédex com pesquisa por nome ou número;
+- filtros de Pokémon por tipo;
+- filtro de Pokémon que possuem ou não receitas;
+- paginação da Pokédex;
+- página individual de detalhes dos Pokémon;
+- consulta de características, estatísticas e cadeia evolutiva
 - navegação para uma rota dinâmica de detalhes em `/receita/:id`;
 - lista de ingredientes com marcação por checkbox;
 - exibição do modo de preparo com `v-for`;
 - botão “Surpreenda-me!” para selecionar uma receita aleatória;
 - interface responsiva para desktop, tablet e celular.
+- estados de carregamento, erro e ausência de resultados;
+- identidade visual adaptada dinamicamente ao tipo do Pokémon.
 
 ## Evolução — 2ª etapa com Bootstrap
 
@@ -75,6 +88,8 @@ Rotas implementadas:
 - `/` — página inicial;
 - `/receitas` — catálogo com busca, categorias e favoritos;
 - `/receita/:id` — rota dinâmica para o detalhe de cada receita;
+- `/pokedex` — catálogo de Pokémon
+- `/pokemon/:nome` — detalhes individuais de um Pokémon
 - `/sobre` — informações sobre o projeto;
 - `/equipe` — integrantes;
 - `/fontes` — fontes das receitas;
@@ -87,7 +102,7 @@ A configuração `vercel.json` adiciona o fallback necessário para que URLs int
 
 ## Evolução — 4ª etapa com integração à PokéAPI
 
-A quarta fase evolui o Mucuratouille com a integração entre Front-End e Back-End por meio de uma API REST pública. A aplicação passou a consumir dados da **PokéAPI** utilizando requisições HTTP assíncronas, mantendo Vue 3, Bootstrap, Vue Router, componentização, reatividade e responsividade das etapas anteriores.
+A quarta fase evolui o Mucuratouille com a integração do Front-End com uma API REST pública, utilizando a **PokéAPI** para consultar e apresentar informações externas de forma assíncrona. A aplicação passou a consumir dados da **PokéAPI** utilizando requisições HTTP assíncronas, mantendo Vue 3, Bootstrap, Vue Router, componentização, reatividade e responsividade das etapas anteriores.
 
 Nesta fase, o conceito do projeto foi adaptado para um cardápio fictício e bem-humorado de receitas inspiradas em Pokémon, preservando a identidade do Mucuratouille.
 
@@ -127,146 +142,61 @@ src/
 │   ├── Cabecalho.vue
 │   ├── CardReceita.vue
 │   ├── DetalheReceita.vue
+│   ├── EstadoCarregamento.vue
+│   ├── EstadoErro.vue
+│   ├── EstadoVazio.vue
 │   ├── FiltroCategorias.vue
+│   ├── FiltroTipos.vue
+│   ├── ModalInformacoes.vue
+│   ├── PokemonCard.vue
+│   ├── PokemonEvolucao.vue
+│   ├── PokemonInfo.vue
+│   ├── PokemonTypeBadge.vue
 │   └── Rodape.vue
 ├── data/
 │   ├── filtros.js
 │   └── receitas.js
 ├── router/
 │   └── index.js
+├── services/
+│   └── pokeapi.js
 ├── state/
-│   └── favoritos.js
+│   ├── favoritos.js
+│   └── historico.js
 ├── styles/
 │   └── paginas-internas.css
+├── utils/
+│   └── pokemonTheme.js
+├── vendor/
+│   └── bootstrap.min.css
 ├── views/
-│   ├── HomeView.vue
-│   ├── ReceitasView.vue
-│   ├── ReceitaView.vue
-│   ├── SobreView.vue
 │   ├── EquipeView.vue
 │   ├── FontesView.vue
-│   └── NotFoundView.vue
+│   ├── HomeView.vue
+│   ├── NotFoundView.vue
+│   ├── PokedexView.vue
+│   ├── PokemonView.vue
+│   ├── ReceitaView.vue
+│   ├── ReceitasView.vue
+│   └── SobreView.vue
 ├── App.vue
 ├── main.js
 └── style.css
 ```
 
-
-### Arquivos acrescentados ou ampliados na 4ª etapa
-
-```text
-src/
-├── services/
-│   └── pokeapi.js
-├── views/
-│   └── PokedexView.vue
-└── data/
-    └── receitas.js
-```
-
-`services/pokeapi.js` concentra a comunicação com a PokéAPI e o tratamento dos dados externos. `PokedexView.vue` apresenta a consulta e exploração dos Pokémon, enquanto `receitas.js` mantém o conteúdo autoral das receitas e sua associação com os Pokémon utilizados na integração.
-
-Os arquivos em `components` continuam representando partes reutilizáveis da interface. Os arquivos em `views` representam as páginas associadas às rotas. `router/index.js` centraliza a configuração do Vue Router.
-
 ## Como executar
 
-É necessário possuir Node.js instalado.
+Para consultar os requisitos, instruções de instalação, execução em ambiente de desenvolvimento, testes automatizados e geração da versão de produção, acesse o guia:
 
-```bash
-npm install
-npm run dev
-```
-
-Depois, abra no navegador o endereço informado pelo Vite.
+[**Como executar o Mucuratouille (EXECUCAO.md)**](EXECUCAO.md)
 
 ## Uso de Inteligência Artificial
 
-Como proposto no enunciado da tarefa, a inteligência artificial foi utilizada como ferramenta de apoio nas etapas de concepção, identidade visual, componentização, conteúdo, implementação de interações e refinamento da interface.
+A inteligência artificial foi utilizada como ferramenta de apoio durante o desenvolvimento do Mucuratouille, contribuindo para a concepção da proposta, identidade visual, componentização, implementação de funcionalidades, integração com a PokéAPI, testes e refinamento da aplicação.
 
-Os prompts abaixo registram principalmente a **1ª etapa**, quando frameworks CSS e Vue Router ainda não eram permitidos. Na **2ª etapa**, o Bootstrap passou a ser integrado. Na **3ª etapa**, o projeto foi reorganizado como SPA com Vue Router.
+Os prompts utilizados nas etapas de desenvolvimento, juntamente com os registros complementares de evolução e consolidação do projeto, estão organizados em um documento próprio:
 
-
-Na **4ª etapa**, a IA também foi utilizada como apoio para planejar a integração com a PokéAPI, organizar o serviço de requisições, adaptar a identidade visual, estruturar a Pokédex e desenvolver o novo conjunto de receitas temáticas.
-
-### Prompt 1 — Definição da proposta
-
-> Tenho que desenvolver uma aplicação One Page em Vue 3 sobre receitas culinárias. O projeto deve usar apenas componentes .vue, `<script setup>`, props, ref(), eventos, v-if, v-show, v-for, v-model e CSS próprio. Não use Vue Router, frameworks CSS, bibliotecas de componentes ou gerenciamento de estado. Sugira uma proposta de aplicativo de receitas com identidade própria e funcionalidades simples que demonstrem os conteúdos estudados.
-
-**Etapa:** definição inicial do projeto e das funcionalidades.
-
-### Prompt 2 — Adaptação para Belém
-
-> Adapte a proposta do aplicativo de receitas para a realidade de Belém do Pará. O projeto deve valorizar a culinária paraense e incluir receitas típicas da região, com uma seção especial relacionada ao período do Círio de Nazaré. Mantenha o escopo simples, adequado a um trabalho acadêmico de fundamentos de Vue.
-
-**Etapa:** regionalização da proposta.
-
-### Prompt 3 — Criação do Mucuratouille
-
-> Crie uma identidade para um aplicativo de receitas paraenses chamado Mucuratouille. A mascote deve ser uma mucura cozinheira, engraçada, confiante e um pouco atrapalhada. O humor deve ser leve e situacional, com regionalismo discreto, sem exagerar em expressões como “égua” ou “pai d’égua”. Sugira slogan, personalidade e exemplos de falas curtas para a interface.
-
-**Etapa:** criação do nome, mascote e linguagem do projeto.
-
-### Prompt 4 — Divisão em componentes
-
-> Para o aplicativo Mucuratouille, sugira uma estrutura simples e coerente de componentes Vue 3. Utilize arquivos .vue com `<script setup>` e mantenha tudo em uma única página. Preciso de pelo menos quatro componentes reutilizáveis. Não use Vue Router nem bibliotecas externas. Indique também quais componentes podem receber props.
-
-**Etapa:** definição da estrutura de componentes.
-
-### Prompt 5 — Identidade visual e CSS
-
-> Crie uma proposta visual para o Mucuratouille usando apenas HTML e CSS dentro dos componentes Vue. A interface deve lembrar Belém do Pará e a culinária amazônica, com cores inspiradas em tucupi, jambu, madeira e tons quentes. O layout deve ser moderno, amigável e responsivo. Não use Bootstrap, Tailwind ou qualquer framework CSS.
-
-**Etapa:** definição do design e da identidade visual.
-
-### Prompt 6 — Conteúdo regional
-
-> Crie uma lista de receitas paraenses para utilizar como dados locais em uma aplicação Vue. Inclua pratos como pato no tucupi, maniçoba, tacacá, arroz paraense, vatapá paraense, pirarucu de casaca, peixe frito com açaí, creme de cupuaçu e bolo de macaxeira. Para cada receita, forneça nome, categoria, tempo, porções, ingredientes e modo de preparo. Não utilize banco de dados ou API.
-
-**Etapa:** criação do conteúdo local utilizado pela aplicação.
-
-### Prompt 7 — Props e reutilização
-
-> Crie um componente Vue 3 chamado CardReceita.vue usando `<script setup>`. Ele deve receber informações de uma receita por props, como nome, imagem, categoria, tempo e porções. O mesmo componente deverá ser reutilizado várias vezes com dados diferentes. Use apenas props, template e CSS próprio, sem bibliotecas externas.
-
-**Etapa:** construção e reutilização do card de receitas.
-
-### Prompt 8 — Diretivas e v-model
-
-> Implemente uma busca simples para as receitas do Mucuratouille utilizando ref() e v-model. O usuário deve digitar o nome de uma receita ou ingrediente e a lista exibida deve mudar conforme a pesquisa. Utilize apenas recursos básicos de Vue trabalhados em aula, como ref, v-model, v-if e v-for.
-
-**Etapa:** implementação da busca de receitas.
-
-### Prompt 9 — Reatividade com eventos
-
-> Adicione ao Mucuratouille uma função simples de favoritos utilizando ref() e @click. Ao clicar no coração de uma receita, ela deve ser marcada ou desmarcada como favorita e o contador de favoritos no cabeçalho deve ser atualizado automaticamente. Não use localStorage, Pinia ou qualquer biblioteca externa.
-
-**Etapa:** implementação de favoritos e reatividade.
-
-### Prompt 10 — Uso de v-if e v-for
-
-> Crie um componente DetalheReceita.vue para o Mucuratouille. Ao selecionar uma receita, o componente deve aparecer na mesma página utilizando v-if. Os ingredientes e etapas do modo de preparo devem ser exibidos com v-for. Permita marcar ingredientes como separados usando eventos simples. Não utilize modal externo, Router ou bibliotecas.
-
-**Etapa:** desenvolvimento da área de detalhes da receita.
-
-### Prompt 11 — Ajustes de interface
-
-> Revise a interface do Mucuratouille para funcionar bem em desktop, tablet e celular utilizando apenas CSS próprio. Ajuste grid, tamanhos de fonte, imagens, botões e espaçamentos. Não altere a estrutura Vue nem adicione bibliotecas externas. Mantenha o código simples e compreensível para estudantes que estão aprendendo componentes, props, diretivas, eventos e reatividade.
-
-**Etapa:** refinamento visual e responsividade.
-
-
-### Prompt 12 — Evolução para Vue Router
-
-> Evolua o projeto Mucuratouille desenvolvido nas etapas anteriores incorporando Vue Router. Mantenha as funcionalidades existentes, Bootstrap e identidade visual. Crie páginas para Início, Receitas, Sobre, Equipe e Fontes, implemente uma rota dinâmica `/receita/:id` para os detalhes das receitas e uma página 404. Utilize RouterLink e RouterView e preserve a experiência SPA sem recarregamento completo.
-
-**Etapa:** reorganização da aplicação em rotas e páginas com Vue Router.
-
-
-### Prompt 13 — Integração com PokéAPI
-
-> Evolua o projeto Mucuratouille desenvolvido nas etapas anteriores incorporando integração com uma API REST pública. Utilize a PokéAPI para consultar dados de Pokémon por meio de requisições HTTP GET assíncronas. Mantenha Vue 3, Bootstrap, Vue Router, componentização, reatividade e responsividade. Adapte o conceito do projeto para um cardápio fictício de receitas inspiradas em Pokémon, crie uma página Pokédex que permita pesquisar e visualizar informações retornadas pela API e indique quais Pokémon possuem receitas disponíveis. Separe, quando possível, a lógica de requisições dos componentes visuais e preserve a identidade bem-humorada do Mucuratouille.
-
-**Etapa:** integração Front-End e Back-End por API REST, consumo de JSON e programação assíncrona.
+[**Consultar os prompts de Inteligência Artificial (PROMPTS_IA.md)**](PROMPTS_IA.md)
 
 ## Imagens e referências visuais
 
@@ -278,7 +208,9 @@ As referências culinárias utilizadas em cada receita estão registradas nos pr
 
 ## Observações
 
-As receitas foram adaptadas para fins acadêmicos e de demonstração da interface. As orientações de segurança exibidas para ingredientes como tucupi e maniva devem ser levadas a sério. Antes do preparo real, devem ser observadas as orientações dos fabricantes e as referências indicadas na aplicação.
+**Cardápio autoral e conteúdo fictício**
+
+O catálogo do Mucuratouille reúne 20 receitas fictícias e autorais, desenvolvidas com auxílio de IA, especialmente para o projeto e inspiradas em diferentes Pokémon. Cada prato possui nome, descrição, imagem, ingredientes e modo de preparo próprios, combinando características dos personagens com propostas culinárias temáticas.
 
 ---
 
@@ -292,22 +224,5 @@ As receitas foram adaptadas para fins acadêmicos e de demonstração da interfa
 | Lucas Jatene Tobias | 04217989 |
 
 
-**Mucuratouille — Receitas boas. Conselhos duvidosos.**  
+**Mucuratouille — Receitas duvidosas. Conselhos mais ainda.**  
 Belém do Pará · 2026
-
-## Responsividade atual
-
-- O catálogo mantém duas colunas em celulares.
-- As categorias continuam recolhíveis no mobile.
-- O detalhe da receita agora é exibido pela rota dinâmica `/receita/:id`.
-- Cabeçalho e menu principal foram ajustados para comportar a navegação por rotas.
-- Bootstrap e CSS próprio continuam trabalhando em conjunto na responsividade.
-
-
-## Atualização 3.1
-
-A versão 3.1 refina a identidade visual da SPA, amplia o menu, reforça os fundos das páginas internas, adiciona Receita do Dia, inclui um Especial Natal com quatro receitas, aumenta a legibilidade do modo de preparo e adiciona um botão explícito para voltar ao catálogo ao abrir uma receita.
-
-## Atualização 4.1.3
-
-A versão 4.1.3 consolida a quarta etapa do projeto com integração à PokéAPI, nova rota Pokédex, 20 receitas temáticas, dados externos carregados de forma assíncrona, identidade visual atualizada, novos fundos e ilustrações, responsividade refinada e ajustes nos componentes de navegação, receitas e rodapé.

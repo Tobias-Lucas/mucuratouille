@@ -2,6 +2,9 @@
 import { computed, onMounted, ref, watch } from 'vue'
 import PokemonCard from '../components/PokemonCard.vue'
 import FiltroTipos from '../components/FiltroTipos.vue'
+import EstadoCarregamento from '../components/EstadoCarregamento.vue'
+import EstadoErro from '../components/EstadoErro.vue'
+import EstadoVazio from '../components/EstadoVazio.vue'
 import { listarTodasEspecies, buscarPokemon, buscarTipo } from '../services/pokeapi.js'
 import { nomesPokemonComReceita, receitasPorPokemon } from '../data/receitas.js'
 import { normalizar } from '../data/filtros.js'
@@ -14,60 +17,145 @@ const tipo = ref('todos')
 const statusCardapio = ref('todos')
 const pagina = ref(1)
 const carregandoLista = ref(true)
+const carregandoTipo = ref(false)
 const carregandoCards = ref(false)
-const erro = ref('')
+const erroLista = ref('')
+const erroTipo = ref('')
+const erroCards = ref('')
 const nomesDoTipo = ref(null)
-let tokenCarga = 0
+let tokenCards = 0
+let tokenTipo = 0
 
-function idDaUrl(url){ const partes = String(url).split('/').filter(Boolean); return Number(partes.at(-1)) || 0 }
+function idDaUrl(url) {
+  const partes = String(url).split('/').filter(Boolean)
+  return Number(partes.at(-1)) || 0
+}
 
 const filtrados = computed(() => {
   const termo = normalizar(busca.value)
+
   return especies.value.filter((item) => {
     const id = idDaUrl(item.url)
-    const combinaBusca = !termo || normalizar(item.name).includes(termo) || String(id) === termo
+    const buscaNumerica = /^\d+$/.test(termo) && Number(termo) === id
+    const combinaBusca = !termo || normalizar(item.name).includes(termo) || buscaNumerica
     const combinaTipo = tipo.value === 'todos' || nomesDoTipo.value?.has(item.name)
     const temReceita = nomesPokemonComReceita.has(item.name)
-    const combinaStatus = statusCardapio.value === 'todos' || (statusCardapio.value === 'com' && temReceita) || (statusCardapio.value === 'sem' && !temReceita)
+    const combinaStatus = statusCardapio.value === 'todos'
+      || (statusCardapio.value === 'com' && temReceita)
+      || (statusCardapio.value === 'sem' && !temReceita)
+
     return combinaBusca && combinaTipo && combinaStatus
   })
 })
+
 const totalPaginas = computed(() => Math.max(1, Math.ceil(filtrados.value.length / TAMANHO_PAGINA)))
 const inicio = computed(() => (pagina.value - 1) * TAMANHO_PAGINA)
 const paginaNomes = computed(() => filtrados.value.slice(inicio.value, inicio.value + TAMANHO_PAGINA))
 
-async function carregarTipo(){
-  if (tipo.value === 'todos') { nomesDoTipo.value = null; return }
+async function carregarLista() {
+  carregandoLista.value = true
+  erroLista.value = ''
+
   try {
-    const dados = await buscarTipo(tipo.value)
-    nomesDoTipo.value = new Set(dados.pokemon.map((item) => item.pokemon.name))
-  } catch { nomesDoTipo.value = new Set() }
+    const dados = await listarTodasEspecies()
+    especies.value = Array.isArray(dados.results) ? dados.results : []
+  } catch {
+    erroLista.value = 'Não foi possível consultar a PokéAPI agora. Verifique sua conexão e tente novamente.'
+  } finally {
+    carregandoLista.value = false
+  }
 }
 
-async function carregarCards(){
-  const meuToken = ++tokenCarga
+async function carregarTipo() {
+  const meuToken = ++tokenTipo
+  erroTipo.value = ''
+
+  if (tipo.value === 'todos') {
+    nomesDoTipo.value = null
+    carregandoTipo.value = false
+    return
+  }
+
+  carregandoTipo.value = true
+  nomesDoTipo.value = null
+
+  try {
+    const dados = await buscarTipo(tipo.value)
+    if (meuToken !== tokenTipo) return
+
+    nomesDoTipo.value = new Set(dados.pokemon.map((item) => item.pokemon.name))
+  } catch {
+    if (meuToken === tokenTipo) {
+      nomesDoTipo.value = new Set()
+      erroTipo.value = 'Não foi possível carregar esse tipo de Pokémon. Tente novamente.'
+    }
+  } finally {
+    if (meuToken === tokenTipo) carregandoTipo.value = false
+  }
+}
+
+async function carregarCards() {
+  const meuToken = ++tokenCards
+  const nomes = paginaNomes.value
+
+  erroCards.value = ''
+
+  if (!nomes.length) {
+    pokemonPagina.value = []
+    carregandoCards.value = false
+    return
+  }
+
   carregandoCards.value = true
-  const resultados = await Promise.allSettled(paginaNomes.value.map((item) => buscarPokemon(item.name)))
-  if (meuToken !== tokenCarga) return
-  pokemonPagina.value = resultados.filter((item) => item.status === 'fulfilled').map((item) => item.value)
+
+  const resultados = await Promise.allSettled(
+    nomes.map((item) => buscarPokemon(item.name)),
+  )
+
+  if (meuToken !== tokenCards) return
+
+  pokemonPagina.value = resultados
+    .filter((item) => item.status === 'fulfilled')
+    .map((item) => item.value)
+
+  if (!pokemonPagina.value.length) {
+    erroCards.value = 'Não foi possível carregar os Pokémon desta página. Tente novamente.'
+  }
+
   carregandoCards.value = false
 }
 
-async function mudarTipo(valor){ tipo.value = valor; pagina.value = 1; await carregarTipo(); await carregarCards() }
-function mudarStatus(valor){ statusCardapio.value = valor; pagina.value = 1 }
-function irPagina(valor){ pagina.value = Math.min(Math.max(1, valor), totalPaginas.value); window.scrollTo({ top: 420, behavior:'smooth' }) }
+async function mudarTipo(valor) {
+  tipo.value = valor
+  pagina.value = 1
+  await carregarTipo()
+}
 
-onMounted(async () => {
-  try {
-    const dados = await listarTodasEspecies()
-    especies.value = dados.results
-    await carregarCards()
-  } catch (e) { erro.value = 'Não foi possível consultar a PokéAPI agora.' }
-  finally { carregandoLista.value = false }
+function mudarStatus(valor) {
+  statusCardapio.value = valor
+  pagina.value = 1
+}
+
+function limparFiltros() {
+  busca.value = ''
+  tipo.value = 'todos'
+  statusCardapio.value = 'todos'
+  pagina.value = 1
+  carregarTipo()
+}
+
+function irPagina(valor) {
+  pagina.value = Math.min(Math.max(1, valor), totalPaginas.value)
+  window.scrollTo({ top: 420, behavior: 'smooth' })
+}
+
+watch([busca, statusCardapio], () => {
+  pagina.value = 1
 })
 
-watch([busca, statusCardapio], () => { pagina.value = 1 })
-watch([pagina, filtrados], carregarCards)
+watch(paginaNomes, carregarCards)
+
+onMounted(carregarLista)
 </script>
 
 <template>
@@ -77,30 +165,141 @@ watch([pagina, filtrados], carregarCards)
         <div>
           <span>POKÉDEX DA COZINHA</span>
           <h1>Conheça os ingredientes antes que eles descubram o cardápio.</h1>
-          <p>Esta área consome a PokéAPI em tempo real. Pesquise por nome ou número, filtre por tipo e descubra quais Pokémon já possuem receita no Mucuratouille.</p>
+          <p>
+            Esta área consome a PokéAPI em tempo real. Pesquise por nome ou número,
+            filtre por tipo e descubra quais Pokémon já possuem receita no Mucuratouille.
+          </p>
         </div>
-        <div class="pokedex-hero__contador"><strong>{{ especies.length || '...' }}</strong><small>espécies disponíveis</small></div>
+        <div class="pokedex-hero__contador">
+          <strong>{{ especies.length || '...' }}</strong>
+          <small>espécies disponíveis</small>
+        </div>
       </div>
     </section>
 
     <section class="pokedex-controles container-fluid px-3 px-lg-4">
       <div class="pokedex-controles__painel rounded-4 shadow-sm">
-        <label class="pokedex-busca"><span>Buscar</span><input v-model="busca" class="form-control rounded-pill" type="search" placeholder="Nome ou número da Pokédex" /></label>
-        <FiltroTipos :selecionado="tipo" :desabilitado="carregandoLista" @selecionar="mudarTipo" />
-        <div class="pokedex-status"><span>Cardápio</span><div class="d-flex gap-1"><button v-for="item in [{id:'todos',n:'Todos'},{id:'com',n:'Com receita'},{id:'sem',n:'Sem receita'}]" :key="item.id" class="btn rounded-pill" :class="{ ativo:statusCardapio===item.id }" type="button" @click="mudarStatus(item.id)">{{ item.n }}</button></div></div>
+        <label class="pokedex-busca">
+          <span>Buscar</span>
+          <input
+            v-model="busca"
+            class="form-control rounded-pill"
+            type="search"
+            placeholder="Nome ou número da Pokédex"
+          />
+        </label>
+
+        <FiltroTipos
+          :selecionado="tipo"
+          :desabilitado="carregandoLista || carregandoTipo"
+          @selecionar="mudarTipo"
+        />
+
+        <div class="pokedex-status">
+          <span>Cardápio</span>
+          <div class="d-flex gap-1">
+            <button
+              v-for="item in [
+                { id: 'todos', nome: 'Todos' },
+                { id: 'com', nome: 'Com receita' },
+                { id: 'sem', nome: 'Sem receita' },
+              ]"
+              :key="item.id"
+              class="btn rounded-pill"
+              :class="{ ativo: statusCardapio === item.id }"
+              type="button"
+              :aria-pressed="statusCardapio === item.id"
+              @click="mudarStatus(item.id)"
+            >
+              {{ item.nome }}
+            </button>
+          </div>
+        </div>
       </div>
     </section>
 
     <section class="pokedex-grid container-fluid px-3 px-lg-4 pb-5">
-      <div class="pokedex-grid__cabeca d-flex align-items-end justify-content-between gap-3"><div><span class="sobretitulo">RESULTADOS DA API</span><h2>{{ filtrados.length }} Pokémon encontrados</h2></div><small>Página {{ pagina }} de {{ totalPaginas }}</small></div>
-      <div v-if="erro" class="pokedex-estado">{{ erro }}</div>
-      <div v-else-if="carregandoLista || carregandoCards" class="pokedex-estado"><span class="spinner-border" aria-hidden="true"></span><strong>Consultando a PokéAPI...</strong></div>
-      <div v-else-if="pokemonPagina.length" class="row g-2 g-md-3">
-        <div v-for="pokemon in pokemonPagina" :key="pokemon.id" class="col-6 col-md-4 col-xl-3"><PokemonCard :pokemon="pokemon" :receita="receitasPorPokemon.get(pokemon.name)" /></div>
+      <div class="pokedex-grid__cabeca d-flex align-items-end justify-content-between gap-3">
+        <div>
+          <span class="sobretitulo">RESULTADOS DA API</span>
+          <h2>{{ filtrados.length }} Pokémon encontrados</h2>
+        </div>
+        <small>Página {{ pagina }} de {{ totalPaginas }}</small>
       </div>
-      <div v-else class="pokedex-estado"><strong>Nenhum Pokémon encontrado.</strong><span>A Mucura consultou até os cantos mais suspeitos da Pokédex.</span></div>
-      <nav v-if="totalPaginas > 1" class="pokedex-paginacao d-flex align-items-center justify-content-center gap-2 mt-4" aria-label="Paginação da Pokédex">
-        <button class="btn rounded-pill" type="button" :disabled="pagina===1" @click="irPagina(pagina-1)">← Anterior</button><span>{{ pagina }} / {{ totalPaginas }}</span><button class="btn rounded-pill" type="button" :disabled="pagina===totalPaginas" @click="irPagina(pagina+1)">Próxima →</button>
+
+      <EstadoErro
+        v-if="erroLista"
+        titulo="A PokéAPI não respondeu."
+        :mensagem="erroLista"
+        acao-texto="Tentar novamente"
+        @tentar-novamente="carregarLista"
+      />
+
+      <EstadoErro
+        v-else-if="erroTipo"
+        titulo="Não foi possível aplicar o filtro."
+        :mensagem="erroTipo"
+        acao-texto="Tentar novamente"
+        @tentar-novamente="carregarTipo"
+      />
+
+      <EstadoErro
+        v-else-if="erroCards"
+        titulo="Os Pokémon desta página não foram carregados."
+        :mensagem="erroCards"
+        acao-texto="Tentar novamente"
+        @tentar-novamente="carregarCards"
+      />
+
+      <EstadoCarregamento
+        v-else-if="carregandoLista || carregandoTipo || carregandoCards"
+        titulo="Consultando a PokéAPI..."
+        mensagem="A Mucura está separando os ingredientes da Pokédex."
+      />
+
+      <div v-else-if="pokemonPagina.length" class="row g-2 g-md-3">
+        <div
+          v-for="pokemon in pokemonPagina"
+          :key="pokemon.id"
+          class="col-6 col-md-4 col-xl-3"
+        >
+          <PokemonCard
+            :pokemon="pokemon"
+            :receita="receitasPorPokemon.get(pokemon.name)"
+          />
+        </div>
+      </div>
+
+      <EstadoVazio
+        v-else
+        titulo="Nenhum Pokémon encontrado."
+        mensagem="A Mucura consultou até os cantos mais suspeitos da Pokédex. Ajuste a pesquisa ou limpe os filtros."
+        acao-texto="Limpar filtros"
+        @acao="limparFiltros"
+      />
+
+      <nav
+        v-if="!erroLista && !erroTipo && !erroCards && totalPaginas > 1"
+        class="pokedex-paginacao d-flex align-items-center justify-content-center gap-2 mt-4"
+        aria-label="Paginação da Pokédex"
+      >
+        <button
+          class="btn rounded-pill"
+          type="button"
+          :disabled="pagina === 1"
+          @click="irPagina(pagina - 1)"
+        >
+          ← Anterior
+        </button>
+        <span>{{ pagina }} / {{ totalPaginas }}</span>
+        <button
+          class="btn rounded-pill"
+          type="button"
+          :disabled="pagina === totalPaginas"
+          @click="irPagina(pagina + 1)"
+        >
+          Próxima →
+        </button>
       </nav>
     </section>
   </div>
@@ -250,27 +449,6 @@ watch([pagina, filtrados], carregarCards)
 .pokedex-grid__cabeca small {
   color: #817c72;
   font-size: 10.5px;
-}
-
-.pokedex-estado {
-  display: flex;
-  min-height: 300px;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  gap: 10px;
-  color: #123c2c;
-  background: #fffdf8;
-  border: 1px solid #e0d7c9;
-  border-radius: 20px;
-  text-align: center;
-}
-
-.pokedex-estado span {
-  max-width: 620px;
-  color: #77736b;
-  font-size: 12.5px;
-  line-height: 1.55;
 }
 
 .pokedex-paginacao .btn {

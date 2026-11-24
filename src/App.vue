@@ -24,7 +24,7 @@ function executarBusca() {
   <main id="conteudo-principal" class="pagina">
     <section class="busca-global container-fluid px-3 px-lg-4" aria-label="Busca global de receitas">
       <form class="busca-global__linha d-flex align-items-center gap-2 gap-md-3" role="search" @submit.prevent="executarBusca">
-        <BuscaReceitas :valor-inicial="textoBusca" placeholder="Busque uma receita ou Pokémon do cardápio..." @buscar="textoBusca = $event" />
+        <BuscaReceitas :valor-inicial="textoBusca" placeholder="Busque receita, ingrediente, categoria, Pokémon ou tipo..." @buscar="textoBusca = $event" />
         <button class="busca-global__botao btn rounded-pill shadow" type="submit">Buscar</button>
       </form>
     </section>

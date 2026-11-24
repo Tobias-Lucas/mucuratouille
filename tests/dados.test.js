@@ -76,7 +76,7 @@ test('App preserva moldura SPA, busca global e RouterView', () => {
   assert.ok(app.includes('<RouterView'))
   assert.ok(app.includes('<Rodape'))
   assert.ok(app.includes('@submit.prevent="executarBusca"'))
-  assert.ok(app.includes('Pokémon do cardápio'))
+  assert.ok(app.includes('categoria, Pokémon ou tipo'))
 })
 
 test('cabecalho preserva logo visual, efeito de movimento e link Pokedex', () => {
@@ -150,6 +150,144 @@ test('ajustes visuais v4.1.3 preservam numeros vazados, busca vermelha e CTA pad
   assert.match(detalhe,/background:\s*transparent/)
   assert.ok(appStyle.includes('#d8343b'))
   assert.match(appStyle,/font-size:\s*13px/)
-  assert.ok(receitas.includes('btn btn-mucura btn-acao rounded-pill'))
+  assert.ok(receitas.includes('<EstadoVazio'))
+  assert.ok(ler('../src/components/EstadoVazio.vue').includes('btn btn-mucura rounded-pill'))
   assert.match(receitas,/font-size:\s*12\.5px/)
+})
+
+test('busca encontra categoria e tipo do Pokemon em portugues', () => {
+  assert.ok(filtrar({ busca: 'sobremesa' }).some((receita) => receita.categoria === 'sobremesas'))
+
+  const tipos = {
+    torchic: ['fire'],
+    tepig: ['fire'],
+  }
+
+  assert.deepEqual(
+    filtrar({ busca: 'fogo', tipos }).map((receita) => receita.id),
+    ['torchic-crocante', 'tepig-bacon-burger'],
+  )
+})
+
+test('favoritos possuem persistencia local e validacao dos dados armazenados', () => {
+  const state = ler('../src/state/favoritos.js')
+
+  assert.ok(state.includes('mucuratouille:favoritos:v1'))
+  assert.ok(state.includes('window.localStorage.getItem'))
+  assert.ok(state.includes('window.localStorage.setItem'))
+  assert.ok(state.includes('watch(favoritos, salvarFavoritos'))
+  assert.ok(state.includes('Array.isArray(armazenados)'))
+})
+
+test('historico de receitas possui limite, ordem recente e persistencia local', () => {
+  const state = ler('../src/state/historico.js')
+
+  assert.ok(state.includes('mucuratouille:historico:v1'))
+  assert.ok(state.includes('LIMITE_HISTORICO = 5'))
+  assert.ok(state.includes('registrarVisualizacao'))
+  assert.ok(state.includes('limparHistorico'))
+  assert.ok(state.includes('window.localStorage.setItem'))
+  assert.ok(ler('../src/views/ReceitaView.vue').includes('registrarVisualizacao(receita.value)'))
+  assert.ok(ler('../src/views/HomeView.vue').includes('Vistos recentemente'))
+})
+
+test('estados de carregamento, erro e vazio sao componentes reutilizaveis', () => {
+  for (const nome of ['EstadoCarregamento.vue', 'EstadoErro.vue', 'EstadoVazio.vue']) {
+    assert.ok(fs.existsSync(new URL(`../src/components/${nome}`, import.meta.url)), nome)
+  }
+
+  const pokedex = ler('../src/views/PokedexView.vue')
+  const receitas = ler('../src/views/ReceitasView.vue')
+  assert.ok(pokedex.includes('<EstadoCarregamento'))
+  assert.ok(pokedex.includes('<EstadoErro'))
+  assert.ok(pokedex.includes('<EstadoVazio'))
+  assert.ok(receitas.includes('<EstadoVazio'))
+})
+
+test('Pokédex mantém filtros por tipo e disponibilidade de receita', () => {
+  const view = ler('../src/views/PokedexView.vue')
+  assert.ok(view.includes('statusCardapio'))
+  assert.ok(view.includes("statusCardapio.value === 'com'"))
+  assert.ok(view.includes("statusCardapio.value === 'sem'"))
+  assert.ok(view.includes('FiltroTipos'))
+})
+
+
+test('favoritos carregam do navegador e salvam novas alteracoes', async () => {
+  const armazenamento = new Map([
+    ['mucuratouille:favoritos:v1', JSON.stringify(['id-inexistente', 'psyduck-assado-com-batatas'])],
+  ])
+  const janelaAnterior = globalThis.window
+  const { nextTick } = await import('vue')
+
+  globalThis.window = {
+    localStorage: {
+      getItem: (chave) => armazenamento.get(chave) ?? null,
+      setItem: (chave, valor) => armazenamento.set(chave, valor),
+    },
+  }
+
+  try {
+    const estado = await import(`../src/state/favoritos.js?teste=${Date.now()}`)
+    assert.deepEqual(estado.favoritos.value, ['psyduck-assado-com-batatas'])
+
+    estado.favoritar(dadosReceitas[1])
+    await nextTick()
+
+    assert.deepEqual(
+      JSON.parse(armazenamento.get('mucuratouille:favoritos:v1')),
+      ['psyduck-assado-com-batatas', dadosReceitas[1].id],
+    )
+
+    const recarregado = await import(`../src/state/favoritos.js?recarregado=${Date.now()}`)
+    assert.deepEqual(recarregado.favoritos.value, ['psyduck-assado-com-batatas', dadosReceitas[1].id])
+  } finally {
+    if (janelaAnterior === undefined) delete globalThis.window
+    else globalThis.window = janelaAnterior
+  }
+})
+
+test('historico registra receitas recentes sem duplicar e respeita limite', async () => {
+  const armazenamento = new Map()
+  const janelaAnterior = globalThis.window
+  const { nextTick } = await import('vue')
+
+  globalThis.window = {
+    localStorage: {
+      getItem: (chave) => armazenamento.get(chave) ?? null,
+      setItem: (chave, valor) => armazenamento.set(chave, valor),
+    },
+  }
+
+  try {
+    const estado = await import(`../src/state/historico.js?teste=${Date.now()}`)
+
+    for (const receita of dadosReceitas.slice(0, 6)) {
+      estado.registrarVisualizacao(receita)
+    }
+    estado.registrarVisualizacao(dadosReceitas[2])
+    await nextTick()
+
+    assert.deepEqual(estado.historicoReceitas.value, [
+      dadosReceitas[2].id,
+      dadosReceitas[5].id,
+      dadosReceitas[4].id,
+      dadosReceitas[3].id,
+      dadosReceitas[1].id,
+    ])
+    assert.deepEqual(
+      JSON.parse(armazenamento.get('mucuratouille:historico:v1')),
+      estado.historicoReceitas.value,
+    )
+
+    const recarregado = await import(`../src/state/historico.js?recarregado=${Date.now()}`)
+    assert.deepEqual(recarregado.historicoReceitas.value, estado.historicoReceitas.value)
+
+    estado.limparHistorico()
+    await nextTick()
+    assert.deepEqual(estado.historicoReceitas.value, [])
+  } finally {
+    if (janelaAnterior === undefined) delete globalThis.window
+    else globalThis.window = janelaAnterior
+  }
 })

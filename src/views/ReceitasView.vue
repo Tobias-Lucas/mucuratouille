@@ -4,6 +4,7 @@ import { useRoute, useRouter } from 'vue-router'
 import FiltroCategorias from '../components/FiltroCategorias.vue'
 import FiltroTipos from '../components/FiltroTipos.vue'
 import CardReceita from '../components/CardReceita.vue'
+import EstadoVazio from '../components/EstadoVazio.vue'
 import { dadosReceitas } from '../data/receitas.js'
 import { filtrarReceitas } from '../data/filtros.js'
 import { buscarPokemon } from '../services/pokeapi.js'
@@ -64,7 +65,7 @@ watch(() => [route.query.q, route.query.favoritos, route.query.categoria, route.
       <div class="receitas-intro__painel rounded-4 shadow-sm">
         <span class="sobretitulo">CARDÁPIO SUSPEITO</span>
         <h1>Receitas que a Pokédex preferia esconder.</h1>
-        <p>Busque por nome da receita, ingrediente ou Pokémon. O tipo retornado pela PokéAPI também pode filtrar o cardápio e alterar detalhes visuais.</p>
+        <p>Busque por nome da receita, ingrediente, categoria, Pokémon ou tipo. Os dados da PokéAPI também ajudam a filtrar o cardápio.</p>
       </div>
     </section>
 
@@ -89,11 +90,16 @@ watch(() => [route.query.q, route.query.favoritos, route.query.categoria, route.
           <CardReceita :receita="receita" :pokemon-dados="pokemonDados[receita.pokemon]" :favorita="eFavorita(receita.id)" :selecionada="false" @favoritar="favoritar" />
         </div>
       </div>
-      <div v-else class="catalogo__vazio card border-0 shadow-sm">
-        <img src="/imagens/nao-encontrado.webp" width="134" height="89" alt="Mucura procurando uma receita" />
-        <h2>Nada apareceu por aqui.</h2><p>A Mucura consultou a cozinha e a Pokédex. Tente outro termo ou limpe os filtros.</p>
-        <button class="btn btn-mucura btn-acao rounded-pill px-4" type="button" @click="limparFiltros">Mostrar todas as receitas</button>
-      </div>
+      <EstadoVazio
+        v-else
+        class="catalogo__vazio"
+        :titulo="somenteFavoritos ? 'Você ainda não favoritou nenhuma receita.' : 'Nada apareceu por aqui.'"
+        :mensagem="somenteFavoritos ? 'Use o coração nos cards para guardar suas receitas preferidas.' : 'A Mucura consultou a cozinha e a Pokédex. Tente outro termo ou limpe os filtros.'"
+        imagem="/imagens/nao-encontrado.webp"
+        imagem-alt="Mucura procurando uma receita"
+        acao-texto="Mostrar todas as receitas"
+        @acao="limparFiltros"
+      />
     </section>
   </div>
 </template>

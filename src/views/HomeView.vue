@@ -1,22 +1,47 @@
 <script setup>
-import { onMounted, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { RouterLink } from 'vue-router'
 import CardReceita from '../components/CardReceita.vue'
 import PokemonCard from '../components/PokemonCard.vue'
+import EstadoCarregamento from '../components/EstadoCarregamento.vue'
+import EstadoErro from '../components/EstadoErro.vue'
+import EstadoVazio from '../components/EstadoVazio.vue'
 import { dadosReceitas, receitasPorPokemon } from '../data/receitas.js'
 import { buscarPokemon } from '../services/pokeapi.js'
 import { eFavorita, favoritar } from '../state/favoritos.js'
+import { historicoReceitas, limparHistorico } from '../state/historico.js'
 
 const idsDestaques = ['psyduck-assado-com-batatas','krabby-burger-especial','tangela-espaguete-pesto','appletun-apple-pie']
 const destaques = dadosReceitas.filter((receita) => idsDestaques.includes(receita.id))
 const receitaDoDia = dadosReceitas[new Date().getDate() % dadosReceitas.length]
 const pokemonNoCardapio = ref([])
+const carregandoPokemon = ref(true)
+const erroPokemon = ref('')
+const receitasRecentes = computed(() => historicoReceitas.value
+  .map((id) => dadosReceitas.find((receita) => receita.id === id))
+  .filter(Boolean))
 
-onMounted(async () => {
-  const nomes = ['psyduck','krabby','tangela','appletun']
-  const resultados = await Promise.allSettled(nomes.map((nome) => buscarPokemon(nome)))
-  pokemonNoCardapio.value = resultados.filter((item) => item.status === 'fulfilled').map((item) => item.value)
-})
+async function carregarPokemonNoCardapio() {
+  carregandoPokemon.value = true
+  erroPokemon.value = ''
+
+  const nomes = ['psyduck', 'krabby', 'tangela', 'appletun']
+
+  try {
+    const resultados = await Promise.allSettled(nomes.map((nome) => buscarPokemon(nome)))
+    pokemonNoCardapio.value = resultados
+      .filter((item) => item.status === 'fulfilled')
+      .map((item) => item.value)
+
+    if (!pokemonNoCardapio.value.length) {
+      erroPokemon.value = 'Não foi possível carregar os Pokémon em destaque. Verifique sua conexão e tente novamente.'
+    }
+  } finally {
+    carregandoPokemon.value = false
+  }
+}
+
+onMounted(carregarPokemonNoCardapio)
 </script>
 
 <template>
@@ -46,6 +71,36 @@ onMounted(async () => {
       <div class="row g-2 g-md-3 g-xl-4">
         <div v-for="receita in destaques" :key="receita.id" class="col-6 col-lg-3">
           <CardReceita :receita="receita" :favorita="eFavorita(receita.id)" :selecionada="false" @favoritar="favoritar" />
+        </div>
+      </div>
+    </section>
+
+    <section
+      v-if="receitasRecentes.length"
+      class="home-secao home-recentes container-fluid px-3 px-lg-4"
+      aria-labelledby="titulo-recentes"
+    >
+      <div class="home-secao__cabeca d-flex align-items-end justify-content-between gap-3">
+        <div>
+          <span class="sobretitulo">SEU CAMINHO PELA COZINHA</span>
+          <h2 id="titulo-recentes">Vistos recentemente</h2>
+        </div>
+        <button class="home-recentes__limpar" type="button" @click="limparHistorico">
+          Limpar histórico
+        </button>
+      </div>
+      <div class="row g-2 g-md-3 g-xl-4">
+        <div
+          v-for="receita in receitasRecentes"
+          :key="receita.id"
+          class="col-6 col-md-4 col-xl-3"
+        >
+          <CardReceita
+            :receita="receita"
+            :favorita="eFavorita(receita.id)"
+            :selecionada="false"
+            @favoritar="favoritar"
+          />
         </div>
       </div>
     </section>
@@ -80,7 +135,25 @@ onMounted(async () => {
             <PokemonCard :pokemon="pokemon" :receita="receitasPorPokemon.get(pokemon.name)" />
           </div>
         </div>
-        <div v-else class="home-pokedex__loading">Consultando a Pokédex...</div>
+        <EstadoCarregamento
+          v-else-if="carregandoPokemon"
+          titulo="Consultando a Pokédex..."
+          compacto
+        />
+        <EstadoErro
+          v-else-if="erroPokemon"
+          titulo="A Pokédex não respondeu."
+          :mensagem="erroPokemon"
+          acao-texto="Tentar novamente"
+          compacto
+          @tentar-novamente="carregarPokemonNoCardapio"
+        />
+        <EstadoVazio
+          v-else
+          titulo="Nenhum Pokémon disponível agora."
+          mensagem="Volte em instantes para consultar o cardápio."
+          compacto
+        />
       </div>
     </section>
   </div>
@@ -199,6 +272,21 @@ onMounted(async () => {
 
 .home-secao__link--pokedex {
   color: #c62828;
+}
+
+.home-recentes__limpar {
+  padding: 7px 12px;
+  color: #77736b;
+  background: transparent;
+  border: 1px solid #d9d0c1;
+  border-radius: 999px;
+  font-size: 9px;
+  font-weight: 800;
+}
+
+.home-recentes__limpar:hover {
+  color: #c94c08;
+  border-color: #c94c08;
 }
 
 .home-dia {

@@ -51,6 +51,14 @@ import { RouterLink } from 'vue-router'
   font-weight: 800;
 }
 
+.btn-mucura:hover,
+.btn-mucura:focus {
+  color: #fff;
+  background: #a83e05;
+  border-color: #a83e05;
+  box-shadow: 0 4px 12px rgba(201, 76, 8, 0.25);
+}
+
 .btn-outline-mucura {
   color: #123c2c;
   border-color: #123c2c;

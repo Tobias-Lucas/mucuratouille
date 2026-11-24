@@ -3,6 +3,8 @@ import { computed, ref, watch } from 'vue'
 import { RouterLink, useRoute } from 'vue-router'
 import PokemonTypeBadge from '../components/PokemonTypeBadge.vue'
 import PokemonEvolucao from '../components/PokemonEvolucao.vue'
+import EstadoCarregamento from '../components/EstadoCarregamento.vue'
+import EstadoErro from '../components/EstadoErro.vue'
 import { buscarPokemon, buscarEspecie, buscarCadeiaEvolutiva, extrairNomesEvolucao, descricaoEspecie, artworkPokemon, nomeHabilidade } from '../services/pokeapi.js'
 import { receitasPorPokemon } from '../data/receitas.js'
 import { estiloTipos } from '../utils/pokemonTheme.js'
@@ -18,8 +20,10 @@ const receita = computed(() => pokemon.value ? receitasPorPokemon.get(pokemon.va
 const tema = computed(() => estiloTipos(pokemon.value))
 const descricao = computed(() => descricaoEspecie(especie.value, pokemon.value?.name || ''))
 const stats = computed(() => pokemon.value?.stats || [])
+let tokenCarga = 0
 
 async function carregar() {
+  const meuToken = ++tokenCarga
   carregando.value = true
   erro.value = ''
   pokemon.value = null
@@ -27,18 +31,43 @@ async function carregar() {
   evolucao.value = []
   try {
     const nome = route.params.nome
-    const [pokemonDados, especieDados] = await Promise.all([buscarPokemon(nome), buscarEspecie(nome)])
-    pokemon.value = pokemonDados
-    especie.value = especieDados
-    if (especieDados.evolution_chain?.url) {
-      const cadeia = await buscarCadeiaEvolutiva(especieDados.evolution_chain.url)
-      const nomes = extrairNomesEvolucao(cadeia.chain)
-      const resultados = await Promise.allSettled(nomes.map((item) => buscarPokemon(item.nome)))
-      evolucao.value = resultados.filter((item) => item.status === 'fulfilled').map((item) => item.value)
+    const [resultadoPokemon, resultadoEspecie] = await Promise.allSettled([
+      buscarPokemon(nome),
+      buscarEspecie(nome),
+    ])
+
+    if (meuToken !== tokenCarga) return
+    if (resultadoPokemon.status === 'rejected') throw resultadoPokemon.reason
+
+    pokemon.value = resultadoPokemon.value
+
+    if (resultadoEspecie.status === 'fulfilled') {
+      especie.value = resultadoEspecie.value
+
+      if (especie.value.evolution_chain?.url) {
+        try {
+          const cadeia = await buscarCadeiaEvolutiva(especie.value.evolution_chain.url)
+          if (meuToken !== tokenCarga) return
+
+          const nomes = extrairNomesEvolucao(cadeia.chain)
+          const resultados = await Promise.allSettled(nomes.map((item) => buscarPokemon(item.nome)))
+          if (meuToken !== tokenCarga) return
+
+          evolucao.value = resultados
+            .filter((item) => item.status === 'fulfilled')
+            .map((item) => item.value)
+        } catch {
+          if (meuToken === tokenCarga) evolucao.value = []
+        }
+      }
     }
   } catch (e) {
-    erro.value = e?.status === 404 ? 'Pokémon não encontrado na PokéAPI.' : 'A PokéAPI não respondeu como esperado.'
-  } finally { carregando.value = false }
+    if (meuToken === tokenCarga) {
+      erro.value = e?.status === 404 ? 'Pokémon não encontrado na PokéAPI.' : 'A PokéAPI não respondeu como esperado.'
+    }
+  } finally {
+    if (meuToken === tokenCarga) carregando.value = false
+  }
 }
 
 watch(() => route.params.nome, carregar, { immediate:true })
@@ -52,8 +81,20 @@ function nomeStat(nome) {
   <div class="pokemon-view container-fluid px-3 px-lg-4" :style="{ '--poke-accent': tema.corPrimaria, '--poke-accent-2': tema.corSecundaria }">
     <div class="pokemon-view__topo"><RouterLink class="pokemon-view__voltar" to="/pokedex">← Voltar para a Pokédex</RouterLink></div>
 
-    <section v-if="carregando" class="pokemon-view__estado"><span class="spinner-border" aria-hidden="true"></span><strong>Consultando ficha completa...</strong></section>
-    <section v-else-if="erro" class="pokemon-view__estado"><strong>{{ erro }}</strong><RouterLink class="btn btn-pokedex rounded-pill" to="/pokedex">Voltar para a Pokédex</RouterLink></section>
+    <section v-if="carregando" class="pokemon-view__estado">
+      <EstadoCarregamento titulo="Consultando ficha completa..." />
+    </section>
+    <section v-else-if="erro" class="pokemon-view__estado">
+      <EstadoErro
+        titulo="A Mucura não conseguiu consultar este Pokémon."
+        :mensagem="erro"
+        acao-texto="Tentar novamente"
+        @tentar-novamente="carregar"
+      />
+      <RouterLink class="btn btn-pokedex rounded-pill" to="/pokedex">
+        Voltar para a Pokédex
+      </RouterLink>
+    </section>
 
     <template v-else-if="pokemon">
       <section class="pokemon-hero rounded-4 shadow-sm">
@@ -104,10 +145,33 @@ function nomeStat(nome) {
 }
 
 .pokemon-view__voltar {
+  display: inline-flex;
+  min-height: 40px;
+  align-items: center;
+  justify-content: center;
+  padding: 0 16px;
+  border-radius: 999px !important;
   color: #123c2c;
-  font-size: 11.5px;
+  background: #fffdf8;
+  border: 1px solid #c8bba9;
+  box-shadow: 0 2px 6px rgba(18, 60, 44, 0.08);
+  font-size: 9px;
   font-weight: 900;
+  line-height: 1;
+  text-align: center;
   text-decoration: none;
+  transition:
+    background-color 0.18s ease,
+    color 0.18s ease,
+    border-color 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+.pokemon-view__voltar:hover {
+  color: #fff;
+  background: #123c2c;
+  border-color: #123c2c;
+  box-shadow: 0 4px 12px rgba(18, 60, 44, 0.22);
 }
 
 .pokemon-view__estado {

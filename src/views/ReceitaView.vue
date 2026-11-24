@@ -1,33 +1,60 @@
 <script setup>
 import { computed, ref, watch } from 'vue'
-import { RouterLink, useRoute } from 'vue-router'
+import { RouterLink, useRoute, useRouter } from 'vue-router'
 import DetalheReceita from '../components/DetalheReceita.vue'
 import CardReceita from '../components/CardReceita.vue'
+import EstadoVazio from '../components/EstadoVazio.vue'
 import { dadosReceitas } from '../data/receitas.js'
 import { buscarPokemon } from '../services/pokeapi.js'
 import { eFavorita, favoritar } from '../state/favoritos.js'
+import { registrarVisualizacao } from '../state/historico.js'
 
 const route = useRoute()
+const router = useRouter()
 const pokemon = ref(null)
 const carregandoPokemon = ref(false)
 const erroPokemon = ref('')
 const receita = computed(() => dadosReceitas.find((item) => item.id === route.params.id))
+let tokenPokemon = 0
+
 const relacionadas = computed(() => {
   if (!receita.value) return []
   return dadosReceitas.filter((item) => item.id !== receita.value.id && item.categoria === receita.value.categoria).slice(0, 3)
 })
 
 async function carregarPokemon() {
+  const meuToken = ++tokenPokemon
+
   pokemon.value = null
   erroPokemon.value = ''
-  if (!receita.value?.pokemon) return
+
+  if (!receita.value?.pokemon) {
+    carregandoPokemon.value = false
+    return
+  }
+
   carregandoPokemon.value = true
-  try { pokemon.value = await buscarPokemon(receita.value.pokemon) }
-  catch { erroPokemon.value = 'Os dados externos não puderam ser carregados. A receita continua disponível.' }
-  finally { carregandoPokemon.value = false }
+
+  try {
+    const dados = await buscarPokemon(receita.value.pokemon)
+    if (meuToken === tokenPokemon) pokemon.value = dados
+  } catch {
+    if (meuToken === tokenPokemon) {
+      erroPokemon.value = 'Os dados externos não puderam ser carregados. A receita continua disponível.'
+    }
+  } finally {
+    if (meuToken === tokenPokemon) carregandoPokemon.value = false
+  }
 }
 
-watch(() => route.params.id, carregarPokemon, { immediate:true })
+function voltarParaReceitas() {
+  router.push({ name: 'receitas' })
+}
+
+watch(() => route.params.id, () => {
+  if (receita.value) registrarVisualizacao(receita.value)
+  carregarPokemon()
+}, { immediate: true })
 </script>
 
 <template>
@@ -43,7 +70,16 @@ watch(() => route.params.id, carregarPokemon, { immediate:true })
         <div class="row g-3"><div v-for="item in relacionadas" :key="item.id" class="col-12 col-md-4"><CardReceita :receita="item" :favorita="eFavorita(item.id)" :selecionada="false" @favoritar="favoritar" /></div></div>
       </section>
     </template>
-    <section v-else class="receita-view__nao-encontrada text-center"><img src="/imagens/nao-encontrado.webp" alt="Mucura chef" width="134" height="89" /><span class="sobretitulo">RECEITA NÃO ENCONTRADA</span><h1>A Mucura procurou, mas essa panela está vazia.</h1><p>O endereço não corresponde a nenhuma das 20 receitas atuais.</p><RouterLink class="btn btn-mucura rounded-pill px-4" to="/receitas">Voltar às receitas</RouterLink></section>
+    <EstadoVazio
+      v-else
+      class="receita-view__nao-encontrada"
+      titulo="A Mucura procurou, mas essa panela está vazia."
+      mensagem="O endereço não corresponde a nenhuma das 20 receitas atuais."
+      imagem="/imagens/nao-encontrado.webp"
+      imagem-alt="Mucura procurando uma receita"
+      acao-texto="Voltar às receitas"
+      @acao="voltarParaReceitas"
+    />
   </div>
 </template>
 
@@ -60,18 +96,32 @@ watch(() => route.params.id, carregarPokemon, { immediate:true })
 }
 
 .receita-view__voltar {
+  display: inline-flex;
   min-height: 40px;
-  padding: 8px 14px;
+  align-items: center;
+  justify-content: center;
+  padding: 0 16px;
   color: #123c2c;
   background: #fffdf8;
-  border: 1px solid #d7cebf;
+  border: 1px solid #c8bba9;
+  box-shadow: 0 2px 6px rgba(18, 60, 44, 0.08);
   font-size: 9px;
   font-weight: 900;
+  line-height: 1;
+  text-align: center;
+  text-decoration: none;
+  transition:
+    background-color 0.18s ease,
+    color 0.18s ease,
+    border-color 0.18s ease,
+    box-shadow 0.18s ease;
 }
 
 .receita-view__voltar:hover {
   color: #fff;
   background: #123c2c;
+  border-color: #123c2c;
+  box-shadow: 0 4px 12px rgba(18, 60, 44, 0.22);
 }
 
 .receita-view__breadcrumb {
@@ -109,20 +159,6 @@ watch(() => route.params.id, carregarPokemon, { immediate:true })
   max-width: 650px;
   margin: 0 auto;
   padding: 70px 20px 100px;
-}
-
-.receita-view__nao-encontrada img {
-  margin-bottom: 15px;
-}
-
-.receita-view__nao-encontrada h1 {
-  margin: 8px 0 10px;
-  font: 800 34px/1.05 Georgia,'Times New Roman',serif;
-}
-
-.receita-view__nao-encontrada p {
-  color: #6d6961;
-  font-size: 11px;
 }
 
 .btn-mucura {
